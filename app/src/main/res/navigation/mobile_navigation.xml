@@ -19,7 +19,7 @@
         android:id="@+id/nav_home_second"
         android:name="com.sudoajay.dnswidget.ui.home.HomeSecondFragment"
         android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
             app:destination="@id/nav_home" />

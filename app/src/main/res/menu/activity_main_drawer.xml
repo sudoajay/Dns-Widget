@@ -3,18 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+    <group android:checkableBehavior="single"
+        android:id="@+id/nav_group_main">
+        <item android:id="@+id/nav_home"
+            android:title="@string/action_home"
+            android:checked="true"
+            android:icon="@drawable/ic_home"/>
+        <item android:id="@+id/nav_custom_dns"
+            android:title="@string/action_custom_dns"
+            android:checked="false"
+            android:icon="@drawable/ic_dns"/>
+        <item android:id="@+id/nav_dns_test"
+            android:title="@string/action_dns_test"
+            android:icon="@drawable/ic_verified_user"/>
     </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/nav_group_more">
+        <item android:id="@+id/nav_share"
+            android:title="@string/action_share"
+            android:icon="@drawable/ic_share"/>
+        <item android:id="@+id/nav_rate_us"
+            android:title="@string/action_rate_us"
+            android:checked="false"
+            android:icon="@drawable/ic_rate_us"/>
+        <item android:id="@+id/nav_more_app"
+            android:title="@string/action_more_app"
+            android:checked="false"
+            android:icon="@drawable/ic_more_app"/>
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/nav_group_setting">
+        <item android:id="@+id/nav_log"
+            android:title="@string/action_send_feedback"
+            android:icon="@drawable/ic_send_feedback"/>
+        <item android:id="@+id/nav_settings"
+            android:title="@string/action_settings"
+            android:icon="@drawable/ic_settings"/>
+        <item android:id="@+id/nav_about"
+            android:title="@string/action_about"
+            android:icon="@drawable/ic_about"/>
+    </group>
+
+
 </menu>
