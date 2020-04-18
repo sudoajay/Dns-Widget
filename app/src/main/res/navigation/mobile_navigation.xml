@@ -24,11 +24,6 @@
         android:label="@string/action_dns_test"
         tools:layout="@layout/fragment_dns_test" />
 
-    <fragment
-        android:id="@+id/nav_share"
-        android:label="@string/action_share" />
-
-
 
     <fragment
         android:id="@+id/nav_send_feedback"

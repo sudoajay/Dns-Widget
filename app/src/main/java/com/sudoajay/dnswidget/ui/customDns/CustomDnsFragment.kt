@@ -13,18 +13,17 @@ import com.sudoajay.dnswidget.ui.sendFeedback.SendFeedbackViewModel
 
 class CustomDnsFragment : Fragment() {
 
-    private lateinit var sendFeedbackViewModel: SendFeedbackViewModel
-
+    private lateinit var customDnsViewModel: CustomDnsViewModel
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        sendFeedbackViewModel =
-            ViewModelProvider(this).get(SendFeedbackViewModel::class.java)
+        customDnsViewModel =
+            ViewModelProvider(this).get(CustomDnsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_custom_dns, container, false)
         val textView: TextView = root.findViewById(R.id.text_gallery)
-        sendFeedbackViewModel.text.observe(viewLifecycleOwner, Observer {
+        customDnsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
