@@ -35,7 +35,7 @@
 
     <group android:checkableBehavior="single"
         android:id="@+id/nav_group_setting">
-        <item android:id="@+id/nav_log"
+        <item android:id="@+id/nav_send_feedback"
             android:title="@string/action_send_feedback"
             android:icon="@drawable/ic_send_feedback"/>
         <item android:id="@+id/nav_settings"

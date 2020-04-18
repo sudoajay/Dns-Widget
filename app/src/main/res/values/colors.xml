@@ -3,4 +3,8 @@
     <color name="colorPrimary">#376db6</color>
     <color name="colorPrimaryDark">#1e5397</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--Toast Color Background and text Color-->
+    <color name="toastBackgroundColor">@android:color/black</color>
+    <color name="toastTextColor">#D6D1D1</color>
 </resources>

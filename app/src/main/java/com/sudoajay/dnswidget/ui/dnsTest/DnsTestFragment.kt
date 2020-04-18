@@ -1,4 +1,4 @@
-package com.sudoajay.dnswidget.ui.home
+package com.sudoajay.dnswidget.ui.dnsTest
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,20 +11,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.sudoajay.dnswidget.R
 
-class HomeFragment : Fragment() {
+class DnsTestFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var dnsTestViewModel: DnsTestViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        dnsTestViewModel =
+            ViewModelProvider(this).get(DnsTestViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_dns_test, container, false)
+        val textView: TextView = root.findViewById(R.id.text_slideshow)
+        dnsTestViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
