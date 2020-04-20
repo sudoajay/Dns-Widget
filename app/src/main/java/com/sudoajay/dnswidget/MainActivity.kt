@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
+import com.sudoajay.dnswidget.ui.sendFeedback.SendFeedback
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -53,6 +54,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_share -> share()
             R.id.nav_rate_us -> rateUs()
             R.id.nav_more_app -> openMoreApp()
+            R.id.nav_send_feedback -> startActivity(Intent(applicationContext,SendFeedback::class.java))
+
         }
         drawerLayout.closeDrawer(GravityCompat.START)
 
@@ -85,8 +88,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         i.data = Uri.parse(link)
         startActivity(i)
     }
-
-
-
 
 }

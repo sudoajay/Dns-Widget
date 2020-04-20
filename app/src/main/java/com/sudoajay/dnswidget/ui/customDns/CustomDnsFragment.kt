@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.sudoajay.dnswidget.R
-import com.sudoajay.dnswidget.ui.sendFeedback.SendFeedbackViewModel
 
 class CustomDnsFragment : Fragment() {
 

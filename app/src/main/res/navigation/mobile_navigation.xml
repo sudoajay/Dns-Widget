@@ -26,12 +26,6 @@
 
 
     <fragment
-        android:id="@+id/nav_send_feedback"
-        android:name="com.sudoajay.dnswidget.ui.sendFeedback.SendFeedbackFragment"
-        android:label="@string/action_send_feedback"
-        tools:layout="@layout/fragment_send_feedback" />
-
-    <fragment
         android:id="@+id/nav_settings"
         android:name="com.sudoajay.dnswidget.ui.setting.SettingFragment"
         android:label="@string/action_send_feedback"
