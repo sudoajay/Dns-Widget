@@ -40,6 +40,7 @@ class SendFeedback : AppCompatActivity() {
         val clickableSpan1: ClickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
                 CustomToast.toastIt(applicationContext,"Do Something")
+                callCustomSystemInfo()
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -54,6 +55,12 @@ class SendFeedback : AppCompatActivity() {
 
         textView.text = ss
         textView.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    private fun callCustomSystemInfo() {
+        val ft = supportFragmentManager.beginTransaction()
+        val customDialogForBackgroundTimer = SystemInfo()
+        customDialogForBackgroundTimer.show(ft, "dialog")
     }
 
     /**

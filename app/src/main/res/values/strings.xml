@@ -42,4 +42,16 @@
     <string name="feedbackEditTextHint">Please write your feedback</string>
     <string name="systemInfo_text">Your System Info will be send to our developer team</string>
     <string name="add_screenshot_text">+ Add Screenshot</string>
+    <string name="ok_text">OK</string>
+
+    <!--    System Info-->
+    <string name="system_info_text"> System Info </string>
+    <string name="device_text">Device : </string>
+    <string name="os_api_level_text">Os Api Level : </string>
+    <string name="app_version_text">App Version : </string>
+    <string name="language_text">Language : </string>
+    <string name="total_memory_text">Total Memory : </string>
+    <string name="free_memory_text">Free Memory : </string>
+    <string name="screen_Text">Screen : </string>
+    <string name="network_type_text">Network Type : </string>
 </resources>
