@@ -1,12 +1,9 @@
 package com.sudoajay.dnswidget.ui.sendFeedback
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.ConnectivityManager
-import android.net.NetworkInfo.DetailedState
 import android.os.Build
 import android.os.Bundle
 import android.os.Debug
@@ -17,12 +14,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.DialogFragment
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.helper.Connectivity
 import com.sudoajay.dnswidget.helper.FileSize
 import java.util.*
 
@@ -83,21 +79,6 @@ class SystemInfo() : DialogFragment(), View.OnClickListener {
         val dm = DisplayMetrics()
         requireActivity().windowManager.defaultDisplay.getMetrics(dm)
 
-//        Network
-        val connMgr =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        val wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-
-        val mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
-
-        if (wifi.isAvailable && wifi.detailedState == DetailedState.CONNECTED) {
-            Toast.makeText(this, "Wifi", Toast.LENGTH_LONG).show()
-        } else if (mobile.isAvailable && mobile.detailedState == DetailedState.CONNECTED) {
-            Toast.makeText(this, "Mobile 3G ", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(this, "No Network ", Toast.LENGTH_LONG).show()
-        }
 
 
 //        Fill in the text View
@@ -108,9 +89,7 @@ class SystemInfo() : DialogFragment(), View.OnClickListener {
         totalMemoryText.text =FileSize.convertIt(nativeHeapSize)
         freeMemoryText.text = FileSize.convertIt(nativeHeapFreeSize)
         screenText.text = dm.heightPixels.toString() + " x " +dm.widthPixels.toString()
-        networkTypeText.text =
-
-
+        networkTypeText.text =Connectivity.getNetworkProvider(requireContext())
 
 
     }

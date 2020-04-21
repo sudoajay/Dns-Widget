@@ -41,11 +41,11 @@
                 android:id="@+id/deviceInfo_View"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:background="@color/infoLayout_BackColor"
                 app:layout_constraintBottom_toTopOf="@+id/osApiLevel_View"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/systemInfo_TextView" />
 
@@ -323,30 +323,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/screen_View"
                 app:layout_constraintVertical_bias="0.619" />
 
-            <View
-                android:id="@+id/lastLine_View"
-                android:layout_width="wrap_content"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:background="#250F0F0F"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/networkType_View" />
-
             <Button
                 android:id="@+id/ok_Button"
                 style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 android:text="@string/ok_text"
                 android:textColor="@color/colorPrimaryDark"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lastLine_View" />
+                app:layout_constraintTop_toBottomOf="@+id/networkType_View" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
