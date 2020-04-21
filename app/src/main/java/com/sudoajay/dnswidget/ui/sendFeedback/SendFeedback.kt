@@ -10,6 +10,8 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +19,7 @@ import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
 
 
-class SendFeedback : AppCompatActivity() {
+class SendFeedback : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +36,8 @@ class SendFeedback : AppCompatActivity() {
     private fun reference(){
         val textView:TextView = findViewById(R.id.systemInfo_TextView)
         val text = getText(R.string.systemInfo_text)
+        val sendFeedbackButton: Button = findViewById(R.id.sendFeedback_Button)
+        val feedbackEditText :EditText = findViewById(R.id.feedback_EditText)
 
         val ss = SpannableString(text)
 
@@ -55,6 +59,15 @@ class SendFeedback : AppCompatActivity() {
 
         textView.text = ss
         textView.movementMethod = LinkMovementMethod.getInstance()
+
+        sendFeedbackButton.setOnClickListener {
+            if(feedbackEditText.length() == 0) feedbackEditText.error= getString(R.string.feedbackEditTextError)
+            else{
+                CustomToast.toastIt(applicationContext,"We Send Here")
+            }
+        }
+
+
     }
 
     private fun callCustomSystemInfo() {
@@ -73,4 +86,6 @@ class SendFeedback : AppCompatActivity() {
             window.statusBarColor = Color.TRANSPARENT
         }
     }
+
+
 }

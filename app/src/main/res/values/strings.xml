@@ -40,6 +40,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="feedbackEditTextHint">Please write your feedback</string>
+    <string name="feedbackEditTextError">Please write something in feedback</string>
     <string name="systemInfo_text">Your System Info will be send to our developer team</string>
     <string name="add_screenshot_text">+ Add Screenshot</string>
     <string name="ok_text">OK</string>
