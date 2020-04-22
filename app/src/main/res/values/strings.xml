@@ -53,6 +53,6 @@
     <string name="language_text">Language : </string>
     <string name="total_memory_text">Total Heap Memory : </string>
     <string name="free_memory_text">Free Heap Memory : </string>
-    <string name="screen_Text">Screen : </string>
+    <string name="screen_Text">Screen Size : </string>
     <string name="network_type_text">Network Type : </string>
 </resources>

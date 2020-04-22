@@ -41,7 +41,7 @@
                 android:id="@+id/deviceInfo_View"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@color/infoLayout_BackColor"
                 app:layout_constraintBottom_toTopOf="@+id/osApiLevel_View"
                 app:layout_constraintEnd_toEndOf="parent"
