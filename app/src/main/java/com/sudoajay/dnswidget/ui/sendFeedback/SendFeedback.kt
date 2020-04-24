@@ -18,6 +18,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
@@ -65,7 +66,7 @@ class SendFeedback : AppCompatActivity(){
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
-                ds.color = Color.BLACK
+                ds.color = ContextCompat.getColor(applicationContext, R.color.textBlackColor)
                 ds.isUnderlineText = true
                 ds.bgColor = Color.WHITE
             }
@@ -138,7 +139,7 @@ class SendFeedback : AppCompatActivity(){
                 this.applicationContext.packageName + ".provider",
                 fileLocation
             );
-            var emailIntent: Intent? = null
+            var emailIntent: Intent?
             if (imageUri != null) {
                 emailIntent =Intent(Intent.ACTION_SEND_MULTIPLE)
                 val uris: ArrayList<out Parcelable> = arrayListOf(imageUri!!, path)

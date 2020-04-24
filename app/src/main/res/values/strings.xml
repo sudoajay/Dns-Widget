@@ -55,4 +55,13 @@
     <string name="free_memory_text">Free Heap Memory : </string>
     <string name="screen_Text">Screen Size : </string>
     <string name="network_type_text">Network Type : </string>
+
+<!--    Home Class-->
+    <string name="choose_a_dns_provider_text">Choose a DNS provider</string>
+    <string name="dns1_text">DNS 1</string>
+    <string name="dns2_text">DNS 2 (Optional)</string>
+    <string name="dns3_text">DNSv6 1</string>
+    <string name="dns4_text">DNSv6 2 (Optional)</string>
+
+
 </resources>

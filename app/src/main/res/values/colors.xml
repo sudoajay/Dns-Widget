@@ -11,4 +11,11 @@
     <!--Info Layout -->
     <color name="infoLayout_BackColor">#2546ABEB</color>
     <color name="tabBackgroundColor">#ffffff</color>
+
+    <color name="background">#FAFAFA</color>
+
+    <color name="textBlackColor">#FF686868</color>
+
+
+
 </resources>

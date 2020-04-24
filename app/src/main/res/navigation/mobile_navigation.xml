@@ -9,7 +9,23 @@
         android:id="@+id/nav_home"
         android:name="com.sudoajay.dnswidget.ui.home.HomeFragment"
         android:label="@string/action_home"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_open_custom_dns"
+            app:destination="@id/nav_custom_dns"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_open_dns_test"
+            app:destination="@id/nav_dns_test"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/nav_custom_dns"

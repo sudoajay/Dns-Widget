@@ -6,8 +6,27 @@ import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    fun getItemsSpinner():List<String>{
+        return listOf(  "Ice Cream Sandwich",
+            "Jelly Bean",
+            "KitKat",
+            "Lollipop",
+            "Marshmallow",
+            "Ice Cream Sandwich",
+            "Jelly Bean",
+            "KitKat",
+            "Lollipop",
+            "Marshmallow",
+            "Ice Cream Sandwich",
+            "Jelly Bean",
+            "KitKat",
+            "Lollipop",
+            "Marshmallow",
+            "Ice Cream Sandwich",
+            "Jelly Bean",
+            "KitKat",
+            "Lollipop",
+            "Marshmallow")
     }
-    val text: LiveData<String> = _text
+
 }

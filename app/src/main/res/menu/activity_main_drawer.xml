@@ -15,7 +15,7 @@
             android:icon="@drawable/ic_dns"/>
         <item android:id="@+id/nav_dns_test"
             android:title="@string/action_dns_test"
-            android:icon="@drawable/ic_verified_user"/>
+            android:icon="@drawable/ic_dns_test"/>
     </group>
 
     <group android:checkableBehavior="single"
