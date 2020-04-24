@@ -160,9 +160,6 @@ class SendFeedback : AppCompatActivity(){
         }
 
     }
-
-
-
     private fun callCustomSystemInfo() {
         val ft = supportFragmentManager.beginTransaction()
         val systemInfoDialog = SystemInfoDialog()
