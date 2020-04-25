@@ -62,6 +62,8 @@
     <string name="dns2_text">DNS 2 (Optional)</string>
     <string name="dns3_text">DNSv6 1</string>
     <string name="dns4_text">DNSv6 2 (Optional)</string>
+    <string name="use_dns_v6_text">Use DNS v6</string>
+    <string name="use_dns_v4_text">Use DNS v4</string>
 
 
 </resources>

@@ -16,6 +16,8 @@
 
     <color name="textBlackColor">#FF686868</color>
 
+    <color name="unCheckedColor">#979292</color>
+
 
 
 </resources>
