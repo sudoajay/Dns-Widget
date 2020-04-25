@@ -45,54 +45,21 @@ class HomeFragment : Fragment() {
         val dns3TextInputLayout: TextInputLayout = root.findViewById(R.id.dns3_TextInputLayout)
         val dns4TextInputLayout: TextInputLayout = root.findViewById(R.id.dns4_TextInputLayout)
         val materialSpinner :MaterialSpinner = root.findViewById(R.id.materialSpinner)
-        val enableIpv4checkBox: CheckBox = root.findViewById(R.id.enableIpv4_checkBox)
-        val enableIpv6checkBox: CheckBox = root.findViewById(R.id.enableIpv6_checkBox)
+        val useDns4CheckBox: CheckBox = root.findViewById(R.id.useDns4_checkBox)
+        val useDns6CheckBox: CheckBox = root.findViewById(R.id.useDns6_checkBox)
         val useDns4TextView:TextView = root.findViewById(R.id.useDns4_TextView)
         val useDns6TextView:TextView = root.findViewById(R.id.useDns6_TextView)
 
-
-
         materialSpinner.setItems(homeViewModel.getItemsSpinner())
 
-
-        enableIpv6checkBox
+        useDns4CheckBox
             .setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    enableIpv4checkBox.isEnabled = true
-                    enableIpv4checkBox.alpha = 1f
-                    useDns4TextView.alpha = 1f
-                    CompoundButtonCompat.setButtonTintList(
-                        enableIpv4checkBox, ColorStateList.valueOf(
-                            ContextCompat.getColor(requireContext(), R.color.colorPrimary)
-                        )
-                    )
-                    dns3TextInputLayout.hint = getString(R.string.dns3_text)
-                    dns2TextInputLayout.visibility = View.VISIBLE
-                    dns4TextInputLayout.visibility = View.VISIBLE
-                } else {
-                    enableIpv4checkBox.isEnabled = false
-                    enableIpv4checkBox.alpha = .5f
-                    useDns4TextView.alpha = .5f
-                    CompoundButtonCompat.setButtonTintList(
-                        enableIpv4checkBox, ColorStateList.valueOf(
-                            ContextCompat.getColor(requireContext(), R.color.unCheckedColor)
-                        )
-                    )
-                    dns3TextInputLayout.hint = getString(R.string.dns2_text)
-                    dns2TextInputLayout.visibility = View.GONE
-                    dns4TextInputLayout.visibility = View.GONE
-                }
-
-            }
-
-        enableIpv4checkBox
-            .setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    enableIpv6checkBox.isEnabled = true
-                    enableIpv6checkBox.alpha = 1f
+                    useDns6CheckBox.isEnabled = true
+                    useDns6CheckBox.alpha = 1f
                     useDns6TextView.alpha = 1f
                     CompoundButtonCompat.setButtonTintList(
-                        enableIpv6checkBox, ColorStateList.valueOf(
+                        useDns6CheckBox, ColorStateList.valueOf(
                             ContextCompat.getColor(requireContext(), R.color.colorPrimary)
                         )
                     )
@@ -101,11 +68,11 @@ class HomeFragment : Fragment() {
                     dns2TextInputLayout.visibility = View.VISIBLE
                     dns4TextInputLayout.visibility = View.VISIBLE
                 } else {
-                    enableIpv6checkBox.isEnabled = false
-                    enableIpv6checkBox.alpha = .5f
+                    useDns6CheckBox.isEnabled = false
+                    useDns6CheckBox.alpha = .5f
                     useDns6TextView.alpha = .5f
                     CompoundButtonCompat.setButtonTintList(
-                        enableIpv6checkBox, ColorStateList.valueOf(
+                        useDns6CheckBox, ColorStateList.valueOf(
                             ContextCompat.getColor(requireContext(), R.color.unCheckedColor)
                         )
                     )
@@ -116,6 +83,38 @@ class HomeFragment : Fragment() {
                 }
 
             }
+
+        useDns6CheckBox
+            .setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    useDns4CheckBox.isEnabled = true
+                    useDns4CheckBox.alpha = 1f
+                    useDns4TextView.alpha = 1f
+                    CompoundButtonCompat.setButtonTintList(
+                        useDns4CheckBox, ColorStateList.valueOf(
+                            ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+                        )
+                    )
+                    dns3TextInputLayout.hint = getString(R.string.dns3_text)
+                    dns2TextInputLayout.visibility = View.VISIBLE
+                    dns4TextInputLayout.visibility = View.VISIBLE
+                } else {
+                    useDns4CheckBox.isEnabled = false
+                    useDns4CheckBox.alpha = .5f
+                    useDns4TextView.alpha = .5f
+                    CompoundButtonCompat.setButtonTintList(
+                        useDns4CheckBox, ColorStateList.valueOf(
+                            ContextCompat.getColor(requireContext(), R.color.unCheckedColor)
+                        )
+                    )
+                    dns3TextInputLayout.hint = getString(R.string.dns2_text)
+                    dns2TextInputLayout.visibility = View.GONE
+                    dns4TextInputLayout.visibility = View.GONE
+                }
+
+            }
+
+
 
 
         root.findViewById<Button>(R.id.customDns_Button).setOnClickListener {

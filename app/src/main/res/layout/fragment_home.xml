@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/materialSpinner" />
 
         <CheckBox
-            android:id="@+id/enableIpv4_checkBox"
+            android:id="@+id/useDns4_checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -183,7 +183,7 @@
 
 
         <CheckBox
-            android:id="@+id/enableIpv6_checkBox"
+            android:id="@+id/useDns6_checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

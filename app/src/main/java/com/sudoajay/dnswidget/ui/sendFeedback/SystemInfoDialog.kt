@@ -19,8 +19,8 @@ import com.sudoajay.dnswidget.helper.Connectivity
 import com.sudoajay.dnswidget.helper.FileSize
 
 
-class SystemInfoDialog() : DialogFragment(), View.OnClickListener {
-    private var rootview: View? = null
+class SystemInfoDialog : DialogFragment(), View.OnClickListener {
+    private lateinit var rootview: View
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,22 +36,21 @@ class SystemInfoDialog() : DialogFragment(), View.OnClickListener {
     @SuppressLint("SetTextI18n", "DefaultLocale")
     private fun mainFun() { // Reference Object
 
-        val constraintLayout: ConstraintLayout = rootview!!.findViewById(R.id.constraintLayout)
-        val closeImageView: ImageView = rootview!!.findViewById(R.id.close_ImageView)
-        val okButton: Button     = rootview!!.findViewById(R.id.ok_Button)
-        val deviceInfoText: TextView = rootview!!.findViewById(R.id.deviceInfoText_TextView)
-        val osApiLevelText: TextView = rootview!!.findViewById(R.id.osApiLevelText_TextView)
-        val appVersionText: TextView = rootview!!.findViewById(R.id.appVersionText_TextView)
-        val languageText: TextView = rootview!!.findViewById(R.id.languageText_TextView)
-        val totalMemoryText: TextView = rootview!!.findViewById(R.id.totalMemoryText_TextView)
-        val freeMemoryText: TextView = rootview!!.findViewById(R.id.freeMemoryText_TextView)
-        val screenText: TextView = rootview!!.findViewById(R.id.screenText_TextView)
-        val networkTypeText: TextView = rootview!!.findViewById(R.id.networkTypeText_TextView)
+        val closeImageView: ImageView = rootview.findViewById(R.id.close_ImageView)
+        val okButton: Button = rootview.findViewById(R.id.cancel_Button)
+        val deviceInfoText: TextView = rootview.findViewById(R.id.deviceInfoText_TextView)
+        val osApiLevelText: TextView = rootview.findViewById(R.id.osApiLevelText_TextView)
+        val appVersionText: TextView = rootview.findViewById(R.id.appVersionText_TextView)
+        val languageText: TextView = rootview.findViewById(R.id.languageText_TextView)
+        val totalMemoryText: TextView = rootview.findViewById(R.id.totalMemoryText_TextView)
+        val freeMemoryText: TextView = rootview.findViewById(R.id.freeMemoryText_TextView)
+        val screenText: TextView = rootview.findViewById(R.id.screenText_TextView)
+        val networkTypeText: TextView = rootview.findViewById(R.id.networkTypeText_TextView)
 
 
         // setup dialog box
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        constraintLayout.setBackgroundColor(
+        rootview.findViewById<ConstraintLayout>(R.id.constraintLayout).setBackgroundColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.tabBackgroundColor
@@ -114,7 +113,7 @@ class SystemInfoDialog() : DialogFragment(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.close_ImageView, R.id.ok_Button -> dismiss()
+            R.id.close_ImageView, R.id.cancel_Button -> dismiss()
         }
     }
 

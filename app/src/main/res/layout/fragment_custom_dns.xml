@@ -23,11 +23,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
-        android:clickable="true"
         android:src="@drawable/ic_add_dns"
         app:backgroundTint="@color/colorPrimary"
-        app:fabCustomSize="50dp"
+        app:fabCustomSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="24dp" />
+        app:maxImageSize="30dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

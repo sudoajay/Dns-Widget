@@ -324,7 +324,7 @@
                 app:layout_constraintVertical_bias="0.619" />
 
             <Button
-                android:id="@+id/ok_Button"
+                android:id="@+id/cancel_Button"
                 style="@android:style/Widget.DeviceDefault.Button.Borderless.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
