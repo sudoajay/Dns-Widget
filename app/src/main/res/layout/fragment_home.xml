@@ -14,7 +14,7 @@
 
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/share_BottomSheet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -38,7 +38,7 @@
             android:layout_marginRight="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/share_BottomSheet"
             app:ms_dropdown_max_height="@dimen/spinner_dropdownMax" />
 
         <TextView
@@ -197,7 +197,7 @@
 
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/edit_BottomSheet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -229,7 +229,7 @@
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_BottomSheet" />
 
         <Button
             android:id="@+id/customDns_Button"

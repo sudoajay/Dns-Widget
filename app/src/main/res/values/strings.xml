@@ -66,6 +66,13 @@
     <string name="use_dns_v4_text">Use DNS v4</string>
     <string name="name_text">Name</string>
     <string name="cancel_text">Cancel</string>
+    <string name="add_custom_dns_text">Add Custom DNS</string>
+
+
+<!--    Bottom Sheet dialog-->
+    <string name="edit_text">Edit</string>
+    <string name="delete_text">Delete</string>
+    <string name="copy_text">Copy</string>
 
 
 </resources>

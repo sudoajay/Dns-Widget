@@ -7,6 +7,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,13 +29,13 @@
 
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/delete_BottomSheet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:fontFamily="@font/lato"
-                    android:text="Add Custom DNS"
+                    android:text="@string/add_custom_dns_text"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +59,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3">
+                    app:layout_constraintTop_toBottomOf="@+id/delete_BottomSheet">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -224,8 +228,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/dns4_TextInputLayout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
             <ImageView
                 android:id="@+id/close_ImageView"
                 android:layout_width="wrap_content"
@@ -240,5 +242,6 @@
                 tools:ignore="ContentDescription,RtlHardcoded" />
 
         </FrameLayout>
+    </ScrollView>
 
 </LinearLayout>
