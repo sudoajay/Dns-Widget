@@ -1,7 +1,11 @@
 package com.sudoajay.dnswidget.ui.home
 
+import android.app.Activity
+import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.VpnService
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +19,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.google.android.material.textfield.TextInputLayout
 import com.jaredrummler.materialspinner.MaterialSpinner
+import com.sudoajay.dnswidget.DnsServersDetector
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.helper.CustomToast
 
 
 class HomeFragment : Fragment() {
@@ -49,6 +55,7 @@ class HomeFragment : Fragment() {
         val useDns6CheckBox: CheckBox = root.findViewById(R.id.useDns6_checkBox)
         val useDns4TextView:TextView = root.findViewById(R.id.useDns4_TextView)
         val useDns6TextView:TextView = root.findViewById(R.id.useDns6_TextView)
+        val normalChangesButton :Button = root.findViewById(R.id.normal_Changes_Button)
 
         materialSpinner.setItems(homeViewModel.getItemsSpinner())
 
@@ -114,9 +121,6 @@ class HomeFragment : Fragment() {
 
             }
 
-
-
-
         root.findViewById<Button>(R.id.customDns_Button).setOnClickListener {
             Navigation.findNavController(root).navigate(R.id.action_open_custom_dns)
         }
@@ -126,7 +130,37 @@ class HomeFragment : Fragment() {
         }
 
 
+        normalChangesButton.setOnClickListener {
+
+            val detect: DnsServersDetector = DnsServersDetector(requireContext())
+           for(getVpn in detect.servers ){
+
+                Log.e("GotSomething", getVpn)
+            }
+
+//            val intent = VpnService.prepare(requireContext())
+//            Log.e("GotSomething", "reach ")
+//            if (intent != null) {
+//                Log.e("GotSomething", " Not Null ")
+//                startActivityForResult(intent, 0)
+//            } else {
+//                Log.e("GotSomething", " Null ")
+//                onActivityResult(0, Activity.RESULT_OK, null)
+//            }
+
+        }
+
+
     }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == Activity.RESULT_OK) {
+//            CustomToast.toastIt(requireContext()," Result Code Equal to Result Ok ")
+//            requireActivity().startService(Intent(requireContext(),  ToyVpnService::class.java).setAction(ToyVpnService.ACTION_CONNECT))
+//        }
+//
+//    }
 
 
 }
