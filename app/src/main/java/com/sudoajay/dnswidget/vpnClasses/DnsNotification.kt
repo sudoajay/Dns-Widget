@@ -20,13 +20,13 @@ import com.sudoajay.dnswidget.R
 class DnsNotification(private val context: Context) {
     private var notificationManager: NotificationManager? = null
 
-    fun notify(title: String, text: String) { // local variable
+    fun notify(title: String, text: String,builder :NotificationCompat.Builder  ) { // local variable
         // setup intent and passing value
         val intent = Intent(context, MainActivity::class.java)
 
         // setup according Which Type
 // if There is no data match with query
-        val channelId: String = context.getString(R.string.dns_channel_id) // channel_id
+
         // now check for null notification manger
         if (notificationManager == null) {
             notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -43,8 +43,8 @@ class DnsNotification(private val context: Context) {
         }
         // Default ringtone
         val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val builder = NotificationCompat.Builder(context, channelId)
-            .addAction(0, context.getString(R.string.dns_pause_text),
+
+        builder.addAction(0, context.getString(R.string.dns_pause_text),
               null)
             .addAction(0, context.getString(R.string.dns_turn_off_text),
                 null)
@@ -105,6 +105,7 @@ class DnsNotification(private val context: Context) {
          */
         private const val notificationTag = "Dns Notification Tag"
         const val notificationTagId = 10
+        const val channelId: String = "DNS Notification"
 
     }
 

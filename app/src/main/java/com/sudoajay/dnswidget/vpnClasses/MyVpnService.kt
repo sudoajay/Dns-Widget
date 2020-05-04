@@ -19,9 +19,9 @@ class MyVpnService : VpnService(){
 
     private fun startDns(){
 
-      val dnsNotification =DnsNotification(applicationContext).notify("Here We Goo" , "Active")
-
-       startForeground(DnsNotification.notificationTagId, )
+        val builder = NotificationCompat.Builder(applicationContext, DnsNotification.channelId)
+        DnsNotification(applicationContext).notify("Here We Goo" , "Active",builder)
+        startForeground(DnsNotification.notificationTagId, builder.build())
     }
 
 
