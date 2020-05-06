@@ -22,7 +22,21 @@ class MyVpnService : VpnService(){
         val builder = NotificationCompat.Builder(applicationContext, DnsNotification.channelId)
         DnsNotification(applicationContext).notify("Here We Goo" , "Active",builder)
         startForeground(DnsNotification.notificationTagId, builder.build())
+
+        // Configure a new interface from our VpnService instance. This must be done
+// from inside a VpnService.
+        val builders = Builder()
+
+// Create a local TUN interface using predetermined addresses. In your app,
+// you typically use values returned from the VPN gateway during handshaking.
+        val localTunnel = builders
+            .addAddress("192.0.2.1", 24)
+            .addRoute("0.0.0.0", 0)
+            .addDnsServer("8.8.8.8")
+            .establish()
     }
+
+
 
 
 }
