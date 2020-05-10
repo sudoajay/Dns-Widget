@@ -6,8 +6,19 @@ import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
 
-    fun getItemsSpinner():List<String>{
-        return listOf(  "Ice Cream Sandwich",
+    private var _dnsList: MutableLiveData<List<String>>? = null
+
+    fun dnsList(): LiveData<List<String>> {
+        if (_dnsList == null) {
+            _dnsList = MutableLiveData<List<String>>()
+            loadDefaultDna()
+        }
+        return _dnsList as MutableLiveData<List<String>>
+    }
+
+    private fun loadDefaultDna() {
+        _dnsList!!.value = listOf(
+            "Ice Cream Sandwich",
             "Jelly Bean",
             "KitKat",
             "Lollipop",
@@ -28,5 +39,4 @@ class HomeViewModel : ViewModel() {
             "Lollipop",
             "Marshmallow")
     }
-
 }

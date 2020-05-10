@@ -79,10 +79,71 @@
 
 <!--    DNS Notification-->
     <string name="dns_channel_id">DNS Notification</string>
-    <string name="dns_pause_text">Pause</string>
-    <string name="dns_turn_off_text">Turn Off</string>
+    <string name="notification_action_pause">Pause</string>
+    <string name="notification_action_turn_off">Turn Off</string>
 
 
+<!--    Modify Strings-->
+<!--    Ad Vpn service vpnStatusToTextId -->
+    <string name="notification_starting">Starting</string>
+    <string name="notification_running">Active</string>
+    <string name="notification_stopping">Stopping</string>
+    <string name="notification_waiting_for_net">Waiting for network</string>
+    <string name="notification_reconnecting">Reconnecting</string>
+    <string name="notification_reconnecting_error">Reconnecting error</string>
+    <string name="notification_stopped">Stopped</string>
+    <string name="notification_title">DNS66</string>
+
+    <!--    Notification Channels -->
+    <string name="notifications_running">Running service</string>
+    <string name="notifications_running_desc">Notifications to interact with running service</string>
+    <string name="notifications_update">Status</string>
+    <string name="notifications_update_desc">Notifications about updating hostfiles</string>
+    <string name="notifications_paused">Paused service</string>
+    <string name="notifications_paused_desc">Notifications to resume after pausing</string>
+    <string name="notifications_group_service">Service control</string>
+    <string name="notifications_group_updates">Updates</string>
+
+    <!-- Ad Vpn service Notification -->
+    <string name="notification_paused_title">DNS66 paused</string>
+    <string name="notification_paused_text">Tap to resume.</string>
+
+
+<!--    Filer Helper-->
+    <string name="cannot_restore_previous_config">Cannot restore previous configuration: %s</string>
+    <string name="cannot_read_config">Cannot read configuration: %s</string>
+    <string name="cannot_load_default_config">Cannot read default settings: %s - This should not happen</string>
+    <string name="cannot_write_config">Cannot write configuration: %s</string>
+
+<!--    Rule Database Update-->
+    <string name="update_incomplete">Update incomplete</string>
+    <string name="update_incomplete_description">Some host files could not be downloaded. If files were previously downloaded, old versions will continue to be used.</string>
+    <string name="updating_hostfiles">Updating hostfiles</string>
+    <string name="updating_n_host_files">Updating %1$d host files</string>
+    <string name="could_not_update_all_hosts">Could not update all hostfiles</string>
+
+<!--    Rule Database Runnable-->
+    <string name="invalid_url_s">Invalid URL: %1$s</string>
+    <string name="file_not_found">File not found</string>
+    <string name="unknown_error_s">Unexpected error: %1$s</string>
+    <string name="requested_timed_out">Request timed out</string>
+    <string name="action_delete">Delete</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="host_update_error_item">Error %1$d: %2$s</string>
+
+<!--    status Dns -->
+    <string name="not_connected_text">Not Connected</string>
+    <string name="connected_progress_text">Connected…</string>
+    <string name="connected_text">Connected</string>
+    <string name="disconnected_progress_text">Disconnected…</string>
+    <string name="disconnected_text">Disconnected</string>
+
+
+<!--    Network Provider-->
+    <string name="wifi_text">Wifi</string>
+    <string name="mobile_data_text">Mobile Data</string>
+    <string name="vpn_text">Vpn</string>
+    <string name="no_internet_text">No Internet</string>
 
 
 </resources>

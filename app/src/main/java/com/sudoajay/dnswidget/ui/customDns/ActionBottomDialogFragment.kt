@@ -22,7 +22,7 @@ class ActionBottomDialogFragment : BottomSheetDialogFragment(),View.OnClickListe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<View>(R.id.share_BottomSheet).setOnClickListener(this)
-        view.findViewById<View>(R.id.edit_BottomSheet).setOnClickListener(this)
+        view.findViewById<View>(R.id.statusDns_editText).setOnClickListener(this)
         view.findViewById<View>(R.id.delete_BottomSheet).setOnClickListener(this)
         view.findViewById<View>(R.id.copy_BottomSheet).setOnClickListener(this)
     }

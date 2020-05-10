@@ -10,7 +10,7 @@ class DnsDatabase(context: Context?) : SQLiteOpenHelper(context, databaseName, n
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
             "create table " + databaseTableName + "(ID INTEGER PRIMARY KEY AUTOINCREMENT , " +
-                    "Name Text,Dns1 INTEGER,Dns2 INTEGER ,Dns3 INTEGER,Dns4 INTEGER)"
+                    "Name Text,Dns1 Text,Dns2 Text ,Dns3 Text,Dns4 Text,Filter Text)"
         )
     }
 
@@ -19,20 +19,21 @@ class DnsDatabase(context: Context?) : SQLiteOpenHelper(context, databaseName, n
         onCreate(db)
     }
 
-    fun deleteData() {
+    fun clearData() {
         val db = this.writableDatabase
         db.delete(databaseTableName, "ID =?", arrayOf(1.toString() + ""))
     }
 
-    fun fillIt(name: String, dns1:Int, dns2: Int, dns3:Int, dns4: Int) {
+    fun fillIt(name: String, dns1:String, dns2: String, dns3:String,
+               dns4: String,filter: String) {
         val sqLiteDatabase = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(col2, name)
         contentValues.put(col3, dns1)
         contentValues.put(col4, dns2)
-        contentValues.put(col3, dns3)
-        contentValues.put(col4, dns4)
-
+        contentValues.put(col5, dns3)
+        contentValues.put(col6, dns4)
+        contentValues.put(col7, filter)
         sqLiteDatabase.insert(databaseTableName, null, contentValues)
     }
 
@@ -63,27 +64,30 @@ class DnsDatabase(context: Context?) : SQLiteOpenHelper(context, databaseName, n
         )
     }
 
-    fun updateTheTable(id: String, name: String, dns1:Int, dns2: Int, dns3:Int, dns4: Int) {
+    fun updateTheTable(id: String, name: String,  dns1:String,
+                       dns2: String, dns3:String, dns4: String,filter: String) {
         val sqLiteDatabase = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(col1, id)
         contentValues.put(col2, name)
         contentValues.put(col3, dns1)
         contentValues.put(col4, dns2)
-        contentValues.put(col3, dns3)
-        contentValues.put(col4, dns4)
+        contentValues.put(col5, dns3)
+        contentValues.put(col6, dns4)
+        contentValues.put(col7, filter)
         sqLiteDatabase.update(databaseTableName, contentValues, "ID = ?", arrayOf(id))
     }
 
     companion object {
-        private const val databaseName = "BackgroundTimerDataBase.db"
-        private const val databaseTableName = "BackgroundTimerDATABASE_TABLE_NAME"
+        private const val databaseName = "DnsDatabase.db"
+        private const val databaseTableName = "DnsDatabase_TABLE_NAME"
         private const val col1 = "ID"
         private const val col2 = "Name"
         private const val col3 = "Dns1"
         private const val col4 = "Dns2"
         private const val col5 = "Dns3"
         private const val col6 = "Dns4"
+        private const val col7 = "Filter"
 
     }
 }
