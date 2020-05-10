@@ -24,11 +24,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.google.android.material.textfield.TextInputLayout
 import com.jaredrummler.materialspinner.MaterialSpinner
-import com.sudoajay.dnswidget.MainActivity
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.vpnClasses.AdVpnService
-import com.sudoajay.dnswidget.vpnClasses.MyVpnService
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -171,10 +169,10 @@ class HomeFragment : Fragment() {
             CustomToast.toastIt(requireContext(),getString(R.string.could_not_configure_vpn_service))
 
         if (requestCode == requestDnsCode && resultCode == Activity.RESULT_OK ) {
-            CustomToast.toastIt(requireContext()," Result Code Equal to Result Ok ")
-            requireActivity().startService(Intent(requireContext(), AdVpnService::class.java).also { intent ->
-                requireActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
-            })
+            val bindIntent = Intent(activity, AdVpnService::class.java)
+            requireActivity().bindService(bindIntent, serviceConnection, Context.BIND_ABOVE_CLIENT)
+            requireContext().startService(bindIntent)
+
         }
 
     }
@@ -210,5 +208,8 @@ class HomeFragment : Fragment() {
             })
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        requireContext().unbindService(serviceConnection)
+    }
 }

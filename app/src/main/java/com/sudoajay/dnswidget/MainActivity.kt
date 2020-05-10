@@ -12,6 +12,8 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
+import com.sudoajay.dnswidget.helper.Connectivity
+import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.sendFeedback.SendFeedback
 import com.sudoajay.dnswidget.vpnClasses.ConfigurationData
 
@@ -48,6 +50,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
        ConfigurationData(applicationContext)
+
+
 
     }
 

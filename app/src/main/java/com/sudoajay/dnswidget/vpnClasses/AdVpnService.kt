@@ -1,5 +1,6 @@
 package com.sudoajay.dnswidget.vpnClasses
 
+import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -25,11 +26,42 @@ class AdVpnService : VpnService(), Handler.Callback {
     private val handler: Handler = MyHandler(this)
 
     // Binder given to clients (notice class declaration below)
-    var mBinder: IBinder = MyBinder()
+    private var mBinder: IBinder = MyBinder()
     var dnsStatus = MutableLiveData<String>()
 
     private val builder = NotificationCompat.Builder(this, NotificationChannels.SERVICE_RUNNING)
 
+
+    private val networkChangeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (Connectivity.getNetworkProvider(context!!)) {
+
+                context.getString(R.string.vpn_text) -> Log.i(
+                    TAG,
+                    "Ignoring connectivity changed for our own network"
+                )
+                context.getString(R.string.no_internet_text) -> {
+                    Log.i(TAG, "No Network Connection")
+
+                    if (intent!!.getBooleanExtra(
+                            ConnectivityManager.EXTRA_NO_CONNECTIVITY,
+                            false
+                        )
+                    ) {
+                        Log.i(
+                            TAG,
+                            "Connectivity changed to no connectivity, wait for a network"
+                        )
+                        waitForNetVpn()
+                    } else {
+                        Log.i(TAG, "Network changed, try to reconnect")
+                        reconnect()
+                    }
+                }
+            }
+        }
+
+    }
 
     private var vpnThread: AdVpnThread? = AdVpnThread(this, Notify { value ->
         handler.sendMessage(
@@ -89,7 +121,7 @@ class AdVpnService : VpnService(), Handler.Callback {
             NOTIFICATION_ID_STATE,
             NotificationCompat.Builder(this, NotificationChannels.SERVICE_PAUSED)
                 .setSmallIcon(R.drawable.ic_share) // TODO: Notification icon
-                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setPriority(NotificationCompat.PRIORITY_MIN)
                 .setContentTitle(getString(R.string.notification_paused_title))
                 .setContentText(getString(R.string.notification_paused_text))
                 .setContentIntent(
@@ -127,11 +159,11 @@ class AdVpnService : VpnService(), Handler.Callback {
         updateVpnStatus(VPN_STATUS_STARTING)
 
         registerReceiver(
-            NetworkChangeReceiver(),
+            networkChangeReceiver,
             IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
         )
 
-//        restartVpnThread();
+//       restartVpnThread();
     }
 
 
@@ -166,7 +198,7 @@ class AdVpnService : VpnService(), Handler.Callback {
         if (vpnThread != null) stopVpnThread()
         vpnThread = null
         try {
-            unregisterReceiver(NetworkChangeReceiver())
+            unregisterReceiver(networkChangeReceiver)
         } catch (e: IllegalArgumentException) {
             Log.i(
                 TAG,
@@ -185,39 +217,39 @@ class AdVpnService : VpnService(), Handler.Callback {
     override fun handleMessage(message: Message): Boolean {
         when (message.what) {
             VPN_MSG_STATUS_UPDATE -> updateVpnStatus(message.arg1)
-            VPN_MSG_NETWORK_CHANGED -> connectivityChanged(message.obj as Intent)
+//            VPN_MSG_NETWORK_CHANGED -> connectivityChanged(message.obj as Intent)
             else -> throw IllegalArgumentException("Invalid message with what = " + message.what)
         }
         return true
     }
 
-    private fun connectivityChanged(intent: Intent) {
-        if (intent.getIntExtra(
-                ConnectivityManager.EXTRA_NETWORK_TYPE,
-                0
-            ) == ConnectivityManager.TYPE_VPN
-        ) {
-
-            Log.i(TAG, "Ignoring connectivity changed for our own network")
-            return
-        }
-        if (ConnectivityManager.CONNECTIVITY_ACTION != intent.action) {
-            Log.e(
-                TAG,
-                "Got bad intent on connectivity changed " + intent.action
-            )
-        }
-        if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false)) {
-            Log.i(
-                TAG,
-                "Connectivity changed to no connectivity, wait for a network"
-            )
-            waitForNetVpn()
-        } else {
-            Log.i(TAG, "Network changed, try to reconnect")
-            reconnect()
-        }
-    }
+//    private fun connectivityChanged(intent: Intent) {
+//        if (intent.getIntExtra(
+//                ConnectivityManager.EXTRA_NETWORK_TYPE,
+//                0
+//            ) == ConnectivityManager.TYPE_VPN
+//        ) {
+//
+//            Log.i(TAG, "Ignoring connectivity changed for our own network")
+//            return
+//        }
+//        if (ConnectivityManager.CONNECTIVITY_ACTION != intent.action) {
+//            Log.e(
+//                TAG,
+//                "Got bad intent on connectivity changed " + intent.action
+//            )
+//        }
+//        if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false)) {
+//            Log.i(
+//                TAG,
+//                "Connectivity changed to no connectivity, wait for a network"
+//            )
+//            waitForNetVpn()
+//        } else {
+//            Log.i(TAG, "Network changed, try to reconnect")
+//            reconnect()
+//        }
+//    }
 
     /* The handler may only keep a weak reference around, otherwise it leaks */
     private class MyHandler(callback: Callback) :
@@ -339,36 +371,4 @@ class AdVpnService : VpnService(), Handler.Callback {
         }
     }
 
-
-    inner class NetworkChangeReceiver : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            when (Connectivity.getNetworkProvider(context!!)) {
-                context.getString(R.string.vpn_text) -> Log.i(
-                    TAG,
-                    "Ignoring connectivity changed for our own network"
-                )
-                context.getString(R.string.no_internet_text) -> {
-                    Log.i(TAG, "No Network Connection")
-
-                    if (intent!!.getBooleanExtra(
-                            ConnectivityManager.EXTRA_NO_CONNECTIVITY,
-                            false
-                        )
-                    ) {
-                        Log.i(
-                            TAG,
-                            "Connectivity changed to no connectivity, wait for a network"
-                        )
-                        waitForNetVpn()
-                    } else {
-                        Log.i(TAG, "Network changed, try to reconnect")
-                        reconnect()
-                    }
-                }
-
-
-            }
-        }
-
-    }
 }

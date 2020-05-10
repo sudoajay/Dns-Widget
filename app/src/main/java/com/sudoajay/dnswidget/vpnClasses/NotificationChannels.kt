@@ -5,7 +5,6 @@ import android.app.NotificationChannelGroup
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import android.view.View
 import androidx.annotation.RequiresApi
 import com.sudoajay.dnswidget.R
 
@@ -40,7 +39,7 @@ object NotificationChannels {
         val runningChannel = NotificationChannel(
             SERVICE_RUNNING,
             context.getString(R.string.notifications_running),
-            NotificationManager.IMPORTANCE_HIGH
+            NotificationManager.IMPORTANCE_MIN
         )
         runningChannel.description = context.getString(R.string.notifications_running_desc)
         runningChannel.group = GROUP_SERVICE

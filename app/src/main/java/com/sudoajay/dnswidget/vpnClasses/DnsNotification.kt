@@ -44,25 +44,14 @@ class DnsNotification(private val context: Context) {
             )
 
             // Set appropriate defaults for the notification light, sound,
-// and vibration.
+    // and vibration.
             .setDefaults(Notification.DEFAULT_ALL) // Set required fields, including the small icon, the
-// notification title, and text.
             .setContentTitle(title)
             .setContentText("") // All fields below this line are optional.
-// Use a default priority (recognized on devices running Android
-// 4.1 or later)
-            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setPriority(NotificationCompat.PRIORITY_MIN)
             .setSound(uri) // Provide a large icon, shown with the notification in the
-// notification drawer on devices running Android 3.0 or later.
-// Set ticker text (preview) information for this notification.
-            .setTicker(title) // Show a number. This is useful when stacking notifications of
-// a single type.
-            .setNumber(1)
             .setSmallIcon(R.drawable.ic_dns)
-            .setColor(ContextCompat.getColor(context,R.color.notificationColor)) // If this notification relates to a past or upcoming event, you
-
-// Automatically dismiss the notification when it is touched.
-            .setAutoCancel(false)
+            .color = ContextCompat.getColor(context,R.color.notificationColor) // If this notification relates to a past or upcoming event, you
 
         // check if there ia data with empty
 // more and view button classification
