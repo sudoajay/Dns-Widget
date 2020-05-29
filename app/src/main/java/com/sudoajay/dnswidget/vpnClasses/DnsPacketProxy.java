@@ -90,6 +90,10 @@ public class DnsPacketProxy {
     void initialize(Context context, ArrayList<InetAddress> upstreamDnsServers) throws InterruptedException {
         ruleDatabase.initialize(context);
         this.upstreamDnsServers = upstreamDnsServers;
+
+        for(InetAddress get: upstreamDnsServers){
+            Log.e(TAG , " Address  - " + get );
+        }
     }
 
     /**

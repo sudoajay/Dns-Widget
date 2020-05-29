@@ -177,7 +177,6 @@ class HomeFragment : Fragment() {
 
     }
 
-
     /**
      * Interface for getting the instance of binder from our service class
      * So client can get instance of our service class and can directly communicate with it.
@@ -210,6 +209,6 @@ class HomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        requireContext().unbindService(serviceConnection)
+        if (mIsBound != null) requireContext().unbindService(serviceConnection)
     }
 }

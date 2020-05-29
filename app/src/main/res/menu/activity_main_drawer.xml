@@ -16,6 +16,9 @@
         <item android:id="@+id/nav_dns_test"
             android:title="@string/action_dns_test"
             android:icon="@drawable/ic_dns_test"/>
+        <item android:id="@+id/nav_app_filter"
+            android:title="@string/action_app_filter"
+            android:icon="@drawable/ic_app_filter"/>
     </group>
 
     <group android:checkableBehavior="single"

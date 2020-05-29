@@ -3,15 +3,18 @@ package com.sudoajay.dnswidget.helper
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
+import android.net.NetworkInfo
 import android.os.Build
 import com.sudoajay.dnswidget.R
+
 
 object Connectivity {
 
     fun getNetworkProvider(context: Context): String {
         var result = ""
-        val connectivityManager =
+        val connectivityManager: ConnectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val networkCapabilities = connectivityManager.activeNetwork ?: return context.getString(
@@ -43,6 +46,26 @@ object Connectivity {
         return result
     }
 
+    @Throws(VpnNetworkException::class)
+    fun  isNetworkConnected(connectivityManager: ConnectivityManager, network: Network): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val networkCapabilities = connectivityManager.activeNetwork ?: return false
+            val actNw =
+                connectivityManager.getNetworkCapabilities(networkCapabilities)
+                    ?: return false
+        } else {
+            val activeInfo = connectivityManager.activeNetworkInfo
+                ?: throw VpnNetworkException("No DNS Server");
+            val ni: NetworkInfo = connectivityManager.getNetworkInfo(network)!!
+            if (!ni.isConnected || ni.type != activeInfo.type || ni.subtype != activeInfo.subtype)
+                return false
+
+        }
+
+        return true
+
+    }
 
 
+    internal class VpnNetworkException(s: String?) : Exception(s)
 }

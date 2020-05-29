@@ -40,6 +40,12 @@
         android:label="@string/action_dns_test"
         tools:layout="@layout/fragment_dns_test" />
 
+    <activity
+        android:id="@+id/nav_app_filter"
+        android:name="com.sudoajay.dnswidget.ui.appFilter.AppFilter"
+        android:label="@string/action_app_filter"
+        tools:layout="@layout/activity_app_filter" />
+
 
     <fragment
         android:id="@+id/nav_settings"

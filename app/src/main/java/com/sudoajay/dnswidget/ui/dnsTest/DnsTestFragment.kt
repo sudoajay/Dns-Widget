@@ -23,6 +23,7 @@ class DnsTestFragment : Fragment() {
             ViewModelProvider(this).get(DnsTestViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_dns_test, container, false)
         val textView: TextView = root.findViewById(R.id.text_slideshow)
+
         dnsTestViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })

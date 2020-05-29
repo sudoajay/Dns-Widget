@@ -64,6 +64,9 @@ class AdVpnService : VpnService(), Handler.Callback {
     }
 
     private var vpnThread: AdVpnThread? = AdVpnThread(this, Notify { value ->
+
+        Log.e("ShowSomething" , "$value --- VPN_MSG_STATUS_UPDATE ")
+
         handler.sendMessage(
             handler.obtainMessage(
                 VPN_MSG_STATUS_UPDATE,
@@ -163,7 +166,7 @@ class AdVpnService : VpnService(), Handler.Callback {
             IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
         )
 
-//       restartVpnThread();
+       restartVpnThread();
     }
 
 

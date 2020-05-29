@@ -12,12 +12,19 @@
     <!--Info Layout -->
     <color name="infoLayout_BackColor">#2546ABEB</color>
     <color name="tabBackgroundColor">#ffffff</color>
-
     <color name="background">#FAFAFA</color>
-
     <color name="textBlackColor">#FF686868</color>
-
     <color name="unCheckedColor">#979292</color>
+    
+<!--    Bottom Toolbar activity -->
+    <color name="bottom_toolbar_bg_color">#fff</color>
+    <color name="heading_text_color">#3A3838</color>
+
+    <color name="primary_text">@android:color/black</color>
+    <color name="secondary_text">#727272</color>
+
+    <color name="divider">#E6E6E6</color>
+
 
 
 

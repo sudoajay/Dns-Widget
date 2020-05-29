@@ -76,7 +76,7 @@ class SystemInfoDialog : DialogFragment(), View.OnClickListener {
         freeMemoryText.text = FileSize.convertIt(systemInfo.getHeapFreeSize())
         screenText.text =
             systemInfo.getScreenSize().heightPixels.toString() + " x " + systemInfo.getScreenSize().widthPixels.toString()
-        networkTypeText.text =Connectivity.getNetworkProvider(requireContext())
+        networkTypeText.text = Connectivity.getNetworkProvider(requireContext())
 
     }
 

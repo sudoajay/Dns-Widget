@@ -12,6 +12,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.nfc.Tag;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.sudoajay.dnswidget.BuildConfig;
@@ -31,6 +33,7 @@ import java.util.Set;
  * @author Julian Andres Klode
  */
 public class Configuration {
+    public static String TAG = "Configuration";
     public static final Gson GSON = new Gson();
     static final int VERSION = 1;
     /* Default tweak level */
@@ -201,9 +204,10 @@ public class Configuration {
          * @param notOnVpn Names of packages not to use the VPN
          */
         public void resolve(PackageManager pm, Set<String> onVpn, Set<String> notOnVpn) {
-            Set<String> webBrowserPackageNames = new HashSet<String>();
+            Set<String> webBrowserPackageNames = new HashSet<>();
             List<ResolveInfo> resolveInfoList = pm.queryIntentActivities(newBrowserIntent(), 0);
             for (ResolveInfo resolveInfo : resolveInfoList) {
+                Log.e(TAG,   " resolveInfo.activityInfo.packageName "+ resolveInfo.activityInfo.packageName);
                 webBrowserPackageNames.add(resolveInfo.activityInfo.packageName);
             }
 
@@ -214,25 +218,37 @@ public class Configuration {
             webBrowserPackageNames.add("com.google.android.gsf");
 
             for (ApplicationInfo applicationInfo : pm.getInstalledApplications(0)) {
+
                 // We need to always keep ourselves using the VPN, otherwise our
                 // watchdog does not work.
                 if (applicationInfo.packageName.equals(BuildConfig.APPLICATION_ID)) {
+                    Log.e(TAG,   "   onVpn- BuildConfig.APPLICATION_ID   " + applicationInfo.packageName);
                     onVpn.add(applicationInfo.packageName);
                 } else if (itemsOnVpn.contains(applicationInfo.packageName)) {
+                    Log.e(TAG,   "   onVpn - itemsOnVpn " + applicationInfo.packageName);
                     onVpn.add(applicationInfo.packageName);
                 } else if (items.contains(applicationInfo.packageName)) {
+                    Log.e(TAG,   "   notOnVpn - items " + applicationInfo.packageName);
                     notOnVpn.add(applicationInfo.packageName);
                 } else if (defaultMode == DEFAULT_MODE_ON_VPN) {
+                    Log.e(TAG,   "   onVpn - DEFAULT_MODE_ON_VPN " + applicationInfo.packageName);
                     onVpn.add(applicationInfo.packageName);
                 } else if (defaultMode == DEFAULT_MODE_NOT_ON_VPN) {
+                    Log.e(TAG,   "   notOnVpn - DEFAULT_MODE_NOT_ON_VPN " + applicationInfo.packageName);
                     notOnVpn.add(applicationInfo.packageName);
                 } else if (defaultMode == DEFAULT_MODE_INTELLIGENT) {
-                    if (webBrowserPackageNames.contains(applicationInfo.packageName))
+                    if (webBrowserPackageNames.contains(applicationInfo.packageName)) {
+                        Log.e(TAG,   "   onVpn - webBrowserPackageNames " + applicationInfo.packageName);
                         onVpn.add(applicationInfo.packageName);
-                    else if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0)
+                    }
+                    else if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                        Log.e(TAG,   "   notOnVpn - ApplicationInfo.FLAG_SYSTEM " + applicationInfo.packageName);
                         notOnVpn.add(applicationInfo.packageName);
-                    else
+                    }
+                    else {
+                        Log.e(TAG,   "   onVpn - last " + applicationInfo.packageName);
                         onVpn.add(applicationInfo.packageName);
+                    }
                 }
             }
         }

@@ -16,11 +16,10 @@ package com.sudoajay.dnswidget.vpnClasses;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-
 import android.net.ConnectivityManager;
 import android.net.Network;
-import android.net.NetworkInfo;
 import android.net.VpnService;
+import android.nfc.Tag;
 import android.os.ParcelFileDescriptor;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -29,6 +28,8 @@ import android.system.StructPollfd;
 import android.util.Log;
 
 import com.sudoajay.dnswidget.MainActivity;
+import com.sudoajay.dnswidget.R;
+import com.sudoajay.dnswidget.helper.Connectivity;
 
 import org.pcap4j.packet.IpPacket;
 
@@ -49,6 +50,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 
@@ -91,20 +93,15 @@ class AdVpnThread implements Runnable, DnsPacketProxy.EventLoop {
     private static List<InetAddress> getDnsServers(Context context) throws VpnNetworkException {
         Set<InetAddress> known = new HashSet<>();
         List<InetAddress> out = new ArrayList<>();
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(VpnService.CONNECTIVITY_SERVICE);
-        // Seriously, Android? Seriously?
-        NetworkInfo activeInfo = cm.getActiveNetworkInfo();
-        if (activeInfo == null)
-            throw new VpnNetworkException("No DNS Server");
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(VpnService.CONNECTIVITY_SERVICE);
 
-        for (Network nw : cm.getAllNetworks()) {
-            NetworkInfo ni = cm.getNetworkInfo(nw);
-            if (ni == null || !ni.isConnected() || ni.getType() != activeInfo.getType()
-                    || ni.getSubtype() != activeInfo.getSubtype())
-                continue;
-            for (InetAddress address : cm.getLinkProperties(nw).getDnsServers()) {
-                if (known.add(address))
+        assert connectivityManager != null;
+        for (Network nw : connectivityManager.getAllNetworks()) {
+                for (InetAddress address : Objects.requireNonNull(connectivityManager.getLinkProperties(nw)).getDnsServers()) {
+                if (known.add(address)) {
+                    Log.e(TAG, address + " -- address");
                     out.add(address);
+                }
             }
         }
         return out;
@@ -148,7 +145,8 @@ class AdVpnThread implements Runnable, DnsPacketProxy.EventLoop {
         }
 
         if (notify != null) {
-            notify.run(AdVpnService.VPN_STATUS_STARTING);
+            Log.e(TAG, "VPN_STATUS_RUNNING");
+            notify.run(AdVpnService.VPN_STATUS_RUNNING);
         }
 
         int retryTimeout = MIN_RETRY_TIME;
@@ -160,7 +158,7 @@ class AdVpnThread implements Runnable, DnsPacketProxy.EventLoop {
                 // If the function returns, that means it was interrupted
                 runVpn();
 
-                Log.i(TAG, "Told to stop");
+                Log.i(TAG, "Told to stop ---  VPN_STATUS_STOPPING");
                 notify.run(AdVpnService.VPN_STATUS_STOPPING);
                 break;
             } catch (InterruptedException e) {
@@ -204,12 +202,13 @@ class AdVpnThread implements Runnable, DnsPacketProxy.EventLoop {
     private void runVpn() throws InterruptedException, ErrnoException, IOException, VpnNetworkException {
         // Allocate the buffer for a single packet.
         byte[] packet = new byte[32767];
+        Log.e(TAG, "runVpn");
 
         // A pipe we can interrupt the poll() call with by closing the interruptFd end
         FileDescriptor[] pipes = Os.pipe();
         mInterruptFd = pipes[0];
         mBlockFd = pipes[1];
-
+        Log.e(TAG, Os.pipe().length + " ----" + Os.pipe().toString());
         // Authenticate and configure the virtual network interface.
         try (ParcelFileDescriptor pfd = configure()) {
             // Read and write views of the tun device
@@ -217,18 +216,193 @@ class AdVpnThread implements Runnable, DnsPacketProxy.EventLoop {
             FileOutputStream outFd = new FileOutputStream(pfd.getFileDescriptor());
 
             // Now we are connected. Set the flag and show the message.
-            if (notify != null)
+            if (notify != null) {
+                Log.e(TAG, "VPN_STATUS_RUNNING");
                 notify.run(AdVpnService.VPN_STATUS_RUNNING);
+            }
 
             // We keep forwarding packets till something goes wrong.
-            while (doOne(inputStream, outFd, packet))
-                ;
+            while (doOne(inputStream, outFd, packet)) ;
         } finally {
             mBlockFd = FileHelper.closeOrWarn(mBlockFd, TAG, "runVpn: Could not close blockFd");
         }
     }
 
+
+
+    private ParcelFileDescriptor configure() throws VpnNetworkException {
+        Log.i(TAG, " Call configure Method ");
+
+        Configuration config = FileHelper.loadCurrentSettings(vpnService);
+
+        // Get the current DNS servers before starting the VPN
+        List<InetAddress> dnsServers = getDnsServers(vpnService);
+        Log.i(TAG, "Got DNS servers = " + dnsServers);
+
+        // Configure a builder while parsing the parameters.
+        VpnService.Builder builder = vpnService.new Builder();
+
+        String format = null;
+
+        // Determine a prefix we can use. These are all reserved prefixes for example
+        // use, so it's possible they might be blocked.
+        for (String prefix : new String[]{"192.0.2", "198.51.100", "203.0.113"}) {
+            try {
+                builder.addAddress(prefix + ".1", 24);
+                Log.e("ShowSomething" , prefix + ".1" + " ---- 1");
+            } catch (IllegalArgumentException e) {
+                continue;
+            }
+
+            format = prefix + ".%d";
+            break;
+        }
+
+        // For fancy reasons, this is the 2001:db8::/120 subnet of the /32 subnet reserved for
+        // documentation purposes. We should do this differently. Anyone have a free /120 subnet
+        // for us to use?
+        byte[] ipv6Template = new byte[]{32, 1, 13, (byte) (184 & 0xFF), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+        if (hasIpV6Servers(config, dnsServers)) {
+            try {
+                InetAddress addr = Inet6Address.getByAddress(ipv6Template);
+                Log.d(TAG, "configure: Adding IPv6 address" + addr);
+                builder.addAddress(addr, 120);
+                Log.e("ShowSomething" , addr + " --- 2");
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                ipv6Template = null;
+            }
+        } else {
+            ipv6Template = null;
+        }
+
+        if (format == null) {
+            Log.w(TAG, "configure: Could not find a prefix to use, directly using DNS servers");
+            builder.addAddress("192.168.50.1", 24);
+            Log.e("ShowSomething" , "192.168.50.1 " + " --- 3 ");
+        }
+
+        // Add configured DNS servers
+        upstreamDnsServers.clear();
+        if (config.dnsServers.enabled) {
+            for (Configuration.Item item : config.dnsServers.items) {
+                if (item.state == Configuration.Item.STATE_ALLOW) {
+                    try {
+                        Log.e("ShowSomething", item + " ---- custom dns   " + InetAddress.getByName(item.location).toString());
+                        newDNSServer(builder, format, ipv6Template, InetAddress.getByName(item.location));
+                    } catch (Exception e) {
+                        Log.e(TAG, "configure: Cannot add custom DNS server", e);
+                    }
+                }
+            }
+        }
+        // Add all knows DNS servers
+        for (InetAddress addr : dnsServers) {
+            try {
+                Log.e("ShowSomething", addr + " ---- dns server  " );
+                newDNSServer(builder, format, ipv6Template, addr);
+            } catch (Exception e) {
+                Log.e(TAG, "configure: Cannot add server:", e);
+            }
+        }
+
+        builder.setBlocking(true);
+
+        // Allow applications to bypass the VPN
+        builder.allowBypass();
+
+        // Explictly allow both families, so we do not block
+        // traffic for ones without DNS servers (issue 129).
+        builder.allowFamily(OsConstants.AF_INET);
+        builder.allowFamily(OsConstants.AF_INET6);
+
+        configurePackages(builder, config);
+
+        // Create a new interface using the builder and save the parameters.
+        ParcelFileDescriptor pfd = builder
+                .setSession(vpnService.getString(R.string.app_name))
+                .setConfigureIntent(
+                        PendingIntent.getActivity(vpnService, 1, new Intent(vpnService, MainActivity.class),
+                                PendingIntent.FLAG_CANCEL_CURRENT)).establish();
+        Log.i(TAG, "Configured");
+        return pfd;
+    }
+    boolean hasIpV6Servers(Configuration config, List<InetAddress> dnsServers) {
+        if (!config.ipV6Support)
+            return false;
+
+        if (config.dnsServers.enabled) {
+            for (Configuration.Item item : config.dnsServers.items) {
+                if (item.state == Configuration.Item.STATE_ALLOW && item.location.contains(":"))
+                    return true;
+            }
+        }
+        for (InetAddress inetAddress : dnsServers) {
+            if (inetAddress instanceof Inet6Address)
+                return true;
+        }
+
+        return false;
+    }
+
+    void newDNSServer(VpnService.Builder builder, String format, byte[] ipv6Template, InetAddress addr) throws UnknownHostException {
+        // Optimally we'd allow either one, but the forwarder checks if upstream size is empty, so
+        // we really need to acquire both an ipv6 and an ipv4 subnet.
+        if (addr instanceof Inet6Address && ipv6Template == null) {
+            Log.i(TAG, "newDNSServer: Ignoring DNS server " + addr);
+        } else if (addr instanceof Inet4Address && format == null) {
+            Log.i(TAG, "newDNSServer: Ignoring DNS server " + addr);
+        } else if (addr instanceof Inet4Address) {
+            upstreamDnsServers.add(addr);
+            String alias = String.format(format, upstreamDnsServers.size() + 1);
+            Log.i(TAG, "configure: Adding DNS Server " + addr + " as " + alias);
+            builder.addDnsServer(alias);
+            builder.addRoute(alias, 32);
+            Log.e("ShowSomething" , alias + " ---- 4 " + " Here " + addr);
+
+
+            vpnWatchDog.setTarget(InetAddress.getByName(alias));
+        } else if (addr instanceof Inet6Address) {
+            upstreamDnsServers.add(addr);
+            ipv6Template[ipv6Template.length - 1] = (byte) (upstreamDnsServers.size() + 1);
+            InetAddress i6addr = Inet6Address.getByAddress(ipv6Template);
+            Log.i(TAG, "configure: Adding DNS Server " + addr + " as " + i6addr);
+            builder.addDnsServer(i6addr);
+            Log.e("ShowSomething" , i6addr + " ---- 5 " + " Here " + addr);
+            vpnWatchDog.setTarget(i6addr);
+        }
+    }
+    void configurePackages(VpnService.Builder builder, Configuration config) {
+        Set<String> allowOnVpn = new HashSet<>();
+        Set<String> doNotAllowOnVpn = new HashSet<>();
+
+        config.whitelist.resolve(vpnService.getPackageManager(), allowOnVpn, doNotAllowOnVpn);
+
+        if (config.whitelist.defaultMode == Configuration.Whitelist.DEFAULT_MODE_NOT_ON_VPN) {
+            for (String app : allowOnVpn) {
+                try {
+                    Log.d(TAG, "configure: Allowing " + app + " to use the DNS VPN");
+                    builder.addAllowedApplication(app);
+                } catch (Exception e) {
+                    Log.w(TAG, "configure: Cannot disallow", e);
+                }
+            }
+        } else {
+            for (String app : doNotAllowOnVpn) {
+                try {
+                    Log.d(TAG, "configure: Disallowing " + app + " from using the DNS VPN");
+                    builder.addDisallowedApplication(app);
+                } catch (Exception e) {
+                    Log.w(TAG, "configure: Cannot disallow", e);
+                }
+            }
+        }
+    }
+
     private boolean doOne(FileInputStream inputStream, FileOutputStream outFd, byte[] packet) throws IOException, ErrnoException, InterruptedException, VpnNetworkException {
+        Log.e(TAG, outFd.getFD().toString() + " --- " + inputStream.getChannel().toString());
         StructPollfd deviceFd = new StructPollfd();
         deviceFd.fd = inputStream.getFD();
         deviceFd.events = (short) OsConstants.POLLIN;
@@ -361,178 +535,7 @@ class AdVpnThread implements Runnable, DnsPacketProxy.EventLoop {
         deviceWrites.add(ipOutPacket.getRawData());
     }
 
-    void newDNSServer(VpnService.Builder builder, String format, byte[] ipv6Template, InetAddress addr) throws UnknownHostException {
-        // Optimally we'd allow either one, but the forwarder checks if upstream size is empty, so
-        // we really need to acquire both an ipv6 and an ipv4 subnet.
-        if (addr instanceof Inet6Address && ipv6Template == null) {
-            Log.i(TAG, "newDNSServer: Ignoring DNS server " + addr);
-        } else if (addr instanceof Inet4Address && format == null) {
-            Log.i(TAG, "newDNSServer: Ignoring DNS server " + addr);
-        } else if (addr instanceof Inet4Address) {
-            upstreamDnsServers.add(addr);
-            String alias = String.format(format, upstreamDnsServers.size() + 1);
-            Log.i(TAG, "configure: Adding DNS Server " + addr + " as " + alias);
-            builder.addDnsServer(alias);
-            builder.addRoute(alias, 32);
-            Log.e("ShowSomething" , alias + " ---- 4 " + " Here " + addr);
 
-
-            vpnWatchDog.setTarget(InetAddress.getByName(alias));
-        } else if (addr instanceof Inet6Address) {
-            upstreamDnsServers.add(addr);
-            ipv6Template[ipv6Template.length - 1] = (byte) (upstreamDnsServers.size() + 1);
-            InetAddress i6addr = Inet6Address.getByAddress(ipv6Template);
-            Log.i(TAG, "configure: Adding DNS Server " + addr + " as " + i6addr);
-            builder.addDnsServer(i6addr);
-            Log.e("ShowSomething" , i6addr + " ---- 5 " + " Here " + addr);
-            vpnWatchDog.setTarget(i6addr);
-        }
-    }
-
-    void configurePackages(VpnService.Builder builder, Configuration config) {
-        Set<String> allowOnVpn = new HashSet<>();
-        Set<String> doNotAllowOnVpn = new HashSet<>();
-
-        config.whitelist.resolve(vpnService.getPackageManager(), allowOnVpn, doNotAllowOnVpn);
-
-        if (config.whitelist.defaultMode == Configuration.Whitelist.DEFAULT_MODE_NOT_ON_VPN) {
-            for (String app : allowOnVpn) {
-                try {
-                    Log.d(TAG, "configure: Allowing " + app + " to use the DNS VPN");
-                    builder.addAllowedApplication(app);
-                } catch (Exception e) {
-                    Log.w(TAG, "configure: Cannot disallow", e);
-                }
-            }
-        } else {
-            for (String app : doNotAllowOnVpn) {
-                try {
-                    Log.d(TAG, "configure: Disallowing " + app + " from using the DNS VPN");
-                    builder.addDisallowedApplication(app);
-                } catch (Exception e) {
-                    Log.w(TAG, "configure: Cannot disallow", e);
-                }
-            }
-        }
-    }
-
-    private ParcelFileDescriptor configure() throws VpnNetworkException {
-        Log.i(TAG, "Configuring" + this);
-
-        Configuration config = FileHelper.loadCurrentSettings(vpnService);
-
-        // Get the current DNS servers before starting the VPN
-        List<InetAddress> dnsServers = getDnsServers(vpnService);
-        Log.i(TAG, "Got DNS servers = " + dnsServers);
-
-        // Configure a builder while parsing the parameters.
-        VpnService.Builder builder = vpnService.new Builder();
-
-        String format = null;
-
-        // Determine a prefix we can use. These are all reserved prefixes for example
-        // use, so it's possible they might be blocked.
-        for (String prefix : new String[]{"192.0.2", "198.51.100", "203.0.113"}) {
-            try {
-                builder.addAddress(prefix + ".1", 24);
-                Log.e("ShowSomething" , prefix + ".1" + " ---- 1");
-            } catch (IllegalArgumentException e) {
-                continue;
-            }
-
-            format = prefix + ".%d";
-            break;
-        }
-
-        // For fancy reasons, this is the 2001:db8::/120 subnet of the /32 subnet reserved for
-        // documentation purposes. We should do this differently. Anyone have a free /120 subnet
-        // for us to use?
-        byte[] ipv6Template = new byte[]{32, 1, 13, (byte) (184 & 0xFF), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-        if (hasIpV6Servers(config, dnsServers)) {
-            try {
-                InetAddress addr = Inet6Address.getByAddress(ipv6Template);
-                Log.d(TAG, "configure: Adding IPv6 address" + addr);
-                builder.addAddress(addr, 120);
-                Log.e("ShowSomething" , addr + " --- 2");
-            } catch (Exception e) {
-                e.printStackTrace();
-
-                ipv6Template = null;
-            }
-        } else {
-            ipv6Template = null;
-        }
-
-        if (format == null) {
-            Log.w(TAG, "configure: Could not find a prefix to use, directly using DNS servers");
-            builder.addAddress("192.168.50.1", 24);
-            Log.e("ShowSomething" , "192.168.50.1 " + " --- 3 ");
-        }
-
-        // Add configured DNS servers
-        upstreamDnsServers.clear();
-        if (config.dnsServers.enabled) {
-            for (Configuration.Item item : config.dnsServers.items) {
-                if (item.state == item.STATE_ALLOW) {
-                    try {
-                        Log.e("ShowSomething", item + " ---- custom dns   " + InetAddress.getByName(item.location).toString());
-                        newDNSServer(builder, format, ipv6Template, InetAddress.getByName(item.location));
-                    } catch (Exception e) {
-                        Log.e(TAG, "configure: Cannot add custom DNS server", e);
-                    }
-                }
-            }
-        }
-        // Add all knows DNS servers
-        for (InetAddress addr : dnsServers) {
-            try {
-                Log.e("ShowSomething", addr + " ---- dns server  " );
-                newDNSServer(builder, format, ipv6Template, addr);
-            } catch (Exception e) {
-                Log.e(TAG, "configure: Cannot add server:", e);
-            }
-        }
-
-        builder.setBlocking(true);
-
-        // Allow applications to bypass the VPN
-        builder.allowBypass();
-
-        // Explictly allow both families, so we do not block
-        // traffic for ones without DNS servers (issue 129).
-        builder.allowFamily(OsConstants.AF_INET);
-        builder.allowFamily(OsConstants.AF_INET6);
-
-        configurePackages(builder, config);
-
-        // Create a new interface using the builder and save the parameters.
-        ParcelFileDescriptor pfd = builder
-                .setSession("DNS66")
-                .setConfigureIntent(
-                        PendingIntent.getActivity(vpnService, 1, new Intent(vpnService, MainActivity.class),
-                                PendingIntent.FLAG_CANCEL_CURRENT)).establish();
-        Log.i(TAG, "Configured");
-        return pfd;
-    }
-
-    boolean hasIpV6Servers(Configuration config, List<InetAddress> dnsServers) {
-        if (!config.ipV6Support)
-            return false;
-
-        if (config.dnsServers.enabled) {
-            for (Configuration.Item item : config.dnsServers.items) {
-                if (item.state == Configuration.Item.STATE_ALLOW && item.location.contains(":"))
-                    return true;
-            }
-        }
-        for (InetAddress inetAddress : dnsServers) {
-            if (inetAddress instanceof Inet6Address)
-                return true;
-        }
-
-        return false;
-    }
 
     public interface Notify {
         void run(int value);

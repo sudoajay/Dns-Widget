@@ -12,12 +12,17 @@
     <string name="action_home">Home</string>
     <string name="action_custom_dns">Custom DNS</string>
     <string name="action_dns_test">DNS Test</string>
+    <string name="action_app_filter">App Filter</string>
     <string name="action_share">Share</string>
     <string name="action_rate_us">Rate-Us</string>
     <string name="action_more_app">More App</string>
     <string name="action_send_feedback">Send Feedback</string>
     <string name="action_setting">Setting</string>
     <string name="action_about">About</string>
+
+    <!--    Bottom Toolbar-->
+    <string name="action_search">Search</string>
+    <string name="action_more_option">More Option</string>
 
     <!--share app-->
     <string name="shareMessage">Hey, check This App which helps you to Delete Duplicate and Unnecessary Data from the phone -</string>
@@ -56,7 +61,7 @@
     <string name="screen_Text">Screen Size : </string>
     <string name="network_type_text">Network Type : </string>
 
-<!--    Home Class-->
+    <!--    Home Class-->
     <string name="choose_a_dns_provider_text">Choose a DNS provider</string>
     <string name="dns1_text">DNS 1</string>
     <string name="dns2_text">DNS 2 (Optional)</string>
@@ -69,7 +74,7 @@
     <string name="add_custom_dns_text">Add Custom DNS</string>
 
 
-<!--    Bottom Sheet dialog-->
+    <!--    Bottom Sheet dialog-->
     <string name="edit_text">Edit</string>
     <string name="delete_text">Delete</string>
     <string name="copy_text">Copy</string>
@@ -77,14 +82,14 @@
     <string name="could_not_configure_vpn_service">Could not configure VPN service - Check if you use an always on VPN service like WiFi Assistant and disable it</string>
 
 
-<!--    DNS Notification-->
+    <!--    DNS Notification-->
     <string name="dns_channel_id">DNS Notification</string>
     <string name="notification_action_pause">Pause</string>
     <string name="notification_action_turn_off">Turn Off</string>
 
 
-<!--    Modify Strings-->
-<!--    Ad Vpn service vpnStatusToTextId -->
+    <!--    Modify Strings-->
+    <!--    Ad Vpn service vpnStatusToTextId -->
     <string name="notification_starting">Starting</string>
     <string name="notification_running">Active</string>
     <string name="notification_stopping">Stopping</string>
@@ -109,20 +114,20 @@
     <string name="notification_paused_text">Tap to resume.</string>
 
 
-<!--    Filer Helper-->
+    <!--    Filer Helper-->
     <string name="cannot_restore_previous_config">Cannot restore previous configuration: %s</string>
     <string name="cannot_read_config">Cannot read configuration: %s</string>
     <string name="cannot_load_default_config">Cannot read default settings: %s - This should not happen</string>
     <string name="cannot_write_config">Cannot write configuration: %s</string>
 
-<!--    Rule Database Update-->
+    <!--    Rule Database Update-->
     <string name="update_incomplete">Update incomplete</string>
     <string name="update_incomplete_description">Some host files could not be downloaded. If files were previously downloaded, old versions will continue to be used.</string>
     <string name="updating_hostfiles">Updating hostfiles</string>
     <string name="updating_n_host_files">Updating %1$d host files</string>
     <string name="could_not_update_all_hosts">Could not update all hostfiles</string>
 
-<!--    Rule Database Runnable-->
+    <!--    Rule Database Runnable-->
     <string name="invalid_url_s">Invalid URL: %1$s</string>
     <string name="file_not_found">File not found</string>
     <string name="unknown_error_s">Unexpected error: %1$s</string>
@@ -131,7 +136,7 @@
     <string name="permission_denied">Permission denied</string>
     <string name="host_update_error_item">Error %1$d: %2$s</string>
 
-<!--    status Dns -->
+    <!--    status Dns -->
     <string name="not_connected_text">Not Connected</string>
     <string name="connected_progress_text">Connected…</string>
     <string name="connected_text">Connected</string>
@@ -139,11 +144,42 @@
     <string name="disconnected_text">Disconnected</string>
 
 
-<!--    Network Provider-->
+    <!--    Network Provider-->
     <string name="wifi_text">Wifi</string>
     <string name="mobile_data_text">Mobile Data</string>
     <string name="vpn_text">Vpn</string>
     <string name="no_internet_text">No Internet</string>
+
+
+<!--    Bottom sheet dialog-->
+    <string name="title_menu_order_by">Order by</string>
+    <string name="menu_alphabetical_order">Alphabetical order</string>
+    <string name="menu_installation_date">Installation date</string>
+    <string name="title_menu_show">Show</string>
+    <string name="menu_system_apps">System apps</string>
+    <string name="menu_user_apps">User apps</string>
+
+    <string name="title_menu_select_option">Select Option</string>
+    <string name="menu_all_apps">All apps</string>
+    <string name="menu_no_apps">No apps</string>
+    <string name="title_menu_more_option">Multi - Select</string>
+    <string name="menu_only_system_apps">Only system apps</string>
+    <string name="menu_only_user_apps">Only user apps</string>
+    <string name="menu_system_app_except_browser">System app except browser</string>
+    <string name="menu_custom_app">Custom apps</string>
+    <string name="page_refreshed_text">Page Refresh</string>
+
+<!--    Information text-->
+    <string name="at_least_one_item_text">You Can\'t Hide Both Item </string>
+
+
+<!--    Changes Type in Filter-->
+    <string name="filter_changes_text">filterChanges</string>
+    <string name="selected_app_text">Selected App</string>
+
+
+
+
 
 
 </resources>

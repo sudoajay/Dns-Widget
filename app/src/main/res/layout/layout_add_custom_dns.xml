@@ -238,7 +238,7 @@
                 android:layout_marginRight="8dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/ic_close_window"
+                app:srcCompat="@drawable/ic_close_window"
                 tools:ignore="ContentDescription,RtlHardcoded" />
 
         </FrameLayout>
