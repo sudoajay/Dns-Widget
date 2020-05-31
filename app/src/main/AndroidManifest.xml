@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.customDns.CustomDns"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -30,9 +30,9 @@
             android:name=".ui.sendFeedback.SendFeedback"
             android:theme="@style/AppTheme.NoActionBar" />
 
-<!--        <activity android:name=".ui.customDns.CustomDns"-->
-<!--            android:theme="@style/AppTheme.NoActionBar">-->
-<!--        </activity>-->
+        <activity android:name=".ui.customDns.CustomDns"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".ui.appFilter.AppFilter"
             android:theme="@style/AppTheme.NoActionBar" />

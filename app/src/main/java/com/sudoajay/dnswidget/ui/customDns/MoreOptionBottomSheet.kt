@@ -9,7 +9,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.LayoutMoreoptionBottomsheetBinding
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
-import kotlinx.android.synthetic.main.fragment_custom_dns.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
