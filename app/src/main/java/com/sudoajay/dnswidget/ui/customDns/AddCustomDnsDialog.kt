@@ -8,55 +8,63 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isNotEmpty
 import androidx.core.widget.CompoundButtonCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.databinding.LayoutAddCustomDnsBinding
+import com.sudoajay.dnswidget.ui.customDns.database.Dns
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
-class AddCustomDnsDialog : DialogFragment(), View.OnClickListener {
-    private lateinit var rootview: View
+class AddCustomDnsDialog(private var customDnsViewModel: CustomDnsViewModel) : DialogFragment() {
+    private lateinit var binding: LayoutAddCustomDnsBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        rootview = inflater.inflate(R.layout.layout_add_custom_dns, container, false)
+
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.layout_add_custom_dns,
+            null,
+            false
+        )
+        binding.dialog = this
+
 
         mainFun()
 
-        return rootview
+
+        return binding.root
     }
 
     private fun mainFun() { // Reference Object
 
         // setup dialog box
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        rootview.findViewById<ConstraintLayout>(R.id.constraintLayout).setBackgroundColor(
+
+        binding.constraintLayout.setBackgroundColor(
             ContextCompat.getColor(
                 requireContext(),
                 R.color.tabBackgroundColor
             )
         )
 
-
-        rootview.findViewById<ImageView>(R.id.close_ImageView).setOnClickListener(this)
-        rootview.findViewById<Button>(R.id.cancel_Button).setOnClickListener(this)
-        rootview.findViewById<Button>(R.id.ok_Button).setOnClickListener(this)
-
-
-        val dns1TextInputLayout: TextInputLayout = rootview.findViewById(R.id.dns1_TextInputLayout)
-        val dns2TextInputLayout: TextInputLayout = rootview.findViewById(R.id.dns2_TextInputLayout)
-        val dns3TextInputLayout: TextInputLayout = rootview.findViewById(R.id.dns3_TextInputLayout)
-        val dns4TextInputLayout: TextInputLayout = rootview.findViewById(R.id.dns4_TextInputLayout)
-        val useDns4CheckBox: CheckBox = rootview.findViewById(R.id.useDns4_checkBox)
-        val useDns6CheckBox: CheckBox = rootview.findViewById(R.id.useDns6_checkBox)
+        val dns1TextInputLayout: TextInputLayout = binding.dns1TextInputLayout
+        val dns2TextInputLayout: TextInputLayout = binding.dns2TextInputLayout
+        val dns3TextInputLayout: TextInputLayout = binding.dns3TextInputLayout
+        val dns4TextInputLayout: TextInputLayout = binding.dns4TextInputLayout
+        val useDns4CheckBox: CheckBox = binding.useDns4CheckBox
+        val useDns6CheckBox: CheckBox = binding.useDns6CheckBox
 
         useDns4CheckBox
             .setOnCheckedChangeListener { _, isChecked ->
@@ -115,9 +123,6 @@ class AddCustomDnsDialog : DialogFragment(), View.OnClickListener {
 
             }
 
-
-
-
     }
 
     override fun onStart() { // This MUST be called first! Otherwise the view tweaking will not be present in the displayed Dialog (most likely overriden)
@@ -148,17 +153,36 @@ class AddCustomDnsDialog : DialogFragment(), View.OnClickListener {
         current!!.requestLayout()
     }
 
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            R.id.close_ImageView, R.id.cancel_Button -> dismiss()
-            R.id.ok_Button -> {
-                dismiss()
+
+    fun saveDnsDismiss() {
+        if (binding.nameTextInputLayout.editText!!.text.isNotEmpty() && (binding.dns1TextInputLayout.editText!!.text.isNotEmpty() || binding.dns3TextInputLayout.editText!!.text.isNotEmpty())) {
+            CoroutineScope(Dispatchers.IO).launch {
+                withContext(Dispatchers.IO) {
+                    customDnsViewModel.dnsRepository.insert(
+                        Dns(
+                            null,
+                            binding.nameTextInputLayout.editText!!.text.toString(),
+                            setText(binding.dns1TextInputLayout),
+                            setText(binding.dns2TextInputLayout),
+                            setText(binding.dns3TextInputLayout),
+                            setText(binding.dns4TextInputLayout),
+                            "None",
+                            custom = true
+                        )
+                    )
+                }
+
             }
 
-
+            customDnsViewModel.filterChanges()
+            dismiss()
         }
-
     }
 
+    private fun setText(textInputLayout: TextInputLayout): String {
+        return if (textInputLayout.isNotEmpty()) textInputLayout.editText!!.text.toString() else requireContext().getString(
+            R.string.unspecified_text
+        )
+    }
 
 }

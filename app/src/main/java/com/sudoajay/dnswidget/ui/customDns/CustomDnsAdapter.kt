@@ -1,25 +1,37 @@
 package com.sudoajay.dnswidget.ui.customDns
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.dnswidget.R
-import kotlinx.android.synthetic.main.layout_custom_dns_item.view.*
+import com.sudoajay.dnswidget.databinding.LayoutCustomDnsItemBinding
+import com.sudoajay.dnswidget.ui.customDns.database.Dns
 
-class CustomDnsAdapter(private val items: ArrayList<String>, private val customDnsFragment:CustomDnsFragment) : RecyclerView.Adapter<CustomDnsAdapter.MyViewHolder>() {
+
+class CustomDnsAdapter(private val items: List<Dns> , private var customDns: CustomDns) :
+    RecyclerView.Adapter<CustomDnsAdapter.MyViewHolder>() {
 
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        // each data item is just a string in this case
-        val tvAnimalType: TextView = view.tv_animal_type
+    class MyViewHolder(
+       layoutCustomDnsItemBinding: LayoutCustomDnsItemBinding
+    ) :
+        RecyclerView.ViewHolder(layoutCustomDnsItemBinding.root) {
+
+        var dnsNameTextView = layoutCustomDnsItemBinding.dnsNameTextView
+        var dnsBox = layoutCustomDnsItemBinding.dnsConstraintLayout
+
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(customDnsFragment.requireContext()).inflate(R.layout.layout_custom_dns_item, parent, false))
+        val binding: LayoutCustomDnsItemBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.layout_custom_dns_item, parent, false
+        )
+        return MyViewHolder(binding)
+
+
     }
 
     override fun getItemCount(): Int {
@@ -27,11 +39,18 @@ class CustomDnsAdapter(private val items: ArrayList<String>, private val customD
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.tvAnimalType.text = items[position]
-        holder.tvAnimalType.setOnClickListener{
-            customDnsFragment.showBottomShow()
+        val dns = items[position]
+        holder.dnsNameTextView.text =
+            if (dns.filter == "None") dns.dnsName else dns.dnsName + " (" + dns.filter + ")"
+
+        holder.dnsBox.setOnClickListener {
+            customDns.showMoreOption(dns)
         }
+
+
     }
+
+
 
 }
 

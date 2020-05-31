@@ -4,7 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "app_table")
+
+@Entity(tableName = "AppTable")
 class App(
     @PrimaryKey(autoGenerate = true ) var id: Long?,
     @ColumnInfo(name = "Name") val name: String,

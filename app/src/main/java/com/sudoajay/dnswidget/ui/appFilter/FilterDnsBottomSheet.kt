@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.dnswidget.R
-import com.sudoajay.dnswidget.databinding.LayoutFilterBottomSheetBinding
+import com.sudoajay.dnswidget.databinding.LayoutFilterAppBottomSheetBinding
 import com.sudoajay.dnswidget.helper.CustomToast
 
 
-class FilterBottomSheet : BottomSheetDialogFragment() {
+class FilterDnsBottomSheet : BottomSheetDialogFragment() {
 
-    private var binding: LayoutFilterBottomSheetBinding? = null
     private var isSelectedBottomSheetFragment: IsSelectedBottomSheetFragment? = null
 
     interface IsSelectedBottomSheetFragment {
@@ -27,12 +25,19 @@ class FilterBottomSheet : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.layout_filter_bottom_sheet, container, false)
-        binding!!.bottomSheet = this
+
+        val myDrawerView =
+            layoutInflater.inflate(R.layout.layout_filter_app_bottom_sheet, null)
+        val binding = LayoutFilterAppBottomSheetBinding.inflate(
+            layoutInflater,
+            myDrawerView as ViewGroup,
+            false
+        )
+        binding.bottomSheet = this
+
         isSelectedBottomSheetFragment = activity as IsSelectedBottomSheetFragment?
 
-        return binding!!.root
+        return binding.root
     }
 
 

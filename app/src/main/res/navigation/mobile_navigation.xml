@@ -27,11 +27,11 @@
 
     </fragment>
 
-    <fragment
+    <activity
         android:id="@+id/nav_custom_dns"
-        android:name="com.sudoajay.dnswidget.ui.customDns.CustomDnsFragment"
+        android:name="com.sudoajay.dnswidget.ui.customDns.CustomDns"
         android:label="@string/action_custom_dns"
-        tools:layout="@layout/fragment_custom_dns"/>
+        tools:layout="@layout/activity_custom_dns" />
 
 
     <fragment

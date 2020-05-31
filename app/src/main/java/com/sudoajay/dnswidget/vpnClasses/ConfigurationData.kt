@@ -2,6 +2,7 @@ package com.sudoajay.dnswidget.vpnClasses
 
 import android.content.Context
 import com.sudoajay.dnswidget.helper.DnsDatabase
+import com.sudoajay.dnswidget.ui.customDns.database.Dns
 
 class ConfigurationData(context: Context) {
 
@@ -12,6 +13,8 @@ class ConfigurationData(context: Context) {
     }
 
     private fun fillDefaultData(){
+
+
 
 //      Google Dns Data
         dnsDatabase.fillIt("Google DNS" , "8.8.8.8",

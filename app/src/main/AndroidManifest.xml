@@ -14,11 +14,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.customDns.CustomDns"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -31,8 +30,12 @@
             android:name=".ui.sendFeedback.SendFeedback"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".ui.appFilter.AppFilter"
-            android:theme="@style/AppTheme.NoActionBar"/>
+<!--        <activity android:name=".ui.customDns.CustomDns"-->
+<!--            android:theme="@style/AppTheme.NoActionBar">-->
+<!--        </activity>-->
+        <activity
+            android:name=".ui.appFilter.AppFilter"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="preloaded_fonts"

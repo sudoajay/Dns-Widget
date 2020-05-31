@@ -12,6 +12,7 @@ import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class AppFilterViewModel(application: Application) : AndroidViewModel(application) {
@@ -24,7 +25,8 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
     private var appDao: AppDao = AppRoomDatabase.getDatabase(application, viewModelScope).appDao()
 
 
-    private var headingText: MutableLiveData<String>? = null
+    val headingText: String = application.getString(R.string.action_app_filter)
+
     private var hideProgress: MutableLiveData<Boolean>? = null
 
     private val filterChanges: MutableLiveData<String> = MutableLiveData()
@@ -54,8 +56,7 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun filterChanges(filter: String = _application.getString(R.string.filter_changes_text)) {
         filterChanges.value = filter
-        getHideProgress()
-        hideProgress!!.value = false
+
     }
 
     private fun setDefaultValue() {
@@ -71,12 +72,16 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun databaseConfiguration() {
         CoroutineScope(IO).launch {
-            loadApps.searchInstalledApps()
+            withContext(IO) {
+                loadApps.searchInstalledApps()
+            }
+            hideProgress!!.postValue(  false)
         }
 
     }
 
     fun onRefresh() {
+
         appList!!.value!!.dataSource.invalidate()
     }
 
@@ -86,19 +91,6 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
      */
     suspend fun insert(app: App) {
         appRepository.insert(app)
-    }
-
-    fun getHeadingText(): LiveData<String> {
-        if (headingText == null) {
-            headingText = MutableLiveData<String>()
-            loadHeadingText()
-        }
-        return headingText as MutableLiveData<String>
-    }
-
-    private fun loadHeadingText() {
-
-        headingText!!.value = _application.getString(R.string.action_app_filter)
     }
 
 
@@ -113,6 +105,8 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
     private fun loadHideProgress() {
         hideProgress!!.value = true
     }
+
+
 
 }
 

@@ -151,7 +151,7 @@
     <string name="no_internet_text">No Internet</string>
 
 
-<!--    Bottom sheet dialog-->
+    <!--    Bottom sheet dialog-->
     <string name="title_menu_order_by">Order by</string>
     <string name="menu_alphabetical_order">Alphabetical order</string>
     <string name="menu_installation_date">Installation date</string>
@@ -169,17 +169,21 @@
     <string name="menu_custom_app">Custom apps</string>
     <string name="page_refreshed_text">Page Refresh</string>
 
-<!--    Information text-->
+    <string name="menu_default_dns">Default DNS</string>
+    <string name="menu_custom_dns">Custom DNS</string>
+
+
+    <!--    Information text-->
     <string name="at_least_one_item_text">You Can\'t Hide Both Item </string>
 
 
-<!--    Changes Type in Filter-->
+    <!--    Changes Type in Filter-->
     <string name="filter_changes_text">filterChanges</string>
     <string name="selected_app_text">Selected App</string>
+    <string name="unspecified_text">Unspecified</string>
 
-
-
-
+<!--    Data base-->
+    <string name="none_text">None</string>
 
 
 </resources>

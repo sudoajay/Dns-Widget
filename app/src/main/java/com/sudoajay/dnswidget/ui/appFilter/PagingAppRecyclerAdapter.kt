@@ -1,22 +1,29 @@
 package com.sudoajay.dnswidget.ui.appFilter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.databinding.RecyclerAppItemBinding
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.App
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class PagingAppRecyclerAdapter(context: Context) :
+
+class PagingAppRecyclerAdapter(context: Context, private var appFilter: AppFilter) :
     PagedListAdapter<App, PagingAppRecyclerAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
 
@@ -24,20 +31,22 @@ class PagingAppRecyclerAdapter(context: Context) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_app_item, parent, false)
-
-        return MyViewHolder(view)
-    }
-
-
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val icon: ImageView = itemView.findViewById(R.id.imageView)
-        val title: TextView = itemView.findViewById(R.id.title_TextView)
-        val appPackage: TextView = itemView.findViewById(R.id.appPackage_TextView)
-        val checkBox: CheckBox = itemView.findViewById(R.id.checkbox)
+        val recyclerAppItemBinding: RecyclerAppItemBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.recycler_app_item, parent, false
+        )
+        return MyViewHolder(recyclerAppItemBinding)
 
     }
+
+    class MyViewHolder(recyclerAppItemBinding: RecyclerAppItemBinding) :
+        RecyclerView.ViewHolder(recyclerAppItemBinding.root) {
+        val icon: ImageView = recyclerAppItemBinding.imageView
+        val title: TextView = recyclerAppItemBinding.titleTextView
+        val appPackage: TextView = recyclerAppItemBinding.appPackageTextView
+        val checkBox: CheckBox = recyclerAppItemBinding.checkbox
+    }
+
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val app = getItem(position)
@@ -46,9 +55,16 @@ class PagingAppRecyclerAdapter(context: Context) :
         holder.appPackage.text = app.packageName
         holder.icon.setImageDrawable(getApplicationsIcon(app.icon))
 
-        holder.checkBox.setOnCheckedChangeListener { _: CompoundButton?, _: Boolean ->
-//            app.isSelected = isChecked
+        holder.checkBox.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                appFilter.appFilterViewModel.appRepository.updateSelectedApp(
+                    (it as CompoundButton).isChecked,
+                    app.packageName
+                )
+            }
         }
+
+
         holder.checkBox.isChecked = app.isSelected
     }
 
@@ -57,11 +73,17 @@ class PagingAppRecyclerAdapter(context: Context) :
             DiffUtil.ItemCallback<App>() {
             // Concert details may have changed if reloaded from the database,
             // but ID is fixed.
-            override fun areItemsTheSame(oldConcert: App,
-                                         newConcert: App) = oldConcert.id == newConcert.id
+            override fun areItemsTheSame(
+                oldConcert: App,
+                newConcert: App
+            ) = oldConcert.id == newConcert.id
 
-            override fun areContentsTheSame(oldConcert: App,
-                                            newConcert: App) = oldConcert == newConcert
+            @SuppressLint("DiffUtilEquals")
+            override fun areContentsTheSame(
+                oldConcert: App,
+                newConcert: App
+            ): Boolean = oldConcert == newConcert
+
         }
     }
 

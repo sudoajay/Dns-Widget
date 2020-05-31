@@ -87,13 +87,13 @@ class AppRepository(private val application: Application, private val appDao: Ap
 
         when (selectedOption) {
             application.getString(R.string.menu_no_apps) ->
-                getId(1, SimpleSQLiteQuery("Select id From app_table Where Selected = '1'"))
+                getId(1, SimpleSQLiteQuery("Select id From AppTable Where Selected = '1'"))
             application.getString(R.string.menu_all_apps) ->
-                getId(2, SimpleSQLiteQuery("Select id From app_table Where Selected = '0'"))
+                getId(2, SimpleSQLiteQuery("Select id From AppTable Where Selected = '0'"))
             application.getString(R.string.menu_only_user_apps) ->
-                getId(3, SimpleSQLiteQuery("Select id From app_table Where User_App = '1'"))
+                getId(3, SimpleSQLiteQuery("Select id From AppTable Where User_App = '1'"))
             application.getString(R.string.menu_only_system_apps) ->
-                getId(4, SimpleSQLiteQuery("Select id From app_table Where System_App = '1'"))
+                getId(4, SimpleSQLiteQuery("Select id From AppTable Where System_App = '1'"))
             application.getString(R.string.menu_system_app_except_browser) -> {
                 getAppExceptBrowser()
                 getId(5, SimpleSQLiteQuery(""))
@@ -130,7 +130,7 @@ class AppRepository(private val application: Application, private val appDao: Ap
                 3, 4, 5 -> {
                     withContext(Dispatchers.Default) {
                         id =
-                            appDao.getIdViaQuery(SimpleSQLiteQuery("Select id From app_table Where Selected = '1'"))
+                            appDao.getIdViaQuery(SimpleSQLiteQuery("Select id From AppTable Where Selected = '1'"))
                         updateTheList(false, id)
                     }
                     false
@@ -153,7 +153,7 @@ class AppRepository(private val application: Application, private val appDao: Ap
         }
     }
 
-    private fun updateTheList(value: Boolean, id: List<Int>) {
+    private suspend fun updateTheList(value: Boolean, id: List<Int>) {
         for (i in id) {
             appDao.updateSelectedById(value, i)
         }
@@ -164,20 +164,23 @@ class AppRepository(private val application: Application, private val appDao: Ap
     }
 
 
-    fun getCount(packageName: String): Int {
+    suspend fun getCount(packageName: String): Int {
         return appDao.getCount(packageName)
     }
-    fun setUpdateInstall(packageName: String) {
+    suspend fun setUpdateInstall(packageName: String) {
         appDao.updateInstalledByPackage(packageName)
     }
 
-    fun setDefaultValueInstall(){
+    suspend fun setDefaultValueInstall(){
         appDao.setDefaultValueInstall()
     }
 
-    fun removeUninstallAppFromDB(){
+    suspend fun removeUninstallAppFromDB(){
         for( i in appDao.getUninstallList()){
             appDao.deleteRow(i)
         }
+    }
+    suspend fun updateSelectedApp(selected: Boolean, packageName: String){
+        appDao.updateSelectedApp(selected, packageName)
     }
 }

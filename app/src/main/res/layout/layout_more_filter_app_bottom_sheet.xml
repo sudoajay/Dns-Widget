@@ -9,7 +9,7 @@
 
         <variable
             name="bottomSheet"
-            type="com.sudoajay.dnswidget.ui.appFilter.MoreFilterBottomSheet" />
+            type="com.sudoajay.dnswidget.ui.appFilter.MoreFilterAppBottomSheet" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package com.sudoajay.dnswidget.ui.appFilter
+package com.sudoajay.dnswidget.ui.customDns
 
 import android.graphics.Color
 import android.os.Build
@@ -15,17 +15,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.dnswidget.R
-import com.sudoajay.dnswidget.databinding.ActivityAppFilterBinding
+import com.sudoajay.dnswidget.databinding.ActivityCustomDnsBinding
 import com.sudoajay.dnswidget.helper.CustomToast
+import com.sudoajay.dnswidget.ui.appFilter.InsetDivider
+import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import java.util.*
 
 
-class AppFilter : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFragment {
+class CustomDns : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFragment {
 
-    lateinit var appFilterViewModel: AppFilterViewModel
-    private lateinit var binding: ActivityAppFilterBinding
+
+    private lateinit var binding: ActivityCustomDnsBinding
+    private lateinit var customDnsViewModel: CustomDnsViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,37 +37,50 @@ class AppFilter : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomShee
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_app_filter)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_custom_dns)
 
         changeStatusBarColor()
 
-        appFilterViewModel = ViewModelProvider(this).get(AppFilterViewModel::class.java)
-        binding.viewmodel = appFilterViewModel
+        customDnsViewModel = ViewModelProvider(this).get(CustomDnsViewModel::class.java)
+        binding.viewmodel = customDnsViewModel
         binding.lifecycleOwner = this
 
-        reference()
 
+//        Add Reference
+        reference()
     }
 
+    /**
+     * Making notification bar transparent
+     */
+    private fun changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val window = window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = Color.TRANSPARENT
+        }
+    }
 
     private fun reference() {
 
+        val bottomAppBar = binding.bottomAppBar
+        setSupportActionBar(bottomAppBar)
+
         setRecyclerView()
+
+//      Setup Swipe RecyclerView
         binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
         binding.swipeRefresh.setOnRefreshListener {
-            appFilterViewModel.onRefresh()
+            customDnsViewModel.onRefresh()
         }
-
+//        Set On Click
         binding.filterFloatingActionButton.setOnClickListener {
-            val bottomSheetFragment = FilterDnsBottomSheet()
-            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+            addCustomDns()
         }
-
     }
 
     private fun setRecyclerView() {
-        val bottomAppBar = binding.bottomAppBar
-        setSupportActionBar(bottomAppBar)
+
 
         val recyclerView = binding.recyclerView
         val divider = getInsetDivider()
@@ -71,23 +88,25 @@ class AppFilter : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomShee
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(applicationContext, this)
+        var customDnsAdapter: CustomDnsAdapter
+        customDnsViewModel.dnsList!!.observe(this, Observer {
 
-        appFilterViewModel.appList!!.observe(this, Observer {
+            customDnsAdapter = CustomDnsAdapter(it, this)
+            recyclerView.adapter = customDnsAdapter
 
-            pagingAppRecyclerAdapter.submitList(it)
-            recyclerView.adapter = pagingAppRecyclerAdapter
-            if (binding.swipeRefresh.isRefreshing )
-                binding.swipeRefresh.isRefreshing = false
 
             if (it.isEmpty()) CustomToast.toastIt(applicationContext, "Empty List")
+
+
+            if (binding.swipeRefresh.isRefreshing)
+                binding.swipeRefresh.isRefreshing = false
 
         })
 
 
     }
 
-    private fun getInsetDivider(): ItemDecoration {
+    private fun getInsetDivider(): RecyclerView.ItemDecoration {
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
         val dividerColor = ContextCompat.getColor(applicationContext, R.color.divider)
         val marginLeft = resources.getDimensionPixelSize(R.dimen.divider_inset)
@@ -99,14 +118,29 @@ class AppFilter : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomShee
             .build()
     }
 
+    private fun addCustomDns() {
+        val ft = supportFragmentManager.beginTransaction()
+        val addCustomDnsDialog = AddCustomDnsDialog(customDnsViewModel)
+        addCustomDnsDialog.show(ft, "dialog")
+
+    }
+
+    fun showMoreOption(dns: Dns) {
+        val addPhotoBottomDialogFragment = MoreOptionBottomSheet(dns)
+        addPhotoBottomDialogFragment.show(
+            supportFragmentManager.beginTransaction(),
+            "ActionBottomDialog"
+        )
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
 
             R.id.bottomToolbar_settings -> {
-                val moreFilterBottomSheet = MoreFilterAppBottomSheet()
-                moreFilterBottomSheet.show(supportFragmentManager, moreFilterBottomSheet.tag)
+                val filterBottomSheet = FilterDnsBottomSheet()
+                filterBottomSheet.show(supportFragmentManager, filterBottomSheet.tag)
+
             }
         }
 
@@ -151,33 +185,14 @@ class AppFilter : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomShee
 
             override fun onQueryTextChange(newText: String): Boolean {
                 val query: String = newText.toLowerCase(Locale.ROOT).trim { it <= ' ' }
-                appFilterViewModel.filterChanges(query)
+                customDnsViewModel.filterChanges(query)
                 return true
             }
         })
     }
 
-    /**
-     * Making notification bar transparent
-     */
-    private fun changeStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val window = window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
-        }
-    }
-
-
     override fun handleDialogClose() {
-        appFilterViewModel.filterChanges()
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-
-
+        customDnsViewModel.filterChanges()
     }
 
 

@@ -38,12 +38,20 @@ android {
         jvmTarget = "1.8"
     }
 
-    dataBinding {
-        enabled = true
-    }
 
     packagingOptions {
         exclude 'META-INF/atomicfu.kotlin_module'
+    }
+
+    // You can change the value to override the default behavior.
+    buildFeatures {
+        // Determines whether to support View Binding.
+        // Note that the viewBinding.enabled property is now deprecated.
+        viewBinding = true
+        // Determines whether to support Data Binding.
+        // Note that the dataBinding.enabled property is now deprecated.
+        dataBinding = true
+
     }
 
 }
