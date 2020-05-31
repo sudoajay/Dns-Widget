@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.LayoutMoreoptionBottomsheetBinding
-import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
+import kotlinx.android.synthetic.main.fragment_custom_dns.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
-class MoreOptionBottomSheet(var dns: Dns) : BottomSheetDialogFragment() {
+class MoreOptionBottomSheet(var customDns: CustomDns, var dns: Dns) : BottomSheetDialogFragment() {
 
 
     override fun onCreateView(
@@ -57,6 +60,23 @@ class MoreOptionBottomSheet(var dns: Dns) : BottomSheetDialogFragment() {
         return str.toString()
     }
 
+    fun deleteItem() {
+        CoroutineScope(Dispatchers.IO).launch {
+            customDns.customDnsViewModel.dnsRepository.deleteRow(dns.id!!)
+        }
+        customDns.customDnsViewModel.filterChanges()
+
+        dismiss()
+    }
+
+    fun editItem(){
+        customDns.addCustomDns(dns , "Edit")
+        dismiss()
+    }
+    fun copyItem(){
+        customDns.addCustomDns(dns , "Copy")
+        dismiss()
+    }
 
 
 }

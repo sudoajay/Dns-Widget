@@ -1,5 +1,6 @@
 package com.sudoajay.dnswidget.ui.customDns
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -17,14 +18,18 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.LayoutAddCustomDnsBinding
+import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
-class AddCustomDnsDialog(private var customDnsViewModel: CustomDnsViewModel) : DialogFragment() {
+class AddCustomDnsDialog(
+    private var customDnsViewModel: CustomDnsViewModel,
+    private var dns: Dns?,
+    private var type: String
+) : DialogFragment() {
     private lateinit var binding: LayoutAddCustomDnsBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +52,7 @@ class AddCustomDnsDialog(private var customDnsViewModel: CustomDnsViewModel) : D
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     private fun mainFun() { // Reference Object
 
         // setup dialog box
@@ -65,6 +71,23 @@ class AddCustomDnsDialog(private var customDnsViewModel: CustomDnsViewModel) : D
         val dns4TextInputLayout: TextInputLayout = binding.dns4TextInputLayout
         val useDns4CheckBox: CheckBox = binding.useDns4CheckBox
         val useDns6CheckBox: CheckBox = binding.useDns6CheckBox
+
+        if (dns != null) {
+
+            if(type == "Edit"){
+                binding.nameTextInputLayout.editText!!.setText(dns!!.dnsName)
+
+            }else {
+                binding.nameTextInputLayout.editText!!.setText(dns!!.dnsName + " (Custom) ")
+            }
+            dns1TextInputLayout.editText!!.setText(dns!!.dns1)
+            dns2TextInputLayout.editText!!.setText(dns!!.dns2)
+
+            dns3TextInputLayout.editText!!.setText(dns!!.dns3)
+            dns4TextInputLayout.editText!!.setText(dns!!.dns4)
+
+
+        }
 
         useDns4CheckBox
             .setOnCheckedChangeListener { _, isChecked ->
@@ -125,6 +148,47 @@ class AddCustomDnsDialog(private var customDnsViewModel: CustomDnsViewModel) : D
 
     }
 
+    fun saveDnsDismiss() {
+
+        if (binding.nameTextInputLayout.editText!!.text.isNotEmpty() && (binding.dns1TextInputLayout.editText!!.text.isNotEmpty() || binding.dns3TextInputLayout.editText!!.text.isNotEmpty())) {
+            CoroutineScope(Dispatchers.IO).launch {
+                if (type != "Edit") {
+                    customDnsViewModel.dnsRepository.insert(
+                        Dns(
+                            null,
+                            binding.nameTextInputLayout.editText!!.text.toString(),
+                            setText(binding.dns1TextInputLayout),
+                            setText(binding.dns2TextInputLayout),
+                            setText(binding.dns3TextInputLayout),
+                            setText(binding.dns4TextInputLayout),
+                            "None",
+                            custom = true
+                        )
+                    )
+                } else {
+                    customDnsViewModel.dnsRepository.updateDns(
+                        dns!!.id!!, binding.nameTextInputLayout.editText!!.text.toString(),
+                        setText(binding.dns1TextInputLayout),
+                        setText(binding.dns2TextInputLayout),
+                        setText(binding.dns3TextInputLayout),
+                        setText(binding.dns4TextInputLayout)
+                    )
+                }
+
+            }
+
+            customDnsViewModel.filterChanges()
+            dismiss()
+        }
+    }
+
+    private fun setText(textInputLayout: TextInputLayout): String {
+        return if (textInputLayout.isNotEmpty()) textInputLayout.editText!!.text.toString() else requireContext().getString(
+            R.string.unspecified_text
+        )
+    }
+
+
     override fun onStart() { // This MUST be called first! Otherwise the view tweaking will not be present in the displayed Dialog (most likely overriden)
         super.onStart()
         forceWrapContent(this.view)
@@ -154,35 +218,5 @@ class AddCustomDnsDialog(private var customDnsViewModel: CustomDnsViewModel) : D
     }
 
 
-    fun saveDnsDismiss() {
-        if (binding.nameTextInputLayout.editText!!.text.isNotEmpty() && (binding.dns1TextInputLayout.editText!!.text.isNotEmpty() || binding.dns3TextInputLayout.editText!!.text.isNotEmpty())) {
-            CoroutineScope(Dispatchers.IO).launch {
-                withContext(Dispatchers.IO) {
-                    customDnsViewModel.dnsRepository.insert(
-                        Dns(
-                            null,
-                            binding.nameTextInputLayout.editText!!.text.toString(),
-                            setText(binding.dns1TextInputLayout),
-                            setText(binding.dns2TextInputLayout),
-                            setText(binding.dns3TextInputLayout),
-                            setText(binding.dns4TextInputLayout),
-                            "None",
-                            custom = true
-                        )
-                    )
-                }
-
-            }
-
-            customDnsViewModel.filterChanges()
-            dismiss()
-        }
-    }
-
-    private fun setText(textInputLayout: TextInputLayout): String {
-        return if (textInputLayout.isNotEmpty()) textInputLayout.editText!!.text.toString() else requireContext().getString(
-            R.string.unspecified_text
-        )
-    }
 
 }

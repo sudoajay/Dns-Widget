@@ -28,7 +28,7 @@ class CustomDns : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomShee
 
 
     private lateinit var binding: ActivityCustomDnsBinding
-    private lateinit var customDnsViewModel: CustomDnsViewModel
+    lateinit var customDnsViewModel: CustomDnsViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +75,7 @@ class CustomDns : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomShee
         }
 //        Set On Click
         binding.filterFloatingActionButton.setOnClickListener {
-            addCustomDns()
+            addCustomDns(null)
         }
     }
 
@@ -118,15 +118,15 @@ class CustomDns : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomShee
             .build()
     }
 
-    private fun addCustomDns() {
+    fun addCustomDns(dns: Dns?, type:String = "None") {
         val ft = supportFragmentManager.beginTransaction()
-        val addCustomDnsDialog = AddCustomDnsDialog(customDnsViewModel)
+        val addCustomDnsDialog = AddCustomDnsDialog(customDnsViewModel, dns, type)
         addCustomDnsDialog.show(ft, "dialog")
 
     }
 
     fun showMoreOption(dns: Dns) {
-        val addPhotoBottomDialogFragment = MoreOptionBottomSheet(dns)
+        val addPhotoBottomDialogFragment = MoreOptionBottomSheet(this,dns)
         addPhotoBottomDialogFragment.show(
             supportFragmentManager.beginTransaction(),
             "ActionBottomDialog"

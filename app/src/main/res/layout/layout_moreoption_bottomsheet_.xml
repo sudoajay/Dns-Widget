@@ -54,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
+            android:onClick="@{() -> moreOption.editItem()}"
             android:padding="16dp"
             tools:ignore="UseCompoundDrawables">
 
@@ -80,6 +81,7 @@
             android:id="@+id/delete_BottomSheet"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:onClick="@{() -> moreOption.deleteItem()}"
             android:orientation="horizontal"
             android:padding="16dp"
             tools:ignore="UseCompoundDrawables">
@@ -108,6 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
+            android:onClick="@{() -> moreOption.copyItem()}"
             android:padding="16dp"
             tools:ignore="UseCompoundDrawables">
 

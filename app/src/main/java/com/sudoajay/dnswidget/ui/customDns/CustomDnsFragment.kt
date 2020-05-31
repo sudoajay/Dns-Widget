@@ -31,9 +31,9 @@ class CustomDnsFragment : Fragment() {
 
     private fun reference() {
 
-        root.findViewById<FloatingActionButton>(R.id.addCustomDns_FloatingActionButton).setOnClickListener {
-            callCustomDns()
-        }
+//        root.findViewById<FloatingActionButton>(R.id.addCustomDns_FloatingActionButton).setOnClickListener {
+//            callCustomDns()
+//        }
         val recycleView: RecyclerView = root.findViewById(R.id.recycler_view)
 
 //
@@ -52,11 +52,11 @@ class CustomDnsFragment : Fragment() {
 //        recycleView.adapter = CustomDnsAdapter(customDnsViewModel.animals, this)
     }
 
-    private fun callCustomDns() {
-        val ft = requireActivity().supportFragmentManager.beginTransaction()
-        val addCustomDnsDialog = AddCustomDnsDialog(customDnsViewModel)
-        addCustomDnsDialog.show(ft, "dialog")
-    }
+//    private fun callCustomDns() {
+//        val ft = requireActivity().supportFragmentManager.beginTransaction()
+//        val addCustomDnsDialog = AddCustomDnsDialog(customDnsViewModel)
+//        addCustomDnsDialog.show(ft, "dialog")
+//    }
 
 
 

@@ -30,11 +30,27 @@ class DnsRepository(private val application: Application, private val dnsDao: Dn
 
     }
 
+
+    suspend fun deleteRow(id: Long) {
+        dnsDao.deleteRow(id)
+    }
+
     suspend fun insert(dns: Dns) {
         dnsDao.insert(dns)
     }
 
     suspend fun getCount(): Int {
         return dnsDao.getCount()
+    }
+
+    suspend fun updateDns(
+        id: Long,
+        name: String,
+        dns1: String,
+        dns2: String,
+        dns3: String,
+        dns4: String
+    ) {
+        return dnsDao.updateSelectedDns(id, name, dns1, dns2, dns3, dns4)
     }
 }
