@@ -15,8 +15,13 @@ interface DnsDao {
     @Query("Select Count(*) FROM DnsTable ")
     suspend fun getCount(): Int
 
-    @Query("SELECT * FROM DnsTable WHERE Name LIKE :search")
+    @Query("SELECT * FROM DnsTable Where Name LIKE :search")
     fun searchItem(search: String?): LiveData<List<Dns>>
+
+     @Query("SELECT * FROM DnsTable Where Dns1 != :unspecified_text ")
+    suspend fun getList(unspecified_text:String): List<Dns>
+
+
 
     @Query("UPDATE DnsTable SET Name = :name  ,Dns1  = :dns1 , Dns2 = :dns2 ,Dns3 =:dns3 , Dns4 = :dns4    Where id = :id")
     suspend fun updateSelectedDns(

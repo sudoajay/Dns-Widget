@@ -30,6 +30,10 @@ class DnsRepository(private val application: Application, private val dnsDao: Dn
 
     }
 
+    suspend fun getList(): List<Dns> {
+        return dnsDao.getList(application.getString(R.string.unspecified_text))
+    }
+
 
     suspend fun deleteRow(id: Long) {
         dnsDao.deleteRow(id)

@@ -11,7 +11,7 @@
     <!--    Navigation Drawer-->
     <string name="action_home">Home</string>
     <string name="action_custom_dns">Custom DNS</string>
-    <string name="action_dns_test">DNS Test</string>
+    <string name="action_dns_test">DNS Speed Test</string>
     <string name="action_app_filter">App Filter</string>
     <string name="action_share">Share</string>
     <string name="action_rate_us">Rate-Us</string>
@@ -184,6 +184,8 @@
 
 <!--    Data base-->
     <string name="none_text">None</string>
+    <string name="begin_dns_speed_test_text">Begin Dns Speed Test</string>
+    <string name="use_it_text">Use It</string>
 
 
 </resources>

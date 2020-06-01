@@ -25,7 +25,10 @@
 
     <color name="divider">#E6E6E6</color>
 
-
+<!-- Colo Define Ping -->
+    <color name="ping1">#2CEC16</color>
+    <color name="ping2">#E8D885</color>
+    <color name="ping3">#F30B26</color>
 
 
 </resources>
