@@ -20,7 +20,6 @@ class DnsTestFragment : Fragment() {
 
     private lateinit var dnsTestViewModel: DnsTestViewModel
     private lateinit var binding: FragmentDnsTestBinding
-    private var TAG = "showSomething"
 
     @SuppressLint("InflateParams")
     override fun onCreateView(
@@ -46,11 +45,26 @@ class DnsTestFragment : Fragment() {
 
         setRecyclerView()
 
+        //      Setup Swipe RecyclerView
+        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+        binding.swipeRefresh.isEnabled = false
+        binding.swipeRefresh.setOnRefreshListener {
+            dnsTestViewModel.onRefresh()
+            binding.swipeRefresh.isEnabled = false
+
+
+        }
+
+        binding.refreshFloatingActionButton.setOnClickListener {
+            dnsTestViewModel.onRefresh()
+        }
+
     }
 
 
     private fun setRecyclerView() {
         var dnsSpeedTestAdapter: DnsSpeedTestAdapter
+
         val recyclerView = binding.recyclerView
         val divider = getInsetDivider()
         recyclerView.addItemDecoration(divider)
@@ -59,17 +73,17 @@ class DnsTestFragment : Fragment() {
 
         dnsTestViewModel.show!!.observe(viewLifecycleOwner, Observer {
 
-            if (it == "recyclerList") {
+            if (it == "recyclerList" || it == "progressRecyclerList") {
+                if (it == "recyclerList") binding.swipeRefresh.isEnabled = true
                 if (dnsTestViewModel.dnsList.isEmpty()) CustomToast.toastIt(
                     requireContext(),
                     "Empty List"
                 )
-
                 dnsSpeedTestAdapter =
                     DnsSpeedTestAdapter(
                         requireContext(),
-                        dnsTestViewModel.dnsList,
-                        dnsTestViewModel.msList
+                        dnsTestViewModel.dnsList, dnsTestViewModel.msList
+
                     )
                 recyclerView.adapter = dnsSpeedTestAdapter
 
@@ -94,3 +108,6 @@ class DnsTestFragment : Fragment() {
     }
 
 }
+
+
+

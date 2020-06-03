@@ -1,7 +1,6 @@
 package com.sudoajay.dnswidget.ui.dnsTest
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,7 +19,7 @@ class DnsTestViewModel(application: Application) : AndroidViewModel(application)
     var dnsRepository: DnsRepository
     private var dnsDao = DnsRoomDatabase.getDatabase(application, viewModelScope).dnsDao()
     var dnsList: List<Dns> = ArrayList()
-    var msList: MutableList<String> = ArrayList()
+    val msList: MutableList<Long> = mutableListOf()
     var show: MutableLiveData<String>? = null
 
 
@@ -37,20 +36,26 @@ class DnsTestViewModel(application: Application) : AndroidViewModel(application)
                 dnsList = dnsRepository.getList()
             }
             withContext(Dispatchers.IO) {
+
                 for (dns in dnsList) {
                     msList.add(PingInfo.run(dns.dns1))
-
+                    show!!.postValue("progressRecyclerList")
                 }
-            }
 
-            show!!.postValue( "recyclerList")
+            }
+            show!!.postValue("recyclerList")
         }
 
 
     }
 
+    fun onRefresh() {
+        msList.clear()
+        runThread()
+    }
 
-    fun getShow(): LiveData<String> {
+
+    private fun getShow(): LiveData<String> {
         if (show == null) {
             show = MutableLiveData<String>()
             loadShow()

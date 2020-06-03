@@ -3,13 +3,13 @@
     <color name="colorPrimary">#376db6</color>
     <color name="colorPrimaryDark">#1e5397</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="notificationColor">#0091cd</color>
+    <color name="fabColor_DnsSpeedTest">#337DDC</color>
 
     <!--Toast Color Background and text Color-->
     <color name="toastBackgroundColor">@android:color/black</color>
     <color name="toastTextColor">#D6D1D1</color>
 
-    <!--Info Layout -->
+    <!--Info Layout -->s
     <color name="infoLayout_BackColor">#2546ABEB</color>
     <color name="tabBackgroundColor">#ffffff</color>
     <color name="background">#FAFAFA</color>

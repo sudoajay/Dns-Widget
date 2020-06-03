@@ -14,8 +14,9 @@ import com.sudoajay.dnswidget.ui.customDns.database.Dns
 
 class DnsSpeedTestAdapter(
     private var context: Context,
-    private val items: List<Dns>,
-    var msList: MutableList<String>
+    private val dnsList: List<Dns>,
+    private val msList: MutableList<Long>
+
 ) :
     RecyclerView.Adapter<DnsSpeedTestAdapter.MyViewHolder>() {
 
@@ -49,7 +50,8 @@ class DnsSpeedTestAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val dns = items[position]
+
+        val dns = dnsList[position]
         holder.dnsNameTextView.text =
             if (dns.filter == "None") dns.dnsName else dns.dnsName + " (" + dns.filter + ")"
 
@@ -82,7 +84,7 @@ class DnsSpeedTestAdapter(
         }
 
         if (ms == -1) holder.msTextView.text = "Error"
-        else holder.msTextView.text = "$ms ms"
+        else holder.msTextView.text = msList[position].toString() + " ms"
 
 
     }

@@ -51,7 +51,7 @@ class DnsNotification(private val context: Context) {
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .setSound(uri) // Provide a large icon, shown with the notification in the
             .setSmallIcon(R.drawable.ic_dns)
-            .color = ContextCompat.getColor(context,R.color.notificationColor) // If this notification relates to a past or upcoming event, you
+            .color = ContextCompat.getColor(context,R.color.fabColor_DnsSpeedTest) // If this notification relates to a past or upcoming event, you
 
         // check if there ia data with empty
 // more and view button classification

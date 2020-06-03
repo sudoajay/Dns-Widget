@@ -7,25 +7,25 @@ import java.net.UnknownHostException
 class PingInfo() {
 
     companion object {
-        fun run(mHost: String): String {
-            var value: String = "-"
+        fun run(mHost: String): Long {
+            var value:Long  = -1
             try {
                 val dest = InetAddress.getByName(mHost)
                 val ping = Ping(dest, object : Ping.PingListener {
                     override fun onPing(timeMs: Long, count: Int) {
 
-                        value = timeMs.toString()
+                        value = timeMs
                     }
 
                     override fun onPingException(e: Exception?, count: Int) {
-                        value = "-1"
+                        value = -1
 
                     }
                 })
 
                 ping.run()
             } catch (e: UnknownHostException) {
-                value = "-1"
+                value = -1
             }
             return value
         }
