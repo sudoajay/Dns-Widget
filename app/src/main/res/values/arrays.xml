@@ -9,4 +9,12 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+
+    <array name="autosize_text_sizes">
+        <item>50sp</item>
+        <item>54sp</item>
+        <item>58sp</item>
+        <item>62sp</item>
+        <item>64sp</item>
+    </array>
 </resources>

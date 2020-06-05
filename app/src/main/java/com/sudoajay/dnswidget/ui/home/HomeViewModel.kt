@@ -1,42 +1,62 @@
 package com.sudoajay.dnswidget.ui.home
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.sudoajay.dnswidget.ui.customDns.database.Dns
+import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
+import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var _dnsList: MutableLiveData<List<String>>? = null
+    var dnsList: List<Dns> = listOf()
+    private var dnsName: MutableLiveData<List<String>>? = null
+    private var _application = application
+    var dnsRepository: DnsRepository
 
-    fun dnsList(): LiveData<List<String>> {
-        if (_dnsList == null) {
-            _dnsList = MutableLiveData<List<String>>()
-            loadDefaultDna()
+    private var dnsDao = DnsRoomDatabase.getDatabase(application, viewModelScope).dnsDao()
+
+    init {
+        //        Creating Object and Initialization
+        dnsRepository = DnsRepository(application, dnsDao)
+
+        // dbms setup
+        fetchData()
+    }
+
+    private fun fetchData() {
+        val dnsNameList: MutableList<String> = mutableListOf()
+        CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO) {
+                dnsList = dnsRepository.getDnsList()
+            }
+
+            for (dns in dnsList) {
+                dnsNameList.add(dns.dnsName)
+            }
+
+            dnsName!!.postValue(dnsNameList)
         }
-        return _dnsList as MutableLiveData<List<String>>
     }
 
-    private fun loadDefaultDna() {
-        _dnsList!!.value = listOf(
-            "Ice Cream Sandwich",
-            "Jelly Bean",
-            "KitKat",
-            "Lollipop",
-            "Marshmallow",
-            "Ice Cream Sandwich",
-            "Jelly Bean",
-            "KitKat",
-            "Lollipop",
-            "Marshmallow",
-            "Ice Cream Sandwich",
-            "Jelly Bean",
-            "KitKat",
-            "Lollipop",
-            "Marshmallow",
-            "Ice Cream Sandwich",
-            "Jelly Bean",
-            "KitKat",
-            "Lollipop",
-            "Marshmallow")
+
+    fun getDnsName(): LiveData<List<String>> {
+        if (dnsName == null) {
+            dnsName = MutableLiveData<List<String>>()
+            loadDnsName()
+        }
+        return dnsName as MutableLiveData<List<String>>
     }
+
+    private fun loadDnsName() {
+        dnsName!!.value = listOf()
+    }
+
+
 }

@@ -1,11 +1,13 @@
 package com.sudoajay.dnswidget.ui.customDns
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +20,6 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputLayout
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.LayoutAddCustomDnsBinding
-import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -80,6 +81,8 @@ class AddCustomDnsDialog(
             }else {
                 binding.nameTextInputLayout.editText!!.setText(dns!!.dnsName + " (Custom) ")
             }
+
+
             dns1TextInputLayout.editText!!.setText(dns!!.dns1)
             dns2TextInputLayout.editText!!.setText(dns!!.dns2)
 
@@ -120,6 +123,7 @@ class AddCustomDnsDialog(
 
         useDns6CheckBox
             .setOnCheckedChangeListener { _, isChecked ->
+                setVisibleDNSv6(isChecked)
                 if (isChecked) {
                     useDns4CheckBox.isEnabled = true
                     useDns4CheckBox.alpha = 1f
@@ -146,7 +150,10 @@ class AddCustomDnsDialog(
 
             }
 
+        useDns6CheckBox.isChecked = isVisibleDNSv6()
+
     }
+
 
     fun saveDnsDismiss() {
 
@@ -180,6 +187,16 @@ class AddCustomDnsDialog(
             customDnsViewModel.filterChanges()
             dismiss()
         }
+    }
+
+    private fun isVisibleDNSv6(): Boolean {
+        return requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
+            .getBoolean("Dnsv6", false)
+    }
+
+    private fun setVisibleDNSv6(value: Boolean) {
+        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putBoolean("Dnsv6", value).apply()
     }
 
     private fun setText(textInputLayout: TextInputLayout): String {

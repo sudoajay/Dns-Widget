@@ -21,13 +21,17 @@ class DnsRepository(private val application: Application, private val dnsDao: Dn
                     .getBoolean(application.getString(R.string.menu_default_dns), true)
             ) 0 else 2
 
-            return dnsDao.getDns(isCustomDns, isDefaultDns)
+            return dnsDao.getDnsByOption(isCustomDns, isDefaultDns)
         } else {
             val value = "%$filter%"
             return dnsDao.searchItem(value)
 
         }
 
+    }
+
+    suspend fun getDnsList(): List<Dns>{
+        return dnsDao.getDns()
     }
 
     suspend fun getList(): List<Dns> {

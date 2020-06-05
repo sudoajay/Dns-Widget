@@ -12,6 +12,7 @@
     <string name="action_home">Home</string>
     <string name="action_custom_dns">Custom DNS</string>
     <string name="action_dns_test">DNS Speed Test</string>
+    <string name="speed_test_string">Speed Test</string>
     <string name="action_app_filter">App Filter</string>
     <string name="action_share">Share</string>
     <string name="action_rate_us">Rate-Us</string>

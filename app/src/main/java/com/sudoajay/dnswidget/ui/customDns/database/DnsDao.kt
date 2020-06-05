@@ -10,13 +10,18 @@ import androidx.room.Query
 interface DnsDao {
 
     @Query("Select * FROM DnsTable Where Custom = :isCustomDns Or Custom = :isDefaultDns Order By Name Asc")
-    fun getDns(isCustomDns: Int, isDefaultDns: Int): LiveData<List<Dns>>
+    fun getDnsByOption(isCustomDns: Int, isDefaultDns: Int): LiveData<List<Dns>>
+
+
+
+    @Query("SELECT * FROM DnsTable Where Name LIKE :search")
+    fun searchItem(search: String?): LiveData<List<Dns>>
 
     @Query("Select Count(*) FROM DnsTable ")
     suspend fun getCount(): Int
 
-    @Query("SELECT * FROM DnsTable Where Name LIKE :search")
-    fun searchItem(search: String?): LiveData<List<Dns>>
+    @Query("Select * FROM DnsTable ")
+    suspend fun getDns(): List<Dns>
 
      @Query("SELECT * FROM DnsTable Where Dns1 != :unspecified_text ")
     suspend fun getList(unspecified_text:String): List<Dns>
