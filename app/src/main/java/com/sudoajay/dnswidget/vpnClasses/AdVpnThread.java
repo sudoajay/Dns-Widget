@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.VpnService;
-import android.nfc.Tag;
 import android.os.ParcelFileDescriptor;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -29,7 +28,6 @@ import android.util.Log;
 
 import com.sudoajay.dnswidget.MainActivity;
 import com.sudoajay.dnswidget.R;
-import com.sudoajay.dnswidget.helper.Connectivity;
 
 import org.pcap4j.packet.IpPacket;
 

@@ -12,8 +12,12 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
+import com.sudoajay.dnswidget.helper.ConnectivitySpeed
 import com.sudoajay.dnswidget.ui.sendFeedback.SendFeedback
 import com.sudoajay.dnswidget.vpnClasses.ConfigurationData
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -21,6 +25,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var drawerLayout: DrawerLayout
+    private var connectivitySpeed = ConnectivitySpeed()
     private val ratingLink =
         "https://play.google.com/store/apps/details?id=com.sudoajay.duplication_data"
 
@@ -47,11 +52,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
 
-       ConfigurationData(applicationContext)
+        ConfigurationData(applicationContext)
 
-
+        val connectivitySpeed = ConnectivitySpeed()
+//        startCoroutineTimer {
+//            connectivitySpeed.getNetworkSpeed()
+//        }
 
     }
+
+//    private inline fun startCoroutineTimer(
+//        repeatMillis: Long = 1000,
+//        crossinline action: () -> Unit
+//    ) = GlobalScope.launch {
+//        while (true) {
+//            action()
+//            delay(repeatMillis)
+//        }
+//    }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val handled = NavigationUI.onNavDestinationSelected(item, navController)
@@ -59,7 +78,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_share -> share()
             R.id.nav_rate_us -> rateUs()
             R.id.nav_more_app -> openMoreApp()
-            R.id.nav_send_feedback -> startActivity(Intent(applicationContext,SendFeedback::class.java))
+            R.id.nav_send_feedback -> startActivity(
+                Intent(
+                    applicationContext,
+                    SendFeedback::class.java
+                )
+            )
 
         }
         drawerLayout.closeDrawer(GravityCompat.START)

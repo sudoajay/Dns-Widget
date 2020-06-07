@@ -6,7 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Debug
 import android.util.DisplayMetrics
-import com.sudoajay.dnswidget.helper.Connectivity
+import com.sudoajay.dnswidget.helper.ConnectivityType
 import com.sudoajay.dnswidget.helper.FileSize
 import java.io.File
 import java.io.FileWriter
@@ -69,7 +69,7 @@ class SystemInfo(private var activity: Activity) {
                 " \n Screen Size : " + getScreenSize().heightPixels.toString()
                         + " x " + getScreenSize().widthPixels.toString()
             )
-            writer.append("\n Network Type : " + Connectivity.getNetworkProvider(activity))
+            writer.append("\n Network Type : " + ConnectivityType.getNetworkProvider(activity))
             writer.flush()
             writer.close()
         } catch (e: IOException) {

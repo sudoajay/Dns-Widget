@@ -73,7 +73,7 @@ public final class FileHelper {
         try {
             return readConfigFile(context, "settings.json", false);
         } catch (Exception e) {
-            Toast.makeText(context, context.getString(R.string.cannot_read_config, e.getLocalizedMessage()), Toast.LENGTH_LONG).show();
+//            Toast.makeText(context, context.getString(R.string.cannot_read_config, e.getLocalizedMessage()), Toast.LENGTH_LONG).show();
             return loadPreviousSettings(context);
         }
     }

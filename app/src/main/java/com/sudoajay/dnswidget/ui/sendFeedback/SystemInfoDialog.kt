@@ -15,7 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.sudoajay.dnswidget.R
-import com.sudoajay.dnswidget.helper.Connectivity
+import com.sudoajay.dnswidget.helper.ConnectivityType
 import com.sudoajay.dnswidget.helper.FileSize
 
 
@@ -76,7 +76,7 @@ class SystemInfoDialog : DialogFragment(), View.OnClickListener {
         freeMemoryText.text = FileSize.convertIt(systemInfo.getHeapFreeSize())
         screenText.text =
             systemInfo.getScreenSize().heightPixels.toString() + " x " + systemInfo.getScreenSize().widthPixels.toString()
-        networkTypeText.text = Connectivity.getNetworkProvider(requireContext())
+        networkTypeText.text = ConnectivityType.getNetworkProvider(requireContext())
 
     }
 

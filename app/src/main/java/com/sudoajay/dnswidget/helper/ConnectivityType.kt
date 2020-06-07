@@ -10,7 +10,7 @@ import android.os.Build
 import com.sudoajay.dnswidget.R
 
 
-object Connectivity {
+object ConnectivityType {
 
     fun getNetworkProvider(context: Context): String {
         var result = ""

@@ -15,17 +15,18 @@ import com.sudoajay.dnswidget.R
 class DnsNotification(private val context: Context) {
     private var notificationManager: NotificationManager? = null
 
-    fun notify(title: String, builder: NotificationCompat.Builder) { // local variable
+        fun notify(title: String, builder: NotificationCompat.Builder) { // local variable
 
-        // now check for null notification manger
-        if (notificationManager == null) {
-            notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        }
+            // now check for null notification manger
+            if (notificationManager == null) {
+                notificationManager =
+                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            }
 
-        // Default ringtone
-        val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            // Default ringtone
+            val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        builder.addAction(
+            builder.addAction(
             R.drawable.ic_pause, context.getString(R.string.notification_action_pause),
             PendingIntent.getService(
                 context, AdVpnService.REQUEST_CODE_PAUSE, Intent(context, AdVpnService::class.java)
@@ -45,18 +46,25 @@ class DnsNotification(private val context: Context) {
 
             // Set appropriate defaults for the notification light, sound,
     // and vibration.
-            .setDefaults(Notification.DEFAULT_ALL) // Set required fields, including the small icon, the
-            .setContentTitle(title)
-            .setContentText("") // All fields below this line are optional.
-            .setPriority(NotificationCompat.PRIORITY_MIN)
-            .setSound(uri) // Provide a large icon, shown with the notification in the
-            .setSmallIcon(R.drawable.ic_dns)
-            .color = ContextCompat.getColor(context,R.color.fabColor_DnsSpeedTest) // If this notification relates to a past or upcoming event, you
+                .setDefaults(Notification.DEFAULT_ALL) // Set required fields, including the small icon, the
+                .setContentTitle(title)
+                .setContentText("") // All fields below this line are optional.
+                .setPriority(NotificationCompat.PRIORITY_MIN)
+                .setSound(uri) // Provide a large icon, shown with the notification in the
+                .setSmallIcon(R.drawable.ic_dns)
+                .color = ContextCompat.getColor(
+                context,
+                R.color.fabColor_DnsSpeedTest
+            ) // If this notification relates to a past or upcoming event, you
 
-        // check if there ia data with empty
+            // check if there ia data with empty
 // more and view button classification
-        notify(builder.build())
-    }
+            val notification: Notification = builder.build()
+            notification.flags =
+                notification.flags or (Notification.FLAG_NO_CLEAR or Notification.FLAG_ONGOING_EVENT)
+
+            notify(notification)
+        }
 
 
     private fun notify(notification: Notification) {

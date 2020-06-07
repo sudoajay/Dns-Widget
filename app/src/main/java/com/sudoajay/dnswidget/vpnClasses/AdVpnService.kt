@@ -1,6 +1,5 @@
 package com.sudoajay.dnswidget.vpnClasses
 
-import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -16,7 +15,7 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
 import com.sudoajay.dnswidget.MainActivity
 import com.sudoajay.dnswidget.R
-import com.sudoajay.dnswidget.helper.Connectivity
+import com.sudoajay.dnswidget.helper.ConnectivityType
 import com.sudoajay.dnswidget.vpnClasses.AdVpnThread.Notify
 import com.sudoajay.dnswidget.vpnClasses.NotificationChannels.onCreate
 import java.lang.ref.WeakReference
@@ -34,7 +33,7 @@ class AdVpnService : VpnService(), Handler.Callback {
 
     private val networkChangeReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            when (Connectivity.getNetworkProvider(context!!)) {
+            when (ConnectivityType.getNetworkProvider(context!!)) {
 
                 context.getString(R.string.vpn_text) -> Log.i(
                     TAG,
@@ -141,6 +140,7 @@ class AdVpnService : VpnService(), Handler.Callback {
 
     private fun updateVpnStatus(status: Int) {
         vpnStatus = status
+        builder.setSmallIcon(R.drawable.ic_day_mode)
         val notificationText = getString(vpnStatusToTextId(status))
         builder.setContentText(notificationText)
 

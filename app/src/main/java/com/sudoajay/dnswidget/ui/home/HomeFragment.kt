@@ -26,7 +26,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.jaredrummler.materialspinner.MaterialSpinner
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.FragmentHomeBinding
-import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.vpnClasses.AdVpnService
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -43,7 +42,7 @@ class HomeFragment : Fragment() {
     var mIsBound: Boolean? = null
 
     var mService: AdVpnService? = null
-    val mTAG = "ShowSomething"
+    val TAG = "ShowSomething"
 
 
     override fun onCreateView(
@@ -64,32 +63,21 @@ class HomeFragment : Fragment() {
 
     private fun reference() {
 
-        val dns1TextInputLayout: TextInputLayout = binding.dns1TextInputLayout
-        val dns2TextInputLayout: TextInputLayout = binding.dns2TextInputLayout
-        val dns3TextInputLayout: TextInputLayout = binding.dns3TextInputLayout
-        val dns4TextInputLayout: TextInputLayout = binding.dns4TextInputLayout
-        val materialSpinner: MaterialSpinner = binding.materialSpinner
-        val useDns4CheckBox: CheckBox = binding.useDns4CheckBox
-        val useDns6CheckBox: CheckBox = binding.useDns6CheckBox
-        val useDns4TextView: TextView = binding.useDns4TextView
-        val useDns6TextView: TextView = binding.useDns6TextView
-        val normalChangesButton: Button = binding.normalChangesButton
-
 
         homeViewModel.getDnsName().observe(viewLifecycleOwner, Observer {
 
-            materialSpinner.setItems(it)
+            binding.materialSpinner.setItems(it)
             if (it.isNotEmpty()) {
-                materialSpinner.selectedIndex = 0
+                binding.materialSpinner.selectedIndex = 0
                 addItem(0)
                 if (isVisibleDNSv6()) {
-                    dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns1)
-                    dns2TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns2)
-                    dns3TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns3)
-                    dns4TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns4)
+                    binding.dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns1)
+                    binding.dns2TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns2)
+                    binding.dns3TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns3)
+                    binding.dns4TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns4)
                 } else {
-                    dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns1)
-                    dns3TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns2)
+                    binding.dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns1)
+                    binding.dns3TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns2)
                 }
             }
 
@@ -97,103 +85,103 @@ class HomeFragment : Fragment() {
         })
 
 
-        materialSpinner.setOnItemSelectedListener { _, position, _, _ ->
+        binding.materialSpinner.setOnItemSelectedListener { _, position, _, _ ->
             addItem(position)
-            dns1TextInputLayout.editText!!.setText(dnsList[0])
-            dns2TextInputLayout.editText!!.setText(dnsList[1])
-            dns3TextInputLayout.editText!!.setText(dnsList[2])
-            dns4TextInputLayout.editText!!.setText(dnsList[3])
+            binding.dns1TextInputLayout.editText!!.setText(dnsList[0])
+            binding.dns2TextInputLayout.editText!!.setText(dnsList[1])
+            binding.dns3TextInputLayout.editText!!.setText(dnsList[2])
+            binding.dns4TextInputLayout.editText!!.setText(dnsList[3])
         }
 
 
 
-        useDns4CheckBox
+        binding.useDns4CheckBox
             .setOnCheckedChangeListener { _, isChecked ->
 
                 if (isChecked) {
-                    useDns6CheckBox.isEnabled = true
-                    useDns6CheckBox.alpha = 1f
-                    useDns6TextView.alpha = 1f
+                    binding.useDns6CheckBox.isEnabled = true
+                    binding.useDns6CheckBox.alpha = 1f
+                    binding.useDns6TextView.alpha = 1f
                     CompoundButtonCompat.setButtonTintList(
-                        useDns6CheckBox, ColorStateList.valueOf(
+                        binding.useDns6CheckBox, ColorStateList.valueOf(
                             ContextCompat.getColor(requireContext(), R.color.colorPrimary)
                         )
                     )
-                    dns1TextInputLayout.hint = getString(R.string.dns1_text)
-                    dns1TextInputLayout.editText!!.setText(dnsList[0])
+                    binding.dns1TextInputLayout.hint = getString(R.string.dns1_text)
+                    binding.dns1TextInputLayout.editText!!.setText(dnsList[0])
 
-                    dns3TextInputLayout.hint = getString(R.string.dns3_text)
-                    dns3TextInputLayout.editText!!.setText(dnsList[2])
+                    binding.dns3TextInputLayout.hint = getString(R.string.dns3_text)
+                    binding.dns3TextInputLayout.editText!!.setText(dnsList[2])
 
-                    dns2TextInputLayout.visibility = View.VISIBLE
-                    dns2TextInputLayout.editText!!.setText(dnsList[1])
+                    binding.dns2TextInputLayout.visibility = View.VISIBLE
+                    binding.dns2TextInputLayout.editText!!.setText(dnsList[1])
 
-                    dns4TextInputLayout.visibility = View.VISIBLE
-                    dns4TextInputLayout.editText!!.setText(dnsList[3])
+                    binding.dns4TextInputLayout.visibility = View.VISIBLE
+                    binding.dns4TextInputLayout.editText!!.setText(dnsList[3])
                 } else {
-                    useDns6CheckBox.isEnabled = false
-                    useDns6CheckBox.alpha = .5f
-                    useDns6TextView.alpha = .5f
+                    binding.useDns6CheckBox.isEnabled = false
+                    binding.useDns6CheckBox.alpha = .5f
+                    binding.useDns6TextView.alpha = .5f
                     CompoundButtonCompat.setButtonTintList(
-                        useDns6CheckBox, ColorStateList.valueOf(
+                        binding.useDns6CheckBox, ColorStateList.valueOf(
                             ContextCompat.getColor(requireContext(), R.color.unCheckedColor)
                         )
                     )
-                    dns1TextInputLayout.hint = getString(R.string.dns3_text)
-                    dns1TextInputLayout.editText!!.setText(dnsList[2])
+                    binding.dns1TextInputLayout.hint = getString(R.string.dns3_text)
+                    binding.dns1TextInputLayout.editText!!.setText(dnsList[2])
 
-                    dns3TextInputLayout.hint = getString(R.string.dns4_text)
-                    dns3TextInputLayout.editText!!.setText(dnsList[3])
+                    binding.dns3TextInputLayout.hint = getString(R.string.dns4_text)
+                    binding.dns3TextInputLayout.editText!!.setText(dnsList[3])
 
-                    dns2TextInputLayout.visibility = View.GONE
-                    dns4TextInputLayout.visibility = View.GONE
+                    binding.dns2TextInputLayout.visibility = View.GONE
+                    binding.dns4TextInputLayout.visibility = View.GONE
                 }
 
             }
 
-        useDns6CheckBox
+        binding.useDns6CheckBox
             .setOnCheckedChangeListener { _, isChecked ->
                 setVisibleDNSv6(isChecked)
 
                 if (isChecked) {
-                    useDns4CheckBox.isEnabled = true
-                    useDns4CheckBox.alpha = 1f
-                    useDns4TextView.alpha = 1f
+                    binding.useDns4CheckBox.isEnabled = true
+                    binding.useDns4CheckBox.alpha = 1f
+                    binding.useDns4TextView.alpha = 1f
                     CompoundButtonCompat.setButtonTintList(
-                        useDns4CheckBox, ColorStateList.valueOf(
+                        binding.useDns4CheckBox, ColorStateList.valueOf(
                             ContextCompat.getColor(requireContext(), R.color.colorPrimary)
                         )
                     )
-                    dns3TextInputLayout.hint = getString(R.string.dns3_text)
-                    dns3TextInputLayout.editText!!.setText(dnsList[2])
+                    binding.dns3TextInputLayout.hint = getString(R.string.dns3_text)
+                    binding.dns3TextInputLayout.editText!!.setText(dnsList[2])
 
-                    dns2TextInputLayout.visibility = View.VISIBLE
-                    dns2TextInputLayout.editText!!.setText(dnsList[1])
+                    binding.dns2TextInputLayout.visibility = View.VISIBLE
+                    binding.dns2TextInputLayout.editText!!.setText(dnsList[1])
 
-                    dns4TextInputLayout.visibility = View.VISIBLE
-                    dns4TextInputLayout.editText!!.setText(dnsList[3])
+                    binding.dns4TextInputLayout.visibility = View.VISIBLE
+                    binding.dns4TextInputLayout.editText!!.setText(dnsList[3])
 
                 } else {
-                    useDns4CheckBox.isEnabled = false
-                    useDns4CheckBox.alpha = .5f
-                    useDns4TextView.alpha = .5f
+                    binding.useDns4CheckBox.isEnabled = false
+                    binding.useDns4CheckBox.alpha = .5f
+                    binding.useDns4TextView.alpha = .5f
                     CompoundButtonCompat.setButtonTintList(
-                        useDns4CheckBox, ColorStateList.valueOf(
+                        binding.useDns4CheckBox, ColorStateList.valueOf(
                             ContextCompat.getColor(requireContext(), R.color.unCheckedColor)
                         )
                     )
 
-                    dns3TextInputLayout.hint = getString(R.string.dns2_text)
-                    dns3TextInputLayout.editText!!.setText(dnsList[1])
+                    binding.dns3TextInputLayout.hint = getString(R.string.dns2_text)
+                    binding.dns3TextInputLayout.editText!!.setText(dnsList[1])
 
-                    dns2TextInputLayout.visibility = View.GONE
-                    dns4TextInputLayout.visibility = View.GONE
+                    binding.dns2TextInputLayout.visibility = View.GONE
+                    binding.dns4TextInputLayout.visibility = View.GONE
                 }
 
             }
 
 
-        useDns6CheckBox.isChecked = isVisibleDNSv6()
+        binding.useDns6CheckBox.isChecked = isVisibleDNSv6()
 
         binding.customDnsButton.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_open_custom_dns)
@@ -204,21 +192,17 @@ class HomeFragment : Fragment() {
         }
 
 
-        normalChangesButton.setOnClickListener {
-
+        binding.customDnsButton.setOnClickListener {
+            Log.i(TAG, "Attempting to connect")
             val intent = VpnService.prepare(requireContext())
-            Log.e("GotSomething", "reach ")
             if (intent != null) {
-                Log.e("GotSomething", " Not Null ")
+                Log.i(TAG, "Intent Null ")
                 startActivityForResult(intent, requestDnsCode)
             } else {
-                Log.e("GotSomething", " Null ")
+                Log.i(TAG, "Intent Not  Null ")
                 onActivityResult(requestDnsCode, Activity.RESULT_OK, null)
             }
-
         }
-
-
     }
 
     private fun isVisibleDNSv6(): Boolean {
@@ -242,18 +226,18 @@ class HomeFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == requestDnsCode && resultCode == Activity.RESULT_CANCELED)
-            CustomToast.toastIt(
-                requireContext(),
-                getString(R.string.could_not_configure_vpn_service)
-            )
-
-        if (requestCode == requestDnsCode && resultCode == Activity.RESULT_OK) {
-            val bindIntent = Intent(activity, AdVpnService::class.java)
-            requireActivity().bindService(bindIntent, serviceConnection, Context.BIND_ABOVE_CLIENT)
-            requireContext().startService(bindIntent)
-
-        }
+//        if (requestCode == requestDnsCode && resultCode == Activity.RESULT_CANCELED)
+//            CustomToast.toastIt(
+//                requireContext(),
+//                getString(R.string.could_not_configure_vpn_service)
+//            )
+//
+//        if (requestCode == requestDnsCode && resultCode == Activity.RESULT_OK) {
+//            val bindIntent = Intent(activity, AdVpnService::class.java)
+//            requireActivity().bindService(bindIntent, serviceConnection, Context.BIND_ABOVE_CLIENT)
+//            requireContext().startService(bindIntent)
+//
+//        }
 
     }
 
@@ -263,7 +247,7 @@ class HomeFragment : Fragment() {
      */
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, iBinder: IBinder) {
-            Log.d(mTAG, "ServiceConnection: connected to service.")
+            Log.d(TAG, "ServiceConnection: connected to service.")
             // We've bound to MyService, cast the IBinder and get MyBinder instance
             val binder = iBinder as AdVpnService.MyBinder
             mService = binder.service
@@ -272,7 +256,7 @@ class HomeFragment : Fragment() {
         }
 
         override fun onServiceDisconnected(arg0: ComponentName) {
-            Log.d(mTAG, "ServiceConnection: disconnected from service.")
+            Log.d(TAG, "ServiceConnection: disconnected from service.")
             mIsBound = false
         }
     }
@@ -283,7 +267,7 @@ class HomeFragment : Fragment() {
     private fun getStatus() {
         mService!!.dnsStatus.observe(this
             , Observer {
-                statusDns_editText.text = it
+                statusDns_textView.text = it
             })
     }
 

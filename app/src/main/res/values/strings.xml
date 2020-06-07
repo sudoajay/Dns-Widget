@@ -143,6 +143,9 @@
     <string name="connected_text">Connected</string>
     <string name="disconnected_progress_text">Disconnected…</string>
     <string name="disconnected_text">Disconnected</string>
+    <string name="turn_on_string">Turn On</string>
+    <string name="turn_off_string">Turn Of</string>
+
 
 
     <!--    Network Provider-->
@@ -187,6 +190,8 @@
     <string name="none_text">None</string>
     <string name="begin_dns_speed_test_text">Begin Dns Speed Test</string>
     <string name="use_it_text">Use It</string>
+
+
 
 
 </resources>

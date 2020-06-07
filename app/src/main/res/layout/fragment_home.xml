@@ -202,7 +202,7 @@
 
 
             <TextView
-                android:id="@+id/statusDns_editText"
+                android:id="@+id/statusDns_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
@@ -216,7 +216,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/useDns6_TextView" />
 
             <Button
-                android:id="@+id/normal_Changes_Button"
+                android:id="@+id/connectDns_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -228,13 +228,13 @@
                 android:fontFamily="@font/lato"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:text="Turn On"
+                android:text="@string/turn_on_string"
                 android:textAllCaps="true"
                 android:textColor="#f3f4f7"
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/statusDns_editText" />
+                app:layout_constraintTop_toBottomOf="@+id/statusDns_textView" />
 
             <Button
                 android:id="@+id/customDns_Button"
@@ -254,7 +254,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/dnsTest_Button"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/normal_Changes_Button" />
+                app:layout_constraintTop_toBottomOf="@+id/connectDns_button" />
 
             <Button
                 android:id="@+id/dnsTest_Button"
@@ -274,7 +274,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/customDns_Button"
-                app:layout_constraintTop_toBottomOf="@+id/normal_Changes_Button" />
+                app:layout_constraintTop_toBottomOf="@+id/connectDns_button" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
