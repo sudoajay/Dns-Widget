@@ -14,10 +14,6 @@ import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
 import com.sudoajay.dnswidget.helper.ConnectivitySpeed
 import com.sudoajay.dnswidget.ui.sendFeedback.SendFeedback
-import com.sudoajay.dnswidget.vpnClasses.ConfigurationData
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -52,7 +48,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
 
-        ConfigurationData(applicationContext)
+
 
         val connectivitySpeed = ConnectivitySpeed()
 //        startCoroutineTimer {

@@ -191,12 +191,12 @@ class AddCustomDnsDialog(
 
     private fun isVisibleDNSv6(): Boolean {
         return requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getBoolean("Dnsv6", false)
+            .getBoolean("isDnsV6", false)
     }
 
     private fun setVisibleDNSv6(value: Boolean) {
         requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putBoolean("Dnsv6", value).apply()
+            .putBoolean("isDnsV6", value).apply()
     }
 
     private fun setText(textInputLayout: TextInputLayout): String {

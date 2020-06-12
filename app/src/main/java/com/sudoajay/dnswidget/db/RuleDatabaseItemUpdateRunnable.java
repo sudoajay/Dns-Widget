@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 
 
 import com.sudoajay.dnswidget.R;
+
 import com.sudoajay.dnswidget.vpnClasses.Configuration;
 import com.sudoajay.dnswidget.vpnClasses.FileHelper;
 import com.sudoajay.dnswidget.vpnClasses.SingleWriterMultipleReaderFile;

@@ -4,9 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @Database(entities = [Dns::class], version = 1 , exportSchema = false)
 abstract class DnsRoomDatabase : RoomDatabase() {
@@ -38,8 +35,7 @@ abstract class DnsRoomDatabase : RoomDatabase() {
         private var INSTANCE: DnsRoomDatabase? = null
 
         fun getDatabase(
-            context: Context,
-            scope: CoroutineScope
+            context: Context
         ): DnsRoomDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database

@@ -22,7 +22,7 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
     private var _application = application
     var appRepository: AppRepository
 
-    private var appDao: AppDao = AppRoomDatabase.getDatabase(application, viewModelScope).appDao()
+    private var appDao: AppDao = AppRoomDatabase.getDatabase(application).appDao()
 
 
     val headingText: String = application.getString(R.string.action_app_filter)

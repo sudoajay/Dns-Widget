@@ -15,7 +15,6 @@ import androidx.annotation.Nullable;
 import com.sudoajay.dnswidget.vpnClasses.Configuration;
 import com.sudoajay.dnswidget.vpnClasses.FileHelper;
 
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;

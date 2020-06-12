@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 
-class AppRepository(private val application: Application, private val appDao: AppDao) {
+class AppRepository(private val context: Context, private val appDao: AppDao) {
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
@@ -27,28 +27,28 @@ class AppRepository(private val application: Application, private val appDao: Ap
         ArrayList()
 
     fun handleFilterChanges(filter: String): LiveData<PagedList<App>> {
-        if (filter == application.getString(R.string.filter_changes_text)) {
+        if (filter == context.getString(R.string.filter_changes_text)) {
             //         Sorting Data in Alpha or Install date
             val getOrderBy =
-                application.getSharedPreferences("state", Context.MODE_PRIVATE).getString(
-                    application.getString(R.string.title_menu_order_by),
-                    application.getString(R.string.menu_alphabetical_order)
+                context.getSharedPreferences("state", Context.MODE_PRIVATE).getString(
+                    context.getString(R.string.title_menu_order_by),
+                    context.getString(R.string.menu_alphabetical_order)
                 )
 
 //         Is System App Show
-            val isSystemApp = if (application.getSharedPreferences("state", Context.MODE_PRIVATE)
-                    .getBoolean(application.getString(R.string.menu_system_apps), true)
+            val isSystemApp = if (context.getSharedPreferences("state", Context.MODE_PRIVATE)
+                    .getBoolean(context.getString(R.string.menu_system_apps), true)
             ) 1 else 2
 //         Is User App Show
 
-            val isUserApp = if (application.getSharedPreferences("state", Context.MODE_PRIVATE)
-                    .getBoolean(application.getString(R.string.menu_user_apps), true)
+            val isUserApp = if (context.getSharedPreferences("state", Context.MODE_PRIVATE)
+                    .getBoolean(context.getString(R.string.menu_user_apps), true)
             ) 1 else 2
 
 //         get Changes If the Selected App
             modifyDatabase()
 
-            app = if (getOrderBy!! == application.getString(R.string.menu_alphabetical_order)) {
+            app = if (getOrderBy!! == context.getString(R.string.menu_alphabetical_order)) {
                 appDao.getSortByAlpha(isSystemApp, isUserApp)
             } else {
                 appDao.getSortByDate(isSystemApp, isUserApp)
@@ -80,21 +80,21 @@ class AppRepository(private val application: Application, private val appDao: Ap
 
         //        Option Selected
         val selectedOption =
-            application.getSharedPreferences("state", Context.MODE_PRIVATE).getString(
-                application.getString(R.string.title_menu_select_option),
-                application.getString(R.string.menu_custom_app)
+            context.getSharedPreferences("state", Context.MODE_PRIVATE).getString(
+                context.getString(R.string.title_menu_select_option),
+                context.getString(R.string.menu_custom_app)
             ).toString()
 
         when (selectedOption) {
-            application.getString(R.string.menu_no_apps) ->
+            context.getString(R.string.menu_no_apps) ->
                 getId(1, SimpleSQLiteQuery("Select id From AppTable Where Selected = '1'"))
-            application.getString(R.string.menu_all_apps) ->
+            context.getString(R.string.menu_all_apps) ->
                 getId(2, SimpleSQLiteQuery("Select id From AppTable Where Selected = '0'"))
-            application.getString(R.string.menu_only_user_apps) ->
+            context.getString(R.string.menu_only_user_apps) ->
                 getId(3, SimpleSQLiteQuery("Select id From AppTable Where User_App = '1'"))
-            application.getString(R.string.menu_only_system_apps) ->
+            context.getString(R.string.menu_only_system_apps) ->
                 getId(4, SimpleSQLiteQuery("Select id From AppTable Where System_App = '1'"))
-            application.getString(R.string.menu_system_app_except_browser) -> {
+            context.getString(R.string.menu_system_app_except_browser) -> {
                 getAppExceptBrowser()
                 getId(5, SimpleSQLiteQuery(""))
             }
@@ -104,7 +104,7 @@ class AppRepository(private val application: Application, private val appDao: Ap
     private fun getAppExceptBrowser() {
 
         val resolveInfoList: List<ResolveInfo> =
-            application.packageManager.queryIntentActivities(newBrowserIntent(), 0)
+            context.packageManager.queryIntentActivities(newBrowserIntent(), 0)
         for (resolveInfo in resolveInfoList) {
             webBrowserPackageNames.add(resolveInfo.activityInfo.packageName)
         }
@@ -126,14 +126,15 @@ class AppRepository(private val application: Application, private val appDao: Ap
         var value: Boolean
         CoroutineScope(Dispatchers.Default).launch {
             value = when (type) {
-                1 -> true
+                1 -> false
+                2 -> true
                 3, 4, 5 -> {
                     withContext(Dispatchers.Default) {
                         id =
                             appDao.getIdViaQuery(SimpleSQLiteQuery("Select id From AppTable Where Selected = '1'"))
                         updateTheList(false, id)
                     }
-                    false
+                    true
                 }
                 else -> false
             }
@@ -147,7 +148,7 @@ class AppRepository(private val application: Application, private val appDao: Ap
 
             }
             withContext(Dispatchers.Default) {
-                updateTheList(!value, id)
+                updateTheList(value, id)
             }
 
         }
@@ -182,5 +183,9 @@ class AppRepository(private val application: Application, private val appDao: Ap
     }
     suspend fun updateSelectedApp(selected: Boolean, packageName: String){
         appDao.updateSelectedApp(selected, packageName)
+    }
+
+    suspend fun getPackageFromSelected(selected: Boolean):MutableList<String>{
+        return appDao.getPackageFromSelected(selected)
     }
 }

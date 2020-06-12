@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
@@ -17,7 +16,7 @@ class DnsTestViewModel(application: Application) : AndroidViewModel(application)
 
 
     var dnsRepository: DnsRepository
-    private var dnsDao = DnsRoomDatabase.getDatabase(application, viewModelScope).dnsDao()
+    private var dnsDao = DnsRoomDatabase.getDatabase(application).dnsDao()
     var dnsList: List<Dns> = ArrayList()
     val msList: MutableList<Long> = mutableListOf()
     var show: MutableLiveData<String>? = null

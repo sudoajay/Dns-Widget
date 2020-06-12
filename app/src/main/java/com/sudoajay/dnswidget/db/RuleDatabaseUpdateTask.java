@@ -20,7 +20,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-
 import com.sudoajay.dnswidget.MainActivity;
 import com.sudoajay.dnswidget.R;
 import com.sudoajay.dnswidget.vpnClasses.Configuration;
@@ -68,7 +67,7 @@ public class RuleDatabaseUpdateTask extends AsyncTask<Void, Void, Void> {
         notificationBuilder = new NotificationCompat.Builder(context, NotificationChannels.UPDATE_STATUS);
         notificationBuilder.setContentTitle(context.getString(R.string.updating_hostfiles))
                 .setContentText(context.getString(R.string.updating_hostfiles))
-                .setSmallIcon(R.drawable.ic_day_mode);
+                .setSmallIcon(R.drawable.ic_refresh);
 
         notificationBuilder.setProgress(configuration.hosts.items.size(), 0, false);
     }
@@ -176,7 +175,7 @@ public class RuleDatabaseUpdateTask extends AsyncTask<Void, Void, Void> {
             } else {
                 notificationBuilder.setProgress(0, 0, false);
                 notificationBuilder.setContentText(context.getString(R.string.could_not_update_all_hosts));
-                notificationBuilder.setSmallIcon(R.drawable.ic_home);
+                notificationBuilder.setSmallIcon(R.drawable.error_icon);
 
                 Intent intent = new Intent(context, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);

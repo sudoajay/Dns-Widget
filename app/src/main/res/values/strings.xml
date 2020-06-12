@@ -80,13 +80,16 @@
     <string name="delete_text">Delete</string>
     <string name="copy_text">Copy</string>
 
-    <string name="could_not_configure_vpn_service">Could not configure VPN service - Check if you use an always on VPN service like WiFi Assistant and disable it</string>
+<!--    Error Vpn Configuration-->
+    <string name="error_vpn_text">Error in configure VPN </string>
+    <string name="could_not_configure_vpn_service">Check if you use an always on VPN service like WiFi Assistant and disable it</string>
 
 
     <!--    DNS Notification-->
     <string name="dns_channel_id">DNS Notification</string>
     <string name="notification_action_pause">Pause</string>
-    <string name="notification_action_turn_off">Turn Off</string>
+    <string name="start_text">Start</string>
+    <string name="stop_text">Stop</string>
 
 
     <!--    Modify Strings-->
@@ -143,8 +146,6 @@
     <string name="connected_text">Connected</string>
     <string name="disconnected_progress_text">Disconnected…</string>
     <string name="disconnected_text">Disconnected</string>
-    <string name="turn_on_string">Turn On</string>
-    <string name="turn_off_string">Turn Of</string>
 
 
 

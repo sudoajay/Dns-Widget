@@ -228,7 +228,7 @@
                 android:fontFamily="@font/lato"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:text="@string/turn_on_string"
+                android:text="@string/start_text"
                 android:textAllCaps="true"
                 android:textColor="#f3f4f7"
                 android:textSize="22sp"

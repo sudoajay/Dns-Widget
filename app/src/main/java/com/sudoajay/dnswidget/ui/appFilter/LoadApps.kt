@@ -64,7 +64,7 @@ class LoadApps(private val context: Context, private val appFilterViewModel: App
                 installedDate,
                 systemApp,
                 !systemApp,
-                isSelected = false,
+                isSelected = true,
                 isInstalled = true
             )
         )

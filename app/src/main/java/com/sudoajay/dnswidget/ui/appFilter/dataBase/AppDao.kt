@@ -23,6 +23,9 @@ interface AppDao {
     @Query("Select id FROM AppTable Where System_App = '1' and Package_Name Not In (:webBrowserPackageNames)")
     suspend fun getIdFromArray(webBrowserPackageNames: MutableList<String>): List<Int>
 
+    @Query("Select Package_Name FROM AppTable Where Selected =:selected")
+    suspend fun getPackageFromSelected(selected: Boolean): MutableList<String>
+
     @Query("UPDATE AppTable SET Selected = :value WHERE id = :id")
     suspend fun updateSelectedById(value: Boolean, id: Int)
 

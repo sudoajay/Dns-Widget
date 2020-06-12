@@ -64,6 +64,7 @@ class VpnWatchdog {
      * Returns the current poll time out.
      */
     int getPollTimeout() {
+        Log.e(TAG , "getPollTimeoutMethod - " + enabled );
         if (!enabled)
             return -1;
         if (lastPacketReceived < lastPacketSent)
@@ -81,8 +82,6 @@ class VpnWatchdog {
     /**
      * An initialization method. Sleeps the penalty and sends initial packet.
      *
-     * @param enabled If the watchdog should be enabled.
-     * @throws InterruptedException If interrupted
      */
     void initialize(boolean enabled) throws InterruptedException {
         Log.d(TAG, "initialize: Initializing watchdog");
@@ -108,6 +107,7 @@ class VpnWatchdog {
      * @throws AdVpnThread.VpnNetworkException When the watchdog timed out
      */
     void handleTimeout() throws AdVpnThread.VpnNetworkException {
+        Log.e(TAG , "handleTimeout Method - " + enabled );
         if (!enabled)
             return;
         Log.d(TAG, "handleTimeout: Milliseconds elapsed between last receive and sent: "
@@ -135,6 +135,7 @@ class VpnWatchdog {
      * @param packetData The data of the packet
      */
     void handlePacket(byte[] packetData) {
+        Log.e(TAG , "handlePacket Method - " + enabled );
         if (!enabled)
             return;
 
@@ -148,6 +149,7 @@ class VpnWatchdog {
      * @throws AdVpnThread.VpnNetworkException If sending failed and we should restart
      */
     void sendPacket() throws AdVpnThread.VpnNetworkException {
+        Log.e(TAG , "sendPacket Method - " + enabled );
         if (!enabled)
             return;
 

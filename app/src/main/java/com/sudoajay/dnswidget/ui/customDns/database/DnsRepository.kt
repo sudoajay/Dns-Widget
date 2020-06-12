@@ -61,4 +61,10 @@ class DnsRepository(private val application: Application, private val dnsDao: Dn
     ) {
         return dnsDao.updateSelectedDns(id, name, dns1, dns2, dns3, dns4)
     }
+
+    suspend fun getDnsFromId(id: Long): Dns {
+        return dnsDao.getDnsFromId(id)
+    }
+
+
 }

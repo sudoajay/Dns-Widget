@@ -15,8 +15,8 @@ package com.sudoajay.dnswidget.vpnClasses;
 import android.content.Context;
 import android.util.Log;
 
-
 import com.sudoajay.dnswidget.db.RuleDatabase;
+
 
 import org.pcap4j.packet.IpPacket;
 import org.pcap4j.packet.IpSelector;
@@ -69,11 +69,6 @@ public class DnsPacketProxy {
     private final EventLoop eventLoop;
     ArrayList<InetAddress> upstreamDnsServers = new ArrayList<>();
 
-    public DnsPacketProxy(EventLoop eventLoop, RuleDatabase database) {
-        this.eventLoop = eventLoop;
-        this.ruleDatabase = database;
-    }
-
     public DnsPacketProxy(EventLoop eventLoop) {
         this.eventLoop = eventLoop;
         this.ruleDatabase = RuleDatabase.getInstance();
@@ -90,10 +85,6 @@ public class DnsPacketProxy {
     void initialize(Context context, ArrayList<InetAddress> upstreamDnsServers) throws InterruptedException {
         ruleDatabase.initialize(context);
         this.upstreamDnsServers = upstreamDnsServers;
-
-        for(InetAddress get: upstreamDnsServers){
-            Log.e(TAG , " Address  - " + get );
-        }
     }
 
     /**

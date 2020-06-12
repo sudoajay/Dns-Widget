@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
@@ -17,10 +16,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     var dnsList: List<Dns> = listOf()
     private var dnsName: MutableLiveData<List<String>>? = null
-    private var _application = application
     var dnsRepository: DnsRepository
 
-    private var dnsDao = DnsRoomDatabase.getDatabase(application, viewModelScope).dnsDao()
+    private var dnsDao = DnsRoomDatabase.getDatabase(application).dnsDao()
 
     init {
         //        Creating Object and Initialization

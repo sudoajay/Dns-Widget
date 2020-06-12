@@ -16,7 +16,7 @@ class CustomDnsViewModel(application: Application) : AndroidViewModel(applicatio
     val headingText: String = application.getString(R.string.action_custom_dns)
     var dnsRepository: DnsRepository
 
-    private var dnsDao = DnsRoomDatabase.getDatabase(application, viewModelScope).dnsDao()
+    private var dnsDao = DnsRoomDatabase.getDatabase(application).dnsDao()
     private var loadDns: LoadDns
 
     var dnsList: LiveData<List<Dns>>? = null

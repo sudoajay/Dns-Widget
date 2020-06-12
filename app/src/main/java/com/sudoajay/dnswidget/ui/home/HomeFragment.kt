@@ -7,30 +7,29 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.res.ColorStateList
 import android.net.VpnService
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.widget.CompoundButtonCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.google.android.material.textfield.TextInputLayout
-import com.jaredrummler.materialspinner.MaterialSpinner
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.FragmentHomeBinding
+import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import com.sudoajay.dnswidget.vpnClasses.AdVpnService
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.sudoajay.dnswidget.vpnClasses.Command
+import java.io.Serializable
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), Serializable {
 
     private lateinit var homeViewModel: HomeViewModel
     private var requestDnsCode = 1
@@ -67,24 +66,24 @@ class HomeFragment : Fragment() {
         homeViewModel.getDnsName().observe(viewLifecycleOwner, Observer {
 
             binding.materialSpinner.setItems(it)
+            Log.e(TAG, it.size.toString())
             if (it.isNotEmpty()) {
-                binding.materialSpinner.selectedIndex = 0
-                addItem(0)
+                val index = 0
+                binding.materialSpinner.selectedIndex =index
+                addItem(index)
                 if (isVisibleDNSv6()) {
-                    binding.dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns1)
-                    binding.dns2TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns2)
-                    binding.dns3TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns3)
-                    binding.dns4TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns4)
+                    binding.dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns1)
+                    binding.dns2TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns2)
+                    binding.dns3TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns3)
+                    binding.dns4TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns4)
                 } else {
-                    binding.dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns1)
-                    binding.dns3TextInputLayout.editText!!.setText(homeViewModel.dnsList[0].dns2)
+                    binding.dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns1)
+                    binding.dns3TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns2)
                 }
             }
 
 
         })
-
-
         binding.materialSpinner.setOnItemSelectedListener { _, position, _, _ ->
             addItem(position)
             binding.dns1TextInputLayout.editText!!.setText(dnsList[0])
@@ -92,7 +91,6 @@ class HomeFragment : Fragment() {
             binding.dns3TextInputLayout.editText!!.setText(dnsList[2])
             binding.dns4TextInputLayout.editText!!.setText(dnsList[3])
         }
-
 
 
         binding.useDns4CheckBox
@@ -192,28 +190,53 @@ class HomeFragment : Fragment() {
         }
 
 
-        binding.customDnsButton.setOnClickListener {
+        binding.connectDnsButton.setOnClickListener {
+
+            Log.e(
+                TAG,
+                binding.materialSpinner.selectedIndex.toString() + " --- " + homeViewModel.dnsList[binding.materialSpinner.selectedIndex].dnsName
+            )
+            saveSelectedDnsInfo(homeViewModel.dnsList[binding.materialSpinner.selectedIndex])
+
             Log.i(TAG, "Attempting to connect")
             val intent = VpnService.prepare(requireContext())
             if (intent != null) {
-                Log.i(TAG, "Intent Null ")
+                Log.i(TAG, "Intent Not  Null ")
                 startActivityForResult(intent, requestDnsCode)
             } else {
-                Log.i(TAG, "Intent Not  Null ")
+                Log.i(TAG, "Intent Null ")
                 onActivityResult(requestDnsCode, Activity.RESULT_OK, null)
             }
         }
     }
 
+    private fun saveSelectedDnsInfo(dns: Dns) {
+        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putLong("id", dns.id!!).apply()
+        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putString("dnsName", dns.dnsName).apply()
+        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putString("dns1", dns.dns1).apply()
+        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putString("dns2", dns.dns2).apply()
+        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putString("dns3", dns.dns3).apply()
+        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putString("dns4", dns.dns4).apply()
+        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putString("filter", dns.filter).apply()
+    }
+
     private fun isVisibleDNSv6(): Boolean {
         return requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getBoolean("Dnsv6", false)
+            .getBoolean("isDnsV6", false)
     }
 
     private fun setVisibleDNSv6(value: Boolean) {
         requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putBoolean("Dnsv6", value).apply()
+            .putBoolean("isDnsV6", value).apply()
     }
+
 
     private fun addItem(position: Int) {
         dnsList.clear()
@@ -226,19 +249,38 @@ class HomeFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == requestDnsCode && resultCode == Activity.RESULT_CANCELED)
-//            CustomToast.toastIt(
-//                requireContext(),
-//                getString(R.string.could_not_configure_vpn_service)
-//            )
-//
-//        if (requestCode == requestDnsCode && resultCode == Activity.RESULT_OK) {
-//            val bindIntent = Intent(activity, AdVpnService::class.java)
-//            requireActivity().bindService(bindIntent, serviceConnection, Context.BIND_ABOVE_CLIENT)
-//            requireContext().startService(bindIntent)
-//
-//        }
+        if (requestCode == requestDnsCode && resultCode == Activity.RESULT_CANCELED)
+            errorVpnService()
+        else if (requestCode == requestDnsCode && resultCode == Activity.RESULT_OK) {
 
+
+            val bindIntent = Intent(activity, AdVpnService::class.java)
+
+            bindIntent.putExtra("COMMAND", Command.START.ordinal)
+
+            requireActivity().bindService(bindIntent, serviceConnection, Context.BIND_ABOVE_CLIENT)
+            requireContext().startService(bindIntent)
+            Log.i(TAG, "$resultCode ---- Accepted ")
+        }
+
+    }
+
+
+    private fun errorVpnService() {
+        val builder: AlertDialog.Builder =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                AlertDialog.Builder(requireContext(), android.R.style.Theme_Material_Dialog_Alert)
+            } else {
+                AlertDialog.Builder(requireContext())
+            }
+        builder.setTitle(requireContext().getString(R.string.error_vpn_text))
+            .setMessage(requireContext().getString(R.string.could_not_configure_vpn_service))
+            .setNegativeButton("Ok") { _, _ ->
+
+            }
+            .setIcon(R.drawable.error_icon)
+            .setCancelable(true)
+            .show()
     }
 
     /**
@@ -265,10 +307,18 @@ class HomeFragment : Fragment() {
      * Method for listening to random numbers generated by our service class
      */
     private fun getStatus() {
-        mService!!.dnsStatus.observe(this
-            , Observer {
-                statusDns_textView.text = it
-            })
+        mService!!.dnsStatus.observe(this, Observer {
+            binding.statusDnsTextView.text = it
+
+            when (it) {
+                requireContext().getString(R.string.not_connected_text) ->
+                    binding.connectDnsButton.text = requireContext().getString(R.string.start_text)
+
+                requireContext().getString(R.string.connected_progress_text),
+                requireContext().getString(R.string.connected_text) ->
+                    binding.connectDnsButton.text = requireContext().getString(R.string.stop_text)
+            }
+        })
     }
 
     override fun onDestroy() {
