@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
+import com.sudoajay.dnswidget.helper.ConnectivitySpeed
 import com.sudoajay.dnswidget.ui.appFilter.LoadApps
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppDao
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository

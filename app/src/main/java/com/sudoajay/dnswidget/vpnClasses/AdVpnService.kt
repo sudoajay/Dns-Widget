@@ -8,10 +8,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
 import android.graphics.drawable.Icon
 import android.net.ConnectivityManager
 import android.net.VpnService
@@ -19,11 +15,12 @@ import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.sudoajay.dnswidget.MainActivity
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.helper.ConnectivitySpeed
 import com.sudoajay.dnswidget.helper.ConnectivityType
 import com.sudoajay.dnswidget.helper.ImageUtils
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
@@ -32,10 +29,7 @@ import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
 import com.sudoajay.dnswidget.vpnClasses.AdVpnThread.Notify
 import com.sudoajay.dnswidget.vpnClasses.NotificationChannels.onCreate
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 
 class AdVpnService : VpnService() {
@@ -48,7 +42,7 @@ class AdVpnService : VpnService() {
     private lateinit var dnsDao: DnsDao
     private lateinit var notificationBuilder : Notification.Builder
 
-    private lateinit var builder: NotificationCompat.Builder
+    private lateinit var notificationCompat: NotificationCompat.Builder
 
 
     private var vpnThread: AdVpnThread? = AdVpnThread(this, object : Notify {
@@ -97,7 +91,7 @@ class AdVpnService : VpnService() {
 
     fun reconnect() {
         updateVpnStatus(VPN_STATUS_RECONNECTING)
-        restartVpnThread()
+        startVpn()
     }
 
 
@@ -172,10 +166,11 @@ class AdVpnService : VpnService() {
         notificationManager.notify(
             NOTIFICATION_ID_STATE,
             NotificationCompat.Builder(this, NotificationChannels.SERVICE_PAUSED)
-                .setSmallIcon(R.drawable.ic_share) // TODO: Notification icon
+                .setSmallIcon(R.drawable.ic_dns) // TODO: Notification icon
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .setContentTitle(getString(R.string.notification_paused_title))
                 .setContentText(getString(R.string.notification_paused_text))
+                .setColor(ContextCompat.getColor(applicationContext, R.color.fabColor_DnsSpeedTest))
                 .setContentIntent(
                     getResumePendingIntent()
                 )
@@ -207,24 +202,80 @@ class AdVpnService : VpnService() {
 
     private fun startVpn() {
 
-        builder = NotificationCompat.Builder(this, NotificationChannels.SERVICE_RUNNING)
-        DnsNotification(applicationContext).notify("Connected", builder, selectedDns)
+        if (isNetworkSpeedNotification()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                notificationBuilder =
+                    Notification.Builder(this, NotificationChannels.SERVICE_RUNNING)
+            } else {
+                @Suppress("DEPRECATION")
+                notificationBuilder = Notification.Builder(this)
+            }
 
-        builder.setLargeIcon(ImageUtils.createBitmapFromString("0", " KB"))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                notificationBuilder.setSmallIcon(
+                    Icon.createWithBitmap(
+                        ImageUtils.createBitmapFromString(
+                            "0",
+                            " KB"
+                        )
+                    )
+                )
 
 
-        //        Pending Intent For MainActivity
+            } else notificationBuilder.setSmallIcon(R.drawable.ic_dns_test)
+            notificationBuilder.setContentIntent(createPendingIntent())
 
-        builder.setContentIntent(createPendingIntent())
+            val dnsNotification = DnsNotification(applicationContext)
+            dnsNotification.notifyBuilder(
+                "Connected",
+                notificationBuilder,
+                selectedDns
+            )
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val connectivitySpeed = ConnectivitySpeed()
+                startCoroutineTimer {
+                    val networkSpeed = connectivitySpeed.getNetworkSpeed()
+                    val speed = networkSpeed.subSequence(0, networkSpeed.indexOf(" ") + 1)
+                    val units =
+                        networkSpeed.subSequence(networkSpeed.indexOf(" ") + 1, networkSpeed.length)
+
+                    val bitmap =
+                        ImageUtils.createBitmapFromString(speed.toString(), units.toString())
+                    val icon = Icon.createWithBitmap(bitmap)
+                    notificationBuilder.setSmallIcon(icon)
+
+                    dnsNotification.notifyNotification(dnsNotification.notification!!)
+                }
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                startForeground(NOTIFICATION_ID_STATE, notificationBuilder.build(), 1)
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                startForeground(NOTIFICATION_ID_STATE, notificationBuilder.build())
+
+
+        } else {
+
+            notificationCompat =
+                NotificationCompat.Builder(this, NotificationChannels.SERVICE_RUNNING)
+            notificationCompat.setSmallIcon(R.drawable.ic_dns)
+
+            notificationCompat.setContentIntent(createPendingIntent())
+
+            DnsNotification(applicationContext).notifyCompat(
+                "Connected",
+                notificationCompat,
+                selectedDns
+            )
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                startForeground(NOTIFICATION_ID_STATE, notificationCompat.build(), 1)
+            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                startForeground(NOTIFICATION_ID_STATE, notificationCompat.build())
+        }
 
         updateVpnStatus(VPN_STATUS_STARTING)
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-            startForeground(NOTIFICATION_ID_STATE, builder.build(), 1)
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            startForeground(NOTIFICATION_ID_STATE, builder.build())
-
 
         registerReceiver(
             networkChangeReceiver,
@@ -232,31 +283,25 @@ class AdVpnService : VpnService() {
         )
 
         restartVpnThread()
+
+
     }
 
-    private fun createBitmapFromString(speed: String, units: String): Bitmap? {
-        val paint = Paint()
-        paint.isAntiAlias = true
-        paint.textSize = 55f
-        paint.textAlign = Paint.Align.CENTER
-        val unitsPaint = Paint()
-        unitsPaint.isAntiAlias = true
-        unitsPaint.textSize = 40f // size is in pixels
-        unitsPaint.textAlign = Paint.Align.CENTER
-        val textBounds = Rect()
-        paint.getTextBounds(speed, 0, speed.length, textBounds)
-        val unitsTextBounds = Rect()
-        unitsPaint.getTextBounds(units, 0, units.length, unitsTextBounds)
-        val width =
-            if (textBounds.width() > unitsTextBounds.width()) textBounds.width() else unitsTextBounds.width()
-        val bitmap = Bitmap.createBitmap(
-            width + 10, 90,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        canvas.drawText(speed, width / 2 + 5.toFloat(), 50f, paint)
-        canvas.drawText(units, width / 2.toFloat(), 90f, unitsPaint)
-        return bitmap
+
+    private inline fun startCoroutineTimer(
+        repeatMillis: Long = 1000,
+        crossinline action: () -> Unit
+    ) = GlobalScope.launch {
+        while (true) {
+            action()
+            delay(repeatMillis)
+        }
+    }
+
+
+    private fun isNetworkSpeedNotification(): Boolean {
+        return applicationContext.getSharedPreferences("state", Context.MODE_PRIVATE)
+            .getBoolean("isNetworkSpeed", true)
     }
 
 
@@ -297,37 +342,6 @@ class AdVpnService : VpnService() {
         stopSelf()
     }
 
-
-//    private fun createNotification(){
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            notificationBuilder = Notification.Builder(this,NotificationChannels.SERVICE_NETWORK_SPEED)
-//        } else{
-//            @Suppress("DEPRECATION")
-//            notificationBuilder = Notification.Builder(this)
-//        }
-//
-//        notificationBuilder.setContentTitle("")
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-//            notificationBuilder.setSmallIcon(Icon.createWithBitmap(ImageUtils.createBitmapFromString("0", " KB")))
-//        else
-//            notificationBuilder.setSmallIcon(R.drawable.ic_speed_test)
-//
-//        notificationBuilder.setVisibility(Notification.VISIBILITY_PUBLIC)
-//        notificationBuilder.setOngoing(true)
-//        notificationBuilder.setAutoCancel(true)
-//        setNotificationContent()
-//        notificationBuilder.setContentIntent(createPendingIntent())
-//
-//    }
-//
-//    private fun setNotificationContent(){
-//        notificationLayout = RemoteViews("com.deepak.internetspeed", androidx.lifecycle.R.layout.custom_notification_view)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            notificationBuilder.setCustomContentView(notificationLayout)
-//        }else{
-//            notificationBuilder.setContent(notificationLayout)
-//        }
-//    }
 
     private fun createPendingIntent(): PendingIntent? {
         return  PendingIntent.getService(
