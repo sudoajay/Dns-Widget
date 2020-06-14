@@ -1,24 +1,23 @@
 package com.sudoajay.dnswidget.ui.customDns.database
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.sudoajay.dnswidget.R
 
-class DnsRepository(private val application: Application, private val dnsDao: DnsDao) {
+class DnsRepository(private val context: Context, private val dnsDao: DnsDao) {
 
 
     fun dnsListUpdate(filter: String): LiveData<List<Dns>> {
-        if (filter == application.getString(R.string.filter_changes_text)) {
+        if (filter == context.getString(R.string.filter_changes_text)) {
 
             //   Is Custom Dns Show
-            val isCustomDns = if (application.getSharedPreferences("state", Context.MODE_PRIVATE)
-                    .getBoolean(application.getString(R.string.menu_custom_dns), true)
+            val isCustomDns = if (context.getSharedPreferences("state", Context.MODE_PRIVATE)
+                    .getBoolean(context.getString(R.string.menu_custom_dns), true)
             ) 1 else 2
 
             //   Is Default Dns Show
-            val isDefaultDns = if (application.getSharedPreferences("state", Context.MODE_PRIVATE)
-                    .getBoolean(application.getString(R.string.menu_default_dns), true)
+            val isDefaultDns = if (context.getSharedPreferences("state", Context.MODE_PRIVATE)
+                    .getBoolean(context.getString(R.string.menu_default_dns), true)
             ) 0 else 2
 
             return dnsDao.getDnsByOption(isCustomDns, isDefaultDns)
@@ -35,7 +34,7 @@ class DnsRepository(private val application: Application, private val dnsDao: Dn
     }
 
     suspend fun getList(): List<Dns> {
-        return dnsDao.getList(application.getString(R.string.unspecified_text))
+        return dnsDao.getList(context.getString(R.string.unspecified_text))
     }
 
 

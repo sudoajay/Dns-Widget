@@ -1,7 +1,10 @@
 package com.sudoajay.dnswidget.ui.customDns
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
@@ -12,11 +15,12 @@ import kotlinx.coroutines.launch
 
 class CustomDnsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var _application = application
+
     val headingText: String = application.getString(R.string.action_custom_dns)
+    private var _application = application
     var dnsRepository: DnsRepository
 
-    private var dnsDao = DnsRoomDatabase.getDatabase(application).dnsDao()
+    private var dnsDao = DnsRoomDatabase.getDatabase(application.applicationContext).dnsDao()
     private var loadDns: LoadDns
 
     var dnsList: LiveData<List<Dns>>? = null
@@ -25,8 +29,8 @@ class CustomDnsViewModel(application: Application) : AndroidViewModel(applicatio
 
     init {
         //        Creating Object and Initialization
-        dnsRepository = DnsRepository(_application, dnsDao)
-        loadDns = LoadDns(_application, dnsRepository)
+        dnsRepository = DnsRepository(application.applicationContext, dnsDao)
+        loadDns = LoadDns(application.applicationContext, dnsRepository)
 
         dnsList = Transformations.switchMap(filterChanges) {
             dnsRepository.dnsListUpdate(it)

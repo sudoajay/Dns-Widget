@@ -16,6 +16,7 @@ object NotificationChannels {
     private const val GROUP_UPDATE = "com.sudoajay.dnswidget.notifications.update"
     const val SERVICE_RUNNING = "com.sudoajay.dnswidget.notifications.service.running"
     const val SERVICE_PAUSED = "com.sudoajay.dnswidget.notifications.service.paused"
+    const val SERVICE_NETWORK_SPEED = "com.sudoajay.dnswidget.notifications.service.network.speed"
     const val UPDATE_STATUS = "com.sudoajay.dnswidget.notifications.update.status"
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -65,5 +66,14 @@ object NotificationChannels {
         updateChannel.group = GROUP_UPDATE
         updateChannel.setShowBadge(false)
         notificationManager.createNotificationChannel(updateChannel)
+
+        val networkSPeed = NotificationChannel(SERVICE_NETWORK_SPEED ,  context.getString(R.string.network_speed_text),NotificationManager.IMPORTANCE_MIN)
+
+
+        networkSPeed.description = context.getString(R.string.notifications_speed_test_desc)
+        networkSPeed.group = GROUP_UPDATE
+        networkSPeed.setShowBadge(false)
+        notificationManager.createNotificationChannel(networkSPeed)
+
     }
 }

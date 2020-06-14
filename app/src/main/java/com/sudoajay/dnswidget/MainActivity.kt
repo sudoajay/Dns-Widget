@@ -12,8 +12,17 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
-import com.sudoajay.dnswidget.helper.ConnectivitySpeed
+import com.sudoajay.dnswidget.ui.appFilter.LoadApps
+import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppDao
+import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository
+import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRoomDatabase
+import com.sudoajay.dnswidget.ui.customDns.LoadDns
+import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
+import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
 import com.sudoajay.dnswidget.ui.sendFeedback.SendFeedback
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -21,7 +30,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var drawerLayout: DrawerLayout
-    private var connectivitySpeed = ConnectivitySpeed()
     private val ratingLink =
         "https://play.google.com/store/apps/details?id=com.sudoajay.duplication_data"
 
@@ -48,9 +56,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
 
 
+//        App Data base Configuration
+        appDatabaseConfiguration()
+
+        //        Dns Database Configuration
+        dnsDatabaseConfiguration()
 
 
-        val connectivitySpeed = ConnectivitySpeed()
+//        val connectivitySpeed = ConnectivitySpeed()
 //        startCoroutineTimer {
 //            connectivitySpeed.getNetworkSpeed()
 //        }
@@ -67,6 +80,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //        }
 //    }
 
+
+    private fun appDatabaseConfiguration() {
+        //        Creating Object and Initialization
+        val appDao: AppDao = AppRoomDatabase.getDatabase(applicationContext).appDao()
+        val appRepository = AppRepository(applicationContext, appDao)
+        val loadApps = LoadApps(applicationContext, appRepository)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            if (appRepository.getCount() == 0)
+                loadApps.searchInstalledApps()
+        }
+
+    }
+
+
+    private fun dnsDatabaseConfiguration() {
+        //        Creating Object and Initialization
+        val dnsDao = DnsRoomDatabase.getDatabase(applicationContext).dnsDao()
+        val dnsRepository = DnsRepository(applicationContext, dnsDao)
+        val loadDns = LoadDns(applicationContext, dnsRepository)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            if (dnsRepository.getCount() == 0)
+                loadDns.fillDefaultData()
+        }
+
+    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val handled = NavigationUI.onNavDestinationSelected(item, navController)

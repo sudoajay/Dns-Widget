@@ -1,9 +1,7 @@
 package com.sudoajay.dnswidget.vpnClasses
 
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.net.VpnService
 import android.os.ParcelFileDescriptor
 import android.system.ErrnoException
@@ -12,7 +10,15 @@ import android.system.OsConstants
 import android.system.StructPollfd
 import android.util.Log
 import com.sudoajay.dnswidget.MainActivity
+import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppDao
+import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository
+import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRoomDatabase
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.pcap4j.packet.IpPacket
 import java.io.FileDescriptor
 import java.io.FileInputStream
@@ -23,10 +29,10 @@ import java.util.*
 import kotlin.experimental.and
 import kotlin.experimental.or
 
-internal class AdVpnThread(private val vpnService: VpnService, private val notify: Notify?) :
+class AdVpnThread(private val vpnService: VpnService, private val notify: Notify?) :
     Runnable, DnsPacketProxy.EventLoop {
     /* Upstream DNS servers, indexed by our IP */
-    val upstreamDnsServers =
+    private val upstreamDnsServers =
         ArrayList<InetAddress>()
 
     /* Data to be written to the device */
@@ -40,16 +46,12 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
     private val dnsPacketProxy = DnsPacketProxy(this)
 
     // Watch dog that checks our connection is alive.
-    private val vpnWatchDog = VpnWatchdog()
     private var thread: Thread? = null
-    private var mBlockFd: FileDescriptor? = null
-    private var mInterruptFd: FileDescriptor? = null
     private var selectedDns: Dns? = null
 
-    /**
-     * Number of iterations since we last cleared the pcap4j cache
-     */
-    private val pcap4jFactoryClearCacheCounter = 0
+    private var mBlockFd: FileDescriptor? = null
+    private var mInterruptFd: FileDescriptor? = null
+
     fun startThread(selectedDns: Dns?) {
         this.selectedDns = selectedDns
         Log.i(TAG, "Starting Vpn Thread")
@@ -59,13 +61,13 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
     }
 
     fun stopThread() {
+
+
         Log.i(TAG, "Stopping Vpn Thread")
         if (thread != null) thread!!.interrupt()
-        mInterruptFd = FileHelper.closeOrWarn(
-            mInterruptFd,
-            TAG,
-            "stopThread: Could not close interruptFd"
-        )
+
+        closeOrWarn(mInterruptFd)
+
         try {
             if (thread != null) thread!!.join(2000)
         } catch (e: InterruptedException) {
@@ -80,6 +82,7 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
                 TAG,
                 "stopThread: Could not kill VPN thread, it is still alive"
             )
+
         } else {
             thread = null
             Log.i(TAG, "Vpn Thread stopped")
@@ -92,8 +95,8 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
 
         // Load the block list
         try {
-            dnsPacketProxy.initialize(vpnService, upstreamDnsServers)
-            vpnWatchDog.initialize(FileHelper.loadCurrentSettings(vpnService).watchDog)
+            dnsPacketProxy.initialize(upstreamDnsServers)
+
         } catch (e: InterruptedException) {
             return
         }
@@ -162,9 +165,12 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
         val packet = ByteArray(32767)
 
         // A pipe we can interrupt the poll() call with by closing the interruptFd end
+
+        // A pipe we can interrupt the poll() call with by closing the interruptFd end
         val pipes = Os.pipe()
         mInterruptFd = pipes[0]
         mBlockFd = pipes[1]
+
 
         // Authenticate and configure the virtual network interface.
         try {
@@ -182,11 +188,7 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
                 while (doOne(inputStream, outFd, packet));
             }
         } finally {
-            mBlockFd = FileHelper.closeOrWarn(
-                mBlockFd,
-                TAG,
-                "runVpn: Could not close blockFd"
-            )
+            closeOrWarn(mBlockFd )
         }
     }
 
@@ -226,11 +228,9 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
             TAG,
             "doOne: Polling " + polls.size + " file descriptors"
         )
-        val result = FileHelper.poll(polls, vpnWatchDog.getPollTimeout())
-        if (result == 0) {
-            vpnWatchDog.handleTimeout()
-            return true
-        }
+        val result = poll(polls, -1)
+        if (result == 0) return true
+
         if (blockFd.revents.toInt() != 0) {
             Log.i(TAG, "Told to stop VPN")
             return false
@@ -266,10 +266,43 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
         return true
     }
 
+    /**
+     * Wrapper around [Os.poll] that automatically restarts on EINTR
+     * While post-Lollipop devices handle that themselves, we need to do this for Lollipop.
+     *
+     * @param fds     Descriptors and events to wait on
+     * @param timeout Timeout. Should be -1 for infinite, as we do not lower the timeout when
+     * retrying due to an interrupt
+     * @return The number of fds that have events
+     * @throws ErrnoException See [Os.poll]
+     */
+    @Throws(ErrnoException::class, InterruptedException::class)
+    fun poll(fds: Array<StructPollfd?>?, timeout: Int): Int {
+        while (true) {
+            if (Thread.interrupted()) throw InterruptedException()
+            return try {
+                Os.poll(fds, timeout)
+            } catch (e: ErrnoException) {
+                if (e.errno == OsConstants.EINTR) continue
+                throw e
+            }
+        }
+    }
+
+    private fun closeOrWarn(fd: FileDescriptor?): FileDescriptor? {
+        try {
+            if (fd != null) Os.close(fd)
+        } catch (e: ErrnoException) {
+            Log.e(TAG, "closeOrWarn: ${e.message}", e)
+        } finally {
+            return null
+        }
+    }
+
     @Throws(VpnNetworkException::class)
     private fun writeToDevice(outFd: FileOutputStream) {
         try {
-            outFd.write(deviceWrites.poll())
+            outFd.write(deviceWrites.poll()!!)
         } catch (e: IOException) {
             // TODO: Make this more specific, only for: "File descriptor closed"
             throw VpnNetworkException("Outgoing VPN output stream closed")
@@ -300,7 +333,6 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
             return
         }
         val readPacket = packet.copyOfRange(0, length)
-        vpnWatchDog.handlePacket(readPacket)
         dnsPacketProxy.handleDnsRequest(readPacket)
     }
 
@@ -309,28 +341,19 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
         outPacket: DatagramPacket,
         parsedPacket: IpPacket
     ) {
-        var dnsSocket: DatagramSocket? = null
+        val dnsSocket: DatagramSocket
         try {
             // Packets to be sent to the real DNS server will need to be protected from the VPN
             dnsSocket = DatagramSocket()
             vpnService.protect(dnsSocket)
             dnsSocket.send(outPacket)
-            if (parsedPacket != null) dnsIn.add(
+            dnsIn.add(
                 WaitingOnSocketPacket(
                     dnsSocket,
                     parsedPacket
                 )
-            ) else FileHelper.closeOrWarn(
-                dnsSocket,
-                TAG,
-                "handleDnsRequest: Cannot close socket in error"
             )
         } catch (e: IOException) {
-            FileHelper.closeOrWarn(
-                dnsSocket,
-                TAG,
-                "handleDnsRequest: Cannot close socket in error"
-            )
             if (e.cause is ErrnoException) {
                 val errnoExc = e.cause as ErrnoException?
                 if (errnoExc!!.errno == OsConstants.ENETUNREACH || errnoExc.errno == OsConstants.EPERM) {
@@ -394,7 +417,7 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
             builder.addDnsServer(alias)
             builder.addRoute(alias, 32)
             Log.e(TAG, "$alias ---- 4  Here $addr")
-            vpnWatchDog.setTarget(InetAddress.getByName(alias))
+
         } else if (addr is Inet6Address) {
             upstreamDnsServers.add(addr)
             ipv6Template!![ipv6Template.size - 1] = (upstreamDnsServers.size + 1).toByte()
@@ -408,54 +431,63 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
                 TAG,
                 "$i6addr ---- 5  Here $addr"
             )
-            vpnWatchDog.setTarget(i6addr)
+
         }
     }
 
-    private fun configurePackages(
-        builder: VpnService.Builder,
-        config: Configuration
-    ) {
-        val allowOnVpn: Set<String> = HashSet()
-        val doNotAllowOnVpn: Set<String> =
-            HashSet()
-        config.whitelist.resolve(vpnService.packageManager, allowOnVpn, doNotAllowOnVpn)
-        if (config.whitelist.defaultMode == Configuration.Whitelist.DEFAULT_MODE_NOT_ON_VPN) {
-            for (app in allowOnVpn) {
-                try {
-                    Log.d(
-                        TAG,
-                        "configure: Allowing $app to use the DNS VPN"
-                    )
-                    builder.addAllowedApplication(app)
-                } catch (e: Exception) {
-                    Log.w(TAG, "configure: Cannot disallow", e)
+    private fun configurePackages(builder: VpnService.Builder) {
+
+        CoroutineScope(Dispatchers.Main).launch {
+
+            val appDao: AppDao = AppRoomDatabase.getDatabase(vpnService).appDao()
+            val appRepository = AppRepository(vpnService, appDao)
+
+            var allowOnVpn: MutableList<String> = mutableListOf()
+            var doNotAllowOnVpn: MutableList<String> = mutableListOf()
+
+            withContext(Dispatchers.IO) {
+                allowOnVpn = appRepository.getPackageFromSelected(true)
+                doNotAllowOnVpn = appRepository.getPackageFromSelected(false)
+            }
+
+            if (doNotAllowOnVpn.isEmpty()) {
+                for (app in allowOnVpn) {
+                    try {
+                        Log.d(
+                            TAG,
+                            "configure: Allowing $app to use the DNS VPN"
+                        )
+                        builder.addAllowedApplication(app)
+                    } catch (e: Exception) {
+                        Log.w(TAG, "configure: Cannot disallow", e)
+                    }
+                }
+
+            } else {
+                for (app in doNotAllowOnVpn) {
+                    try {
+                        Log.d(
+                            TAG,
+                            "configure: Disallowing $app from using the DNS VPN"
+                        )
+                        builder.addDisallowedApplication(app)
+                    } catch (e: Exception) {
+                        Log.w(TAG, "configure: Cannot disallow", e)
+                    }
                 }
             }
-        } else {
-            for (app in doNotAllowOnVpn) {
-                try {
-                    Log.d(
-                        TAG,
-                        "configure: Disallowing $app from using the DNS VPN"
-                    )
-                    builder.addDisallowedApplication(app)
-                } catch (e: Exception) {
-                    Log.w(TAG, "configure: Cannot disallow", e)
-                }
-            }
+
+
         }
     }
 
     @Throws(VpnNetworkException::class)
     private fun configure(): ParcelFileDescriptor {
         Log.i(TAG, "Configuring$this")
-        val config =
-            FileHelper.loadCurrentSettings(vpnService)
-
 
         // Configure a builder while parsing the parameters.
         val builder = vpnService.Builder()
+
         var format: String? = null
 
         // Determine a prefix we can use. These are all reserved prefixes for example
@@ -529,11 +561,11 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
         // traffic for ones without DNS servers (issue 129).
         builder.allowFamily(OsConstants.AF_INET)
         builder.allowFamily(OsConstants.AF_INET6)
-        configurePackages(builder, config)
+        configurePackages(builder)
 
         // Create a new interface using the builder and save the parameters.
         val pfd = builder
-            .setSession("DNS66")
+            .setSession(vpnService.getString(R.string.app_name))
             .setConfigureIntent(
                 PendingIntent.getActivity(
                     vpnService, 1, Intent(vpnService, MainActivity::class.java),
@@ -542,25 +574,6 @@ internal class AdVpnThread(private val vpnService: VpnService, private val notif
             ).establish()
         Log.i(TAG, "Configured")
         return pfd
-    }
-
-    fun hasIpV6Servers(
-        config: Configuration,
-        dnsServers: List<InetAddress?>
-    ): Boolean {
-        if (!config.ipV6Support) return false
-        if (config.dnsServers.enabled) {
-            for (item in config.dnsServers.items) {
-                if (item.state == Configuration.Item.STATE_ALLOW && item.location.contains(
-                        ":"
-                    )
-                ) return true
-            }
-        }
-        for (inetAddress in dnsServers) {
-            if (inetAddress is Inet6Address) return true
-        }
-        return false
     }
 
     interface Notify {

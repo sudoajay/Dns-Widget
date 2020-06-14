@@ -4,11 +4,12 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.App
+import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LoadApps(private val context: Context, private val appFilterViewModel: AppFilterViewModel) {
+class LoadApps(private val context: Context, private  val appRepository: AppRepository) {
     private lateinit var packageManager: PackageManager
 
     suspend fun searchInstalledApps() {
@@ -24,23 +25,23 @@ class LoadApps(private val context: Context, private val appFilterViewModel: App
 
 //        Here we Just add default value of install app
 
-        appFilterViewModel.appRepository.setDefaultValueInstall()
+        appRepository.setDefaultValueInstall()
 
 //        Here we Just add new Install App Into Data base
 
         for (applicationInfo in installedApplicationsInfo) {
             val packageName = getApplicationPackageName(applicationInfo)
             if (packageName == context.packageName) continue
-            if (appFilterViewModel.appRepository.getCount(packageName) == 0) {
+            if (appRepository.getCount(packageName) == 0) {
                 createApp(applicationInfo)
             }
-            appFilterViewModel.appRepository.setUpdateInstall(
+            appRepository.setUpdateInstall(
                 packageName
             )
         }
 
 //        Here we remove Uninstall App from Data base
-        appFilterViewModel.appRepository.removeUninstallAppFromDB()
+        appRepository.removeUninstallAppFromDB()
 
     }
 
@@ -54,7 +55,7 @@ class LoadApps(private val context: Context, private val appFilterViewModel: App
         val systemApp = isSystemApps(applicationInfo)
 
 
-        appFilterViewModel.insert(
+        appRepository.insert(
             App(
                 null,
                 label,

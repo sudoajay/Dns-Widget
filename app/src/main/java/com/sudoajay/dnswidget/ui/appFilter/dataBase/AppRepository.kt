@@ -188,4 +188,8 @@ class AppRepository(private val context: Context, private val appDao: AppDao) {
     suspend fun getPackageFromSelected(selected: Boolean):MutableList<String>{
         return appDao.getPackageFromSelected(selected)
     }
+
+    suspend fun getCount(): Int {
+        return appDao.getCount()
+    }
 }

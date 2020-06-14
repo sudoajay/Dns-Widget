@@ -12,11 +12,7 @@
  */
 package com.sudoajay.dnswidget.vpnClasses;
 
-import android.content.Context;
 import android.util.Log;
-
-import com.sudoajay.dnswidget.db.RuleDatabase;
-
 
 import org.pcap4j.packet.IpPacket;
 import org.pcap4j.packet.IpSelector;
@@ -25,14 +21,7 @@ import org.pcap4j.packet.IpV6Packet;
 import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.UdpPacket;
 import org.pcap4j.packet.UnknownPacket;
-import org.xbill.DNS.DClass;
-import org.xbill.DNS.Flags;
 import org.xbill.DNS.Message;
-import org.xbill.DNS.Name;
-import org.xbill.DNS.Rcode;
-import org.xbill.DNS.SOARecord;
-import org.xbill.DNS.Section;
-import org.xbill.DNS.TextParseException;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -40,7 +29,6 @@ import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
  * Creates and parses packets, and sends packets to a remote socket or the device using
@@ -49,41 +37,22 @@ import java.util.Locale;
 public class DnsPacketProxy {
 
     private static final String TAG = "DnsPacketProxy";
-    // Choose a value that is smaller than the time needed to unblock a host.
-    private static final int NEGATIVE_CACHE_TTL_SECONDS = 5;
-    private static final SOARecord NEGATIVE_CACHE_SOA_RECORD;
 
-    static {
-        try {
-            // Let's use a guaranteed invalid hostname here, clients are not supposed to use
-            // our fake values, the whole thing just exists for negative caching.
-            Name name = new Name("dns66.dns66.invalid.");
-            NEGATIVE_CACHE_SOA_RECORD = new SOARecord(name, DClass.IN, NEGATIVE_CACHE_TTL_SECONDS,
-                    name, name, 0, 0, 0, 0, NEGATIVE_CACHE_TTL_SECONDS);
-        } catch (TextParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    final RuleDatabase ruleDatabase;
     private final EventLoop eventLoop;
     ArrayList<InetAddress> upstreamDnsServers = new ArrayList<>();
 
     public DnsPacketProxy(EventLoop eventLoop) {
         this.eventLoop = eventLoop;
-        this.ruleDatabase = RuleDatabase.getInstance();
     }
 
     /**
      * Initializes the rules database and the list of upstream servers.
      *
-     * @param context            The context we are operating in (for the database)
      * @param upstreamDnsServers The upstream DNS servers to use; or an empty list if no
      *                           rewriting of ip addresses takes place
-     * @throws InterruptedException If the database initialization was interrupted
      */
-    void initialize(Context context, ArrayList<InetAddress> upstreamDnsServers) throws InterruptedException {
-        ruleDatabase.initialize(context);
+    void initialize(ArrayList<InetAddress> upstreamDnsServers) {
         this.upstreamDnsServers = upstreamDnsServers;
     }
 
@@ -138,7 +107,7 @@ public class DnsPacketProxy {
      */
     void handleDnsRequest(byte[] packetData) throws AdVpnThread.VpnNetworkException {
 
-        IpPacket parsedPacket = null;
+        IpPacket parsedPacket;
         try {
             parsedPacket = (IpPacket) IpSelector.newPacket(packetData, 0, packetData.length);
         } catch (Exception e) {
@@ -189,17 +158,9 @@ public class DnsPacketProxy {
             return;
         }
         String dnsQueryName = dnsMsg.getQuestion().getName().toString(true);
-        if (!ruleDatabase.isBlocked(dnsQueryName.toLowerCase(Locale.ENGLISH))) {
             Log.i(TAG, "handleDnsRequest: DNS Name " + dnsQueryName + " Allowed, sending to " + destAddr);
             DatagramPacket outPacket = new DatagramPacket(dnsRawData, 0, dnsRawData.length, destAddr, parsedUdp.getHeader().getDstPort().valueAsInt());
             eventLoop.forwardPacket(outPacket, parsedPacket);
-        } else {
-            Log.i(TAG, "handleDnsRequest: DNS Name " + dnsQueryName + " Blocked!");
-            dnsMsg.getHeader().setFlag(Flags.QR);
-            dnsMsg.getHeader().setRcode(Rcode.NOERROR);
-            dnsMsg.addRecord(NEGATIVE_CACHE_SOA_RECORD, Section.AUTHORITY);
-            handleDnsResponse(parsedPacket, dnsMsg.toWire());
-        }
     }
 
     /**
@@ -210,7 +171,7 @@ public class DnsPacketProxy {
      * @return The translated address or null on failure.
      */
     private InetAddress translateDestinationAdress(IpPacket parsedPacket) {
-        InetAddress destAddr = null;
+        InetAddress destAddr;
         if (upstreamDnsServers.size() > 0) {
             byte[] addr = parsedPacket.getHeader().getDstAddr().getAddress();
             int index = addr[addr.length - 1] - 2;

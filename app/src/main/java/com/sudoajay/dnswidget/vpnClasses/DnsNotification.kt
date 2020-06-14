@@ -9,6 +9,7 @@ import android.content.Intent
 import android.media.RingtoneManager
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import com.sudoajay.dnswidget.MainActivity
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 
@@ -17,6 +18,18 @@ class DnsNotification(private val context: Context) {
     private var notificationManager: NotificationManager? = null
 
     fun notify(title: String, builder: NotificationCompat.Builder, dns: Dns?) { // local variable
+
+//        Pending Intent For Pause Action
+        val pausePendingIntent = PendingIntent.getService(
+            context, AdVpnService.REQUEST_CODE_PAUSE, Intent(context, AdVpnService::class.java)
+                .putExtra("COMMAND", Command.PAUSE.ordinal), 0
+        )
+
+//        Pending Intent For Stop Action
+        val stopPendingIntent = PendingIntent.getService(
+            context, AdVpnService.REQUEST_CODE_STOP, Intent(context, AdVpnService::class.java)
+                .putExtra("COMMAND", Command.STOP.ordinal), 0
+        )
 
         // now check for null notification manger
         if (notificationManager == null) {
@@ -27,32 +40,27 @@ class DnsNotification(private val context: Context) {
         // Default ringtone
         val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-            builder.addAction(
-            R.drawable.ic_pause, context.getString(R.string.notification_action_pause),
-            PendingIntent.getService(
-                context, AdVpnService.REQUEST_CODE_PAUSE, Intent(context, AdVpnService::class.java)
-                    .putExtra("COMMAND", Command.PAUSE.ordinal), 0
-            )
-        )
-                .addAction(
-                    R.drawable.ic_turn_off, context.getString(R.string.stop_text),
-                    PendingIntent.getService(
-                        context,
-                        AdVpnService.REQUEST_CODE_PAUSE,
-                        Intent(context, AdVpnService::class.java)
-                            .putExtra("COMMAND", Command.STOP.ordinal),
-                        0
-                    )
-                )
+        builder
 
-                // Set appropriate defaults for the notification light, sound,
-                // and vibration.
-                .setDefaults(Notification.DEFAULT_ALL) // Set required fields, including the small icon, the
-                .setContentTitle(title)
-                .setContentText((if (dns!!.filter == "None") dns.dnsName else dns.dnsName + " (" + dns.filter + ")") + ". Expand to see more ")
-                .setPriority(NotificationCompat.PRIORITY_MIN)
+            .addAction(
+                R.drawable.ic_pause,
+                context.getString(R.string.notification_action_pause),
+                pausePendingIntent
+            )
+
+            .addAction(
+                R.drawable.ic_turn_off, context.getString(R.string.stop_text),
+                stopPendingIntent
+            )
+
+            // Set appropriate defaults for the notification light, sound,
+            // and vibration.
+            .setDefaults(Notification.DEFAULT_ALL) // Set required fields, including the small icon, the
+            .setContentTitle(title)
+            .setContentText((if (dns!!.filter == "None") dns.dnsName else dns.dnsName + " (" + dns.filter + ")") + ". Expand to see more ")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSound(uri) // Provide a large icon, shown with the notification in the
-                .setSmallIcon(R.drawable.ic_dns)
+                
                 .color = ContextCompat.getColor(
                 context,
                 R.color.fabColor_DnsSpeedTest

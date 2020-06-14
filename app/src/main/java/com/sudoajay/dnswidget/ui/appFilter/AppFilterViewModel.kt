@@ -2,7 +2,10 @@ package com.sudoajay.dnswidget.ui.appFilter
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.paging.PagedList
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.App
@@ -22,7 +25,8 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
     private var _application = application
     var appRepository: AppRepository
 
-    private var appDao: AppDao = AppRoomDatabase.getDatabase(application).appDao()
+    private var appDao: AppDao =
+        AppRoomDatabase.getDatabase(_application.applicationContext).appDao()
 
 
     val headingText: String = application.getString(R.string.action_app_filter)
@@ -38,8 +42,8 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
     init {
 
 //        Creating Object and Initialization
-        appRepository = AppRepository(_application, appDao)
-        loadApps = LoadApps(application, this)
+        appRepository = AppRepository(_application.applicationContext, appDao)
+        loadApps = LoadApps(_application.applicationContext, appRepository)
 
         setDefaultValue()
 
@@ -71,9 +75,11 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun databaseConfiguration() {
+        getHideProgress()
         CoroutineScope(IO).launch {
             withContext(IO) {
-                loadApps.searchInstalledApps()
+                if (appRepository.getCount() == 0)
+                    loadApps.searchInstalledApps()
             }
             hideProgress!!.postValue(  false)
         }
@@ -85,13 +91,6 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
         appList!!.value!!.dataSource.invalidate()
     }
 
-
-    /**
-     * Launching a new coroutine to insert the data in a non-blocking way
-     */
-    suspend fun insert(app: App) {
-        appRepository.insert(app)
-    }
 
 
     fun getHideProgress(): LiveData<Boolean> {

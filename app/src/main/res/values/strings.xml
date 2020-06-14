@@ -90,6 +90,8 @@
     <string name="notification_action_pause">Pause</string>
     <string name="start_text">Start</string>
     <string name="stop_text">Stop</string>
+    <string name="stopping_text">Stopping…</string>
+
 
 
     <!--    Modify Strings-->
@@ -107,7 +109,9 @@
     <string name="notifications_running">Running service</string>
     <string name="notifications_running_desc">Notifications to interact with running service</string>
     <string name="notifications_update">Status</string>
+    <string name="network_speed_text">Network Speed</string>
     <string name="notifications_update_desc">Notifications about updating hostfiles</string>
+    <string name="notifications_speed_test_desc">Notifications about Network Speed</string>
     <string name="notifications_paused">Paused service</string>
     <string name="notifications_paused_desc">Notifications to resume after pausing</string>
     <string name="notifications_group_service">Service control</string>

@@ -29,6 +29,10 @@ interface AppDao {
     @Query("UPDATE AppTable SET Selected = :value WHERE id = :id")
     suspend fun updateSelectedById(value: Boolean, id: Int)
 
+    @Query("Select Count(*) FROM AppTable ")
+    suspend fun getCount(): Int
+
+
 
     @Query("SELECT COUNT(id) FROM AppTable WHERE Package_Name = :packageName")
     suspend fun getCount(packageName: String): Int

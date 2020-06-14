@@ -1,5 +1,6 @@
 package com.sudoajay.dnswidget.vpnClasses
 
+import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -7,18 +8,24 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Rect
+import android.graphics.drawable.Icon
 import android.net.ConnectivityManager
 import android.net.VpnService
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import android.os.Parcelable
 import android.util.Log
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
 import com.sudoajay.dnswidget.MainActivity
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.ConnectivityType
+import com.sudoajay.dnswidget.helper.ImageUtils
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import com.sudoajay.dnswidget.ui.customDns.database.DnsDao
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
@@ -39,6 +46,7 @@ class AdVpnService : VpnService() {
     private lateinit var selectedDns: Dns
     private var dnsRepository: DnsRepository? = null
     private lateinit var dnsDao: DnsDao
+    private lateinit var notificationBuilder : Notification.Builder
 
     private lateinit var builder: NotificationCompat.Builder
 
@@ -73,6 +81,10 @@ class AdVpnService : VpnService() {
                         reconnect()
                     }
                 }
+                else -> Log.i(
+                    TAG,
+                    ConnectivityType.getNetworkProvider(context).toString()
+                )
             }
         }
 
@@ -100,9 +112,10 @@ class AdVpnService : VpnService() {
 
         //        Creating Object and Initialization
         if (dnsRepository == null) {
-            dnsDao = DnsRoomDatabase.getDatabase(context = applicationContext).dnsDao()
+            dnsDao = DnsRoomDatabase.getDatabase(applicationContext).dnsDao()
             dnsRepository = DnsRepository(application, dnsDao)
         }
+
         when (if (intent == null) Command.START else Command.values()[intent.getIntExtra(
             "COMMAND",
             Command.START.ordinal
@@ -114,9 +127,8 @@ class AdVpnService : VpnService() {
                     getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notificationManager.cancelAll()
 
-                getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-                    .putBoolean("isDnsActive", true).apply()
-                startVpn((intent?.getParcelableExtra<Parcelable>("NOTIFICATION_INTENT")) as PendingIntent?)
+                reconnect()
+
             }
             Command.START -> {
                 CoroutineScope(Dispatchers.Main).launch {
@@ -128,24 +140,24 @@ class AdVpnService : VpnService() {
                             )
                         }
 
-                    Log.i(TAG, "onStartCommand  Command.START -  $intent")
+                    Log.i(TAG, "onStartCommand  Command.START -  ")
                     dnsStatus.postValue(getString(R.string.connected_progress_text))
 
                     getSharedPreferences("state", Context.MODE_PRIVATE).edit()
                         .putBoolean("isDnsActive", true).apply()
-                    startVpn((intent!!.getParcelableExtra<Parcelable>("NOTIFICATION_INTENT")) as PendingIntent?)
+                    startVpn()
 
                 }
             }
             Command.STOP -> {
-                Log.i(TAG, "onStartCommand  Command.Stop -  $intent")
+                Log.i(TAG, "onStartCommand  Command.Stop -  ")
 
                 getSharedPreferences("state", Context.MODE_PRIVATE).edit()
                     .putBoolean("isDnsActive", false).apply()
                 stopVpn()
             }
             Command.PAUSE -> {
-                Log.i(TAG, "onStartCommand  Command.PAUSE -  $intent")
+                Log.i(TAG, "onStartCommand  Command.PAUSE -  ")
 
                 pauseVpn()
             }
@@ -165,28 +177,21 @@ class AdVpnService : VpnService() {
                 .setContentTitle(getString(R.string.notification_paused_title))
                 .setContentText(getString(R.string.notification_paused_text))
                 .setContentIntent(
-                    PendingIntent.getService(
-                        this,
-                        REQUEST_CODE_START,
-                        getResumeIntent(this),
-                        PendingIntent.FLAG_ONE_SHOT
-                    )
+                    getResumePendingIntent()
                 )
                 .build()
         )
     }
 
-    private fun getResumeIntent(context: Context): Intent {
-        val intent = Intent(context, AdVpnService::class.java)
-        intent.putExtra("COMMAND", Command.RESUME.ordinal)
-        intent.putExtra(
-            "NOTIFICATION_INTENT",
-            PendingIntent.getActivity(
-                context, 0,
-                Intent(context, MainActivity::class.java), 0
-            )
+    private fun getResumePendingIntent(): PendingIntent {
+
+        return PendingIntent.getService(
+            applicationContext,
+            REQUEST_CODE_START,
+            Intent(applicationContext, AdVpnService::class.java)
+                .putExtra("COMMAND", Command.RESUME.ordinal),
+            0
         )
-        return intent
     }
 
 
@@ -200,16 +205,17 @@ class AdVpnService : VpnService() {
 
     }
 
-    private fun startVpn(notificationIntent: PendingIntent?) {
+    private fun startVpn() {
 
         builder = NotificationCompat.Builder(this, NotificationChannels.SERVICE_RUNNING)
         DnsNotification(applicationContext).notify("Connected", builder, selectedDns)
 
-        builder.setSmallIcon(R.drawable.ic_day_mode)
+        builder.setLargeIcon(ImageUtils.createBitmapFromString("0", " KB"))
 
-        // pass the pending intent
-        if (notificationIntent != null)
-            builder.setContentIntent(notificationIntent)
+
+        //        Pending Intent For MainActivity
+
+        builder.setContentIntent(createPendingIntent())
 
         updateVpnStatus(VPN_STATUS_STARTING)
 
@@ -228,11 +234,42 @@ class AdVpnService : VpnService() {
         restartVpnThread()
     }
 
+    private fun createBitmapFromString(speed: String, units: String): Bitmap? {
+        val paint = Paint()
+        paint.isAntiAlias = true
+        paint.textSize = 55f
+        paint.textAlign = Paint.Align.CENTER
+        val unitsPaint = Paint()
+        unitsPaint.isAntiAlias = true
+        unitsPaint.textSize = 40f // size is in pixels
+        unitsPaint.textAlign = Paint.Align.CENTER
+        val textBounds = Rect()
+        paint.getTextBounds(speed, 0, speed.length, textBounds)
+        val unitsTextBounds = Rect()
+        unitsPaint.getTextBounds(units, 0, units.length, unitsTextBounds)
+        val width =
+            if (textBounds.width() > unitsTextBounds.width()) textBounds.width() else unitsTextBounds.width()
+        val bitmap = Bitmap.createBitmap(
+            width + 10, 90,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        canvas.drawText(speed, width / 2 + 5.toFloat(), 50f, paint)
+        canvas.drawText(units, width / 2.toFloat(), 90f, unitsPaint)
+        return bitmap
+    }
+
 
     private fun restartVpnThread() {
         if (vpnThread == null) {
             Log.i(TAG, "restartVpnThread: Not restarting thread, could not find thread.")
-            return
+            vpnThread = AdVpnThread(this, object : Notify {
+                override fun run(value: Int) {
+                    Log.e(TAG, "$value --- VPN_MSG_STATUS_UPDATE ")
+
+                    updateVpnStatus(value)
+                }
+            })
         }
         Log.i(TAG, "Thread Exist and Now Stopped")
         vpnThread!!.stopThread()
@@ -244,6 +281,8 @@ class AdVpnService : VpnService() {
         Log.i(TAG, "Stopping Service")
         if (vpnThread != null) vpnThread!!.stopThread()
         vpnThread = null
+
+
         try {
             unregisterReceiver(networkChangeReceiver)
         } catch (e: IllegalArgumentException) {
@@ -252,8 +291,51 @@ class AdVpnService : VpnService() {
                 "Ignoring exception on unregistering receiver"
             )
         }
+
+        stopForeground(true)
         updateVpnStatus(VPN_STATUS_STOPPED)
         stopSelf()
+    }
+
+
+//    private fun createNotification(){
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            notificationBuilder = Notification.Builder(this,NotificationChannels.SERVICE_NETWORK_SPEED)
+//        } else{
+//            @Suppress("DEPRECATION")
+//            notificationBuilder = Notification.Builder(this)
+//        }
+//
+//        notificationBuilder.setContentTitle("")
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+//            notificationBuilder.setSmallIcon(Icon.createWithBitmap(ImageUtils.createBitmapFromString("0", " KB")))
+//        else
+//            notificationBuilder.setSmallIcon(R.drawable.ic_speed_test)
+//
+//        notificationBuilder.setVisibility(Notification.VISIBILITY_PUBLIC)
+//        notificationBuilder.setOngoing(true)
+//        notificationBuilder.setAutoCancel(true)
+//        setNotificationContent()
+//        notificationBuilder.setContentIntent(createPendingIntent())
+//
+//    }
+//
+//    private fun setNotificationContent(){
+//        notificationLayout = RemoteViews("com.deepak.internetspeed", androidx.lifecycle.R.layout.custom_notification_view)
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            notificationBuilder.setCustomContentView(notificationLayout)
+//        }else{
+//            notificationBuilder.setContent(notificationLayout)
+//        }
+//    }
+
+    private fun createPendingIntent(): PendingIntent? {
+        return  PendingIntent.getService(
+            applicationContext,
+            AdVpnService.REQUEST_CODE_STOP,
+            Intent(applicationContext, MainActivity::class.java),
+            0
+        )
     }
 
 
@@ -286,6 +368,7 @@ class AdVpnService : VpnService() {
         const val NOTIFICATION_ID_STATE = 10
         const val REQUEST_CODE_START = 43
         const val REQUEST_CODE_PAUSE = 42
+        const val REQUEST_CODE_STOP = 41
         const val VPN_STATUS_STARTING = 0
         const val VPN_STATUS_RUNNING = 1
         const val VPN_STATUS_STOPPING = 2

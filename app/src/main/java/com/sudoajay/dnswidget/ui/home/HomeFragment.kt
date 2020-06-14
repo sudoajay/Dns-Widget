@@ -38,7 +38,7 @@ class HomeFragment : Fragment(), Serializable {
 
 
     // Boolean to check if our activity is bound to service or not
-    var mIsBound: Boolean? = null
+    var mIsBound: Boolean = false
 
     var mService: AdVpnService? = null
     val TAG = "ShowSomething"
@@ -69,7 +69,7 @@ class HomeFragment : Fragment(), Serializable {
             Log.e(TAG, it.size.toString())
             if (it.isNotEmpty()) {
                 val index = 0
-                binding.materialSpinner.selectedIndex =index
+                binding.materialSpinner.selectedIndex = index
                 addItem(index)
                 if (isVisibleDNSv6()) {
                     binding.dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns1)
@@ -196,20 +196,24 @@ class HomeFragment : Fragment(), Serializable {
                 TAG,
                 binding.materialSpinner.selectedIndex.toString() + " --- " + homeViewModel.dnsList[binding.materialSpinner.selectedIndex].dnsName
             )
-            saveSelectedDnsInfo(homeViewModel.dnsList[binding.materialSpinner.selectedIndex])
+            if (binding.connectDnsButton.text == requireContext().getString(R.string.start_text)) {
+                saveSelectedDnsInfo(homeViewModel.dnsList[binding.materialSpinner.selectedIndex])
 
-            Log.i(TAG, "Attempting to connect")
-            val intent = VpnService.prepare(requireContext())
-            if (intent != null) {
-                Log.i(TAG, "Intent Not  Null ")
-                startActivityForResult(intent, requestDnsCode)
+                Log.i(TAG, "Attempting to connect")
+                val intent = VpnService.prepare(requireContext())
+                if (intent != null) {
+                    Log.i(TAG, "Intent Not  Null ")
+                    startActivityForResult(intent, requestDnsCode)
+                } else {
+                    Log.i(TAG, "Intent Null ")
+                    onActivityResult(requestDnsCode, Activity.RESULT_OK, null)
+                }
             } else {
-                Log.i(TAG, "Intent Null ")
-                onActivityResult(requestDnsCode, Activity.RESULT_OK, null)
+                stopService()
             }
+
         }
     }
-
     private fun saveSelectedDnsInfo(dns: Dns) {
         requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
             .putLong("id", dns.id!!).apply()
@@ -253,13 +257,11 @@ class HomeFragment : Fragment(), Serializable {
             errorVpnService()
         else if (requestCode == requestDnsCode && resultCode == Activity.RESULT_OK) {
 
+            val startIntent = Intent(requireContext(), AdVpnService::class.java)
+            startIntent.putExtra("COMMAND", Command.START.ordinal)
+            requireContext().bindService(startIntent, serviceConnection, Context.BIND_AUTO_CREATE)
+            requireContext().startService(startIntent)
 
-            val bindIntent = Intent(activity, AdVpnService::class.java)
-
-            bindIntent.putExtra("COMMAND", Command.START.ordinal)
-
-            requireActivity().bindService(bindIntent, serviceConnection, Context.BIND_ABOVE_CLIENT)
-            requireContext().startService(bindIntent)
             Log.i(TAG, "$resultCode ---- Accepted ")
         }
 
@@ -283,11 +285,26 @@ class HomeFragment : Fragment(), Serializable {
             .show()
     }
 
+    private fun stopService() {
+
+        val stopIntent = Intent(requireContext(), AdVpnService::class.java)
+        stopIntent.putExtra("COMMAND", Command.STOP.ordinal)
+        requireContext().bindService(stopIntent, serviceConnection, Context.BIND_AUTO_CREATE)
+        requireContext().startService(stopIntent)
+
+        if(mIsBound) {
+            Log.e(TAG , " got Unibind")
+            requireContext().unbindService(serviceConnection)
+            mIsBound = false
+        }
+    }
+
+
     /**
      * Interface for getting the instance of binder from our service class
      * So client can get instance of our service class and can directly communicate with it.
      */
-    private val serviceConnection = object : ServiceConnection {
+    private  val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, iBinder: IBinder) {
             Log.d(TAG, "ServiceConnection: connected to service.")
             // We've bound to MyService, cast the IBinder and get MyBinder instance
@@ -311,7 +328,8 @@ class HomeFragment : Fragment(), Serializable {
             binding.statusDnsTextView.text = it
 
             when (it) {
-                requireContext().getString(R.string.not_connected_text) ->
+                requireContext().getString(R.string.not_connected_text),
+                requireContext().getString(R.string.notification_stopped) ->
                     binding.connectDnsButton.text = requireContext().getString(R.string.start_text)
 
                 requireContext().getString(R.string.connected_progress_text),
@@ -321,8 +339,12 @@ class HomeFragment : Fragment(), Serializable {
         })
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
-        if (mIsBound != null) requireContext().unbindService(serviceConnection)
+        if(mIsBound) {
+            requireContext().unbindService(serviceConnection)
+            mIsBound = false
+        }
     }
 }
