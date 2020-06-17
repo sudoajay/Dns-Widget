@@ -118,7 +118,7 @@
     <string name="notifications_group_updates">Updates</string>
 
     <!-- Ad Vpn service Notification -->
-    <string name="notification_paused_title">DNS66 paused</string>
+    <string name="notification_paused_title">Dns Widget paused</string>
     <string name="notification_paused_text">Tap to resume.</string>
 
 

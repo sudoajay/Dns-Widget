@@ -332,9 +332,7 @@ class HomeFragment : Fragment(), Serializable {
                 requireContext().getString(R.string.notification_stopped) ->
                     binding.connectDnsButton.text = requireContext().getString(R.string.start_text)
 
-                requireContext().getString(R.string.connected_progress_text),
-                requireContext().getString(R.string.connected_text) ->
-                    binding.connectDnsButton.text = requireContext().getString(R.string.stop_text)
+               else -> binding.connectDnsButton.text = requireContext().getString(R.string.stop_text)
             }
         })
     }

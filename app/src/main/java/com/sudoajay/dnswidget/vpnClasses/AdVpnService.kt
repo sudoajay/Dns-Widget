@@ -77,7 +77,7 @@ class AdVpnService : VpnService() {
                 }
                 else -> Log.i(
                     TAG,
-                    ConnectivityType.getNetworkProvider(context).toString()
+                    ConnectivityType.getNetworkProvider(context)
                 )
             }
         }
@@ -202,7 +202,7 @@ class AdVpnService : VpnService() {
 
     private fun startVpn() {
 
-        if (isNetworkSpeedNotification()) {
+        if (!isNetworkSpeedNotification()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 notificationBuilder =
                     Notification.Builder(this, NotificationChannels.SERVICE_RUNNING)
@@ -223,6 +223,8 @@ class AdVpnService : VpnService() {
 
 
             } else notificationBuilder.setSmallIcon(R.drawable.ic_dns_test)
+
+
             notificationBuilder.setContentIntent(createPendingIntent())
 
             val dnsNotification = DnsNotification(applicationContext)
@@ -344,11 +346,11 @@ class AdVpnService : VpnService() {
 
 
     private fun createPendingIntent(): PendingIntent? {
-        return  PendingIntent.getService(
-            applicationContext,
-            AdVpnService.REQUEST_CODE_STOP,
-            Intent(applicationContext, MainActivity::class.java),
-            0
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        return PendingIntent.getActivity(
+            this, 0, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
         )
     }
 
