@@ -8,8 +8,6 @@ import android.os.Debug
 import android.util.DisplayMetrics
 import com.sudoajay.dnswidget.helper.ConnectivityType
 import com.sudoajay.dnswidget.helper.FileSize
-import java.io.File
-import java.io.FileWriter
 import java.io.IOException
 import java.util.*
 
@@ -50,12 +48,12 @@ class SystemInfo(private var activity: Activity) {
         return dm
     }
 
-    fun createTxtFile() {
+    fun createTextForEmail(): StringBuilder {
+        val writer = StringBuilder("")
         try {
-            val root = File(activity.cacheDir, "SystemInfo.txt")
-            if (root.exists() && root.isFile) root.delete()
-            val writer = FileWriter(root)
-            writer.append("\n\n ===== System-Info =====")
+
+
+            writer.append("\n\n\n ===== System-Info =====")
             writer.append(
                 "\n\n Devices : " + getInfo("MANUFACTURER") + "  " +
                         getInfo("MODEL") + " (" + getInfo("PRODUCT") + ")"
@@ -70,11 +68,10 @@ class SystemInfo(private var activity: Activity) {
                         + " x " + getScreenSize().widthPixels.toString()
             )
             writer.append("\n Network Type : " + ConnectivityType.getNetworkProvider(activity))
-            writer.flush()
-            writer.close()
         } catch (e: IOException) {
 
         }
+        return writer
     }
 
 

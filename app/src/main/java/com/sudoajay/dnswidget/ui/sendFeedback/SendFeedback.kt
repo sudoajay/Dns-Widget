@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
@@ -19,10 +18,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
-import java.io.File
 
 
 class SendFeedback : AppCompatActivity(){
@@ -54,7 +51,7 @@ class SendFeedback : AppCompatActivity(){
         addScreenshotTextView = findViewById(R.id.addScreenshot_TextView)
         addScreenshotSmallImageView = findViewById(R.id.addScreenshotSmall_ImageView)
         addScreenshotLargeImageView = findViewById(R.id.addScreenshotLarge_ImageView)
-        val systemInfo = SystemInfo(this)
+
         val imageButton: Button = findViewById(R.id.image_Button)
 
         val ss = SpannableString(text)
@@ -83,7 +80,7 @@ class SendFeedback : AppCompatActivity(){
                 CustomToast.toastIt(applicationContext, getString(R.string.feedbackEditTextError))
                 feedbackEditText.error = getString(R.string.feedbackEditTextError)
             } else {
-                systemInfo.createTxtFile()
+
                 openEmail()
             }
         }
@@ -106,15 +103,9 @@ class SendFeedback : AppCompatActivity(){
     private fun getFileChooserIntent(): Intent? {
         val intent = Intent()
         intent.type = "image/*"
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            intent.action = Intent.ACTION_GET_CONTENT
-        } else {
-            intent.action = Intent.ACTION_OPEN_DOCUMENT
-            intent.addCategory(Intent.CATEGORY_OPENABLE)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        }
+        intent.action = Intent.ACTION_OPEN_DOCUMENT
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         return intent
     }
 
@@ -132,28 +123,22 @@ class SendFeedback : AppCompatActivity(){
 
     private fun openEmail() {
         try {
-            val filename = "SystemInfo.txt"
-            val fileLocation = File(cacheDir, filename)
-            val path = FileProvider.getUriForFile(
-                this,
-                this.applicationContext.packageName + ".provider",
-                fileLocation
-            );
-            var emailIntent: Intent?
+            val systemInfo = SystemInfo(this)
+
+            val emailIntent = Intent(Intent.ACTION_SEND)
+
             if (imageUri != null) {
-                emailIntent =Intent(Intent.ACTION_SEND_MULTIPLE)
-                val uris: ArrayList<out Parcelable> = arrayListOf(imageUri!!, path)
-                emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
-            } else {
-                emailIntent = Intent(Intent.ACTION_SEND)
-                emailIntent.putExtra(Intent.EXTRA_STREAM, path);
+                emailIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
             }
-            emailIntent.type = "image/*";
+            emailIntent.type = "image/*"
             val to = arrayOf("sudoajay@gmail.com")
             emailIntent.putExtra(Intent.EXTRA_EMAIL, to)
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback About DNS App")
-            emailIntent.putExtra(Intent.EXTRA_TEXT, feedbackEditText.text);
-            emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            emailIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                "${feedbackEditText.text} ${systemInfo.createTextForEmail()}"
+            )
+            emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             startActivity(Intent.createChooser(emailIntent, "Send email..."))
         } catch (e: Exception) {
 
