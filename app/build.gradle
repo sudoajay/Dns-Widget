@@ -82,6 +82,8 @@ dependencies {
 // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$archLifecycleVersion"
+
+
 //    Binding
     kapt "com.android.databinding:compiler:$gradle_version"
 

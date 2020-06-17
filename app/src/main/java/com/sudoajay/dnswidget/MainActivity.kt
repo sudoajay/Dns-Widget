@@ -64,22 +64,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         dnsDatabaseConfiguration()
 
 
-//        val connectivitySpeed = ConnectivitySpeed()
-//        startCoroutineTimer {
-//            connectivitySpeed.getNetworkSpeed()
-//        }
+
 
     }
 
-//    private inline fun startCoroutineTimer(
-//        repeatMillis: Long = 1000,
-//        crossinline action: () -> Unit
-//    ) = GlobalScope.launch {
-//        while (true) {
-//            action()
-//            delay(repeatMillis)
-//        }
-//    }
 
 
     private fun appDatabaseConfiguration() {
