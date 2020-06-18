@@ -197,6 +197,15 @@
     <string name="use_it_text">Use It</string>
 
 
+<!--    My Quick Setting Tile Name-->
+    <string name="start_stop_text">Start / Stop</string>
+    <string name="pause_resume_text">Pause / Resume</string>
+    <string name="resume_text">Resume</string>
+    <string name="pause_text">Pause</string>
+
+
+
+
 
 
 </resources>

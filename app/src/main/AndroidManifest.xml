@@ -61,6 +61,29 @@
             </intent-filter>
         </service>
 
+
+        <service
+            android:name=".tileClasses.MyPauseResumeTile"
+            android:icon="@drawable/ic_pause"
+            android:label="@string/pause_resume_text"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".tileClasses.MyStartStopTile"
+            android:icon="@drawable/ic_stop"
+            android:label="@string/start_stop_text"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

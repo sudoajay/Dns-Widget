@@ -91,7 +91,7 @@ class DnsNotification(private val context: Context) {
             )
 
             .addAction(
-                R.drawable.ic_turn_off, context.getString(R.string.stop_text),
+                R.drawable.ic_stop, context.getString(R.string.stop_text),
                 stopPendingIntent
             )
 
