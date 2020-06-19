@@ -26,6 +26,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <activity android:name=".tileClasses.VpnTransparentClass"
@@ -39,8 +40,6 @@
         <activity
             android:name=".ui.appFilter.AppFilter"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
 
         <meta-data
             android:name="preloaded_fonts"

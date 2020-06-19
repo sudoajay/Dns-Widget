@@ -17,6 +17,7 @@
             android:id="@+id/action_open_dns_test"
             app:destination="@id/nav_dns_test" />
 
+
     </fragment>
 
     <activity

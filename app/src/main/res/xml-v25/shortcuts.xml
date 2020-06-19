@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:shortcutDisabledMessage="@string/compose_shortcut_rest"
+        android:shortcutId="settings"
+        android:shortcutLongLabel="@string/compose_shortcut_rest"
+        android:shortcutShortLabel="@string/compose_shortcut_rest">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="org.itxtech.daedalus.activity.MainActivity"
+            android:targetPackage="org.itxtech.daedalus">
+            <extra
+                android:name="org.itxtech.daedalus.activity.MainActivity.LAUNCH_FRAGMENT"
+                android:value="2"/>
+        </intent>
+    </shortcut>
+</shortcuts>

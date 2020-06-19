@@ -196,12 +196,14 @@
 
 
     <!--    My Quick Setting Tile Name-->
-    <string name="start_stop_text">Start / Stop</string>
-    <string name="pause_resume_text">Pause / Resume</string>
-    <string name="resume_text">Resume</string>
-    <string name="pause_text">Pause</string>
-    <string name="added_text">added Tile</string>
-    <string name="removed_text">removed Tile</string>
+    <string name="start_stop_text">Start / Stop DNS </string>
+    <string name="added_text">added </string>
+    <string name="removed_text">removed </string>
+
+<!--    ShortCut Info -->
+    <string name="compose_shortcut_rest">Food menu</string>
+
+
 
 
 </resources>

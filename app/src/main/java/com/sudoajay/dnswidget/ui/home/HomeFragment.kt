@@ -225,18 +225,7 @@ class HomeFragment : Fragment(), Serializable {
     private fun saveSelectedDnsInfo(dns: Dns) {
         requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
             .putLong("id", dns.id!!).apply()
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putString("dnsName", dns.dnsName).apply()
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putString("dns1", dns.dns1).apply()
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putString("dns2", dns.dns2).apply()
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putString("dns3", dns.dns3).apply()
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putString("dns4", dns.dns4).apply()
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putString("filter", dns.filter).apply()
+
     }
 
     private fun isVisibleDNSv6(): Boolean {

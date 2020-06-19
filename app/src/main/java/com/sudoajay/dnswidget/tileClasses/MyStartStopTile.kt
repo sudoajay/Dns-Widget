@@ -14,8 +14,14 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
+import com.sudoajay.dnswidget.ui.customDns.LoadDns
+import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
+import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
 import com.sudoajay.dnswidget.vpnClasses.AdVpnService
 import com.sudoajay.dnswidget.vpnClasses.Command
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -51,7 +57,6 @@ class MyStartStopTile: TileService(){
                 this, R.drawable.ic_stop
             )
             tile.label = getString(R.string.stop_text)
-            CustomToast.toastIt(applicationContext, "Is Active")
 
             val startIntent = Intent(this, VpnTransparentClass::class.java)
             startIntent.action = "startService"
@@ -72,6 +77,9 @@ class MyStartStopTile: TileService(){
         super.onTileAdded()
 
 
+        //        Dns Database Configuration
+        dnsDatabaseConfiguration()
+
 
         CustomToast.toastIt(
             applicationContext,
@@ -79,6 +87,19 @@ class MyStartStopTile: TileService(){
         )
 
         // Do something when the user add the Tile
+    }
+
+    private fun dnsDatabaseConfiguration() {
+        //        Creating Object and Initialization
+        val dnsDao = DnsRoomDatabase.getDatabase(applicationContext).dnsDao()
+        val dnsRepository = DnsRepository(applicationContext, dnsDao)
+        val loadDns = LoadDns(applicationContext, dnsRepository)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            if (dnsRepository.getCount() == 0)
+                loadDns.fillDefaultData()
+        }
+
     }
 
     override fun onTileRemoved() {

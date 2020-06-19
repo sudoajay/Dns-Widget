@@ -37,7 +37,7 @@ class  AdVpnService : VpnService() {
     // Binder given to clients (notice class declaration below)
     private var mBinder: IBinder = MyBinder()
     var dnsStatus = MutableLiveData<String>()
-    private  lateinit var selectedDns: Dns
+    private lateinit var selectedDns: Dns
     private var dnsRepository: DnsRepository? = null
     private lateinit var dnsDao: DnsDao
     private lateinit var notificationBuilder : Notification.Builder
@@ -125,12 +125,24 @@ class  AdVpnService : VpnService() {
             }
             Command.START -> {
 
+                CoroutineScope(Dispatchers.Main).launch {
+
+                    selectedDns =
+                        withContext(Dispatchers.IO) {
+                            dnsRepository!!.getDnsFromId(
+                                getSharedPreferences("state", Context.MODE_PRIVATE)
+                                    .getLong("id", 1)
+                            )
+                        }
+
+                    Log.e(TAG, selectedDns.dnsName + " -- get Name")
                     Log.i(TAG, "onStartCommand  Command.START -  ")
                     dnsStatus.postValue(getString(R.string.connected_progress_text))
 
                     getSharedPreferences("state", Context.MODE_PRIVATE).edit()
                         .putBoolean("isDnsActive", true).apply()
                     startVpn()
+                }
 
 
             }
@@ -192,15 +204,6 @@ class  AdVpnService : VpnService() {
     }
 
     private fun startVpn() {
-
-        CoroutineScope(Dispatchers.Main).launch {
-            selectedDns =
-                withContext(Dispatchers.IO) {
-                    dnsRepository!!.getDnsFromId(
-                        getSharedPreferences("state", Context.MODE_PRIVATE)
-                            .getLong("id", 0)
-                    )
-                }
 
 
             if (!isNetworkSpeedNotification()) {
@@ -290,7 +293,7 @@ class  AdVpnService : VpnService() {
 
             restartVpnThread()
 
-        }
+
     }
 
 

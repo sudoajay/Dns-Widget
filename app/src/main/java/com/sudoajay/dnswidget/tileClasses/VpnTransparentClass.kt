@@ -54,7 +54,7 @@ class VpnTransparentClass : AppCompatActivity() {
             applicationContext.startService(startIntent)
 
         }
-
+        finish()
     }
 
     private fun errorVpnService() {
