@@ -17,7 +17,7 @@ class DnsNotification(private val context: Context) {
     private var notificationManager: NotificationManager? = null
     var notification: Notification? = null
 
-    fun notifyBuilder(title: String, builder: Notification.Builder, dns: Dns?) { // local variable
+    fun notifyBuilder(title: String, builder: Notification.Builder, dns: Dns) { // local variable
 
 
         // now check for null notification manger
@@ -29,7 +29,7 @@ class DnsNotification(private val context: Context) {
         builder
 
             .setContentTitle(title)
-            .setContentText((if (dns!!.filter == "None") dns.dnsName else dns.dnsName + " (" + dns.filter + ")") + ". Expand to see more ")
+            .setContentText((if (dns.filter == "None") dns.dnsName else dns.dnsName + " (" + dns.filter + ")") + ". Expand to see more ")
             .setVisibility(Notification.VISIBILITY_PUBLIC)
             .setOngoing(true)
             .setAutoCancel(true)
@@ -58,7 +58,7 @@ class DnsNotification(private val context: Context) {
     fun notifyCompat(
         title: String,
         builder: NotificationCompat.Builder,
-        dns: Dns?
+        dns: Dns
     ) { // local variable
 
 //        Pending Intent For Pause Action
@@ -99,11 +99,11 @@ class DnsNotification(private val context: Context) {
             // and vibration.
             .setDefaults(Notification.DEFAULT_ALL) // Set required fields, including the small icon, the
             .setContentTitle(title)
-            .setContentText((if (dns!!.filter == "None") dns.dnsName else dns.dnsName + " (" + dns.filter + ")") + ". Expand to see more ")
+            .setContentText((if (dns.filter == "None") dns.dnsName else dns.dnsName + " (" + dns.filter + ")") + ". Expand to see more ")
 
             .setOngoing(true)
             .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_MIN)
             .setSound(uri) // Provide a large icon, shown with the notification in the
 
             .color = ContextCompat.getColor(context, R.color.fabColor_DnsSpeedTest)

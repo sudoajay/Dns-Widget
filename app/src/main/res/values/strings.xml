@@ -80,7 +80,7 @@
     <string name="delete_text">Delete</string>
     <string name="copy_text">Copy</string>
 
-<!--    Error Vpn Configuration-->
+    <!--    Error Vpn Configuration-->
     <string name="error_vpn_text">Error in configure VPN </string>
     <string name="could_not_configure_vpn_service">Check if you use an always on VPN service like WiFi Assistant and disable it</string>
 
@@ -91,7 +91,6 @@
     <string name="start_text">Start</string>
     <string name="stop_text">Stop</string>
     <string name="stopping_text">Stopping…</string>
-
 
 
     <!--    Modify Strings-->
@@ -152,7 +151,6 @@
     <string name="disconnected_text">Disconnected</string>
 
 
-
     <!--    Network Provider-->
     <string name="wifi_text">Wifi</string>
     <string name="mobile_data_text">Mobile Data</string>
@@ -191,21 +189,19 @@
     <string name="selected_app_text">Selected App</string>
     <string name="unspecified_text">Unspecified</string>
 
-<!--    Data base-->
+    <!--    Data base-->
     <string name="none_text">None</string>
     <string name="begin_dns_speed_test_text">Begin Dns Speed Test</string>
     <string name="use_it_text">Use It</string>
 
 
-<!--    My Quick Setting Tile Name-->
+    <!--    My Quick Setting Tile Name-->
     <string name="start_stop_text">Start / Stop</string>
     <string name="pause_resume_text">Pause / Resume</string>
     <string name="resume_text">Resume</string>
     <string name="pause_text">Pause</string>
-
-
-
-
+    <string name="added_text">added Tile</string>
+    <string name="removed_text">removed Tile</string>
 
 
 </resources>
