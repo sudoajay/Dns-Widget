@@ -1,7 +1,6 @@
 package com.sudoajay.dnswidget.tileClasses
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.VpnService
 import android.os.Build
@@ -69,7 +68,7 @@ class VpnTransparentClass : AppCompatActivity() {
             .setNegativeButton("Ok") { _, _ ->
 
             }
-            .setIcon(R.drawable.error_icon)
+            .setIcon(R.drawable.ic_error)
             .setCancelable(true)
             .show()
     }

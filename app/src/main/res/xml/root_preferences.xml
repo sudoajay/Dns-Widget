@@ -1,34 +1,52 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="@string/messages_header">
-
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
+    <PreferenceCategory app:title="@string/dns_type_text">
+                <SwitchPreferenceCompat
+                    app:key="useDnsv4"
+                    app:title="@string/use_dnsv4_text" />
+                <SwitchPreferenceCompat
+                    app:key="useDnsv6"
+                    app:title="@string/use_dnsv6_text" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+    <PreferenceCategory app:title="@string/automation_text">
+        <CheckBoxPreference
+            app:key="start_on_boot"
+            app:summary="@string/start_on_boot_summary_text"
+            app:title="@string/start_on_boot_text" />
 
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
+        <CheckBoxPreference
+            app:key="start_wifi"
+            app:summary="@string/start_wifi_summary_text"
+            app:title="@string/automatically_start_wifi_text" />
+        <CheckBoxPreference
+            app:key="start_mobile"
+            app:summary="@string/start_mobile_summary_text"
+            app:title="@string/automatically_start_mobile_text" />
 
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/system_setting_text">
+        <Preference
+            app:key="useDarkTheme"
+            app:title="@string/use_dark_mode_text" />
+
+
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/help_support_text">
+        <Preference
+            android:key="privacyPolicy"
+            android:title="@string/privacy_policy_text" />
+        <Preference
+            android:key="sendFeedback"
+            android:summary="@string/send_feedback_summary_text"
+            android:title="@string/send_feedback_text" />
+        <Preference
+            android:key="reportABug"
+            android:summary="@string/report_a_bug_summary_text"
+            android:title="@string/report_a_bug_text" />
 
     </PreferenceCategory>
 

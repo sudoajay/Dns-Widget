@@ -11,6 +11,14 @@ class LoadDns(private var context: Context,private var dnsRepository: DnsReposit
     suspend fun fillDefaultData() {
         val dnsList: MutableList<Dns> = ArrayList()
 
+//        custom dns (Enter Manually)
+        dnsList.add(
+            Dns(
+                null, context.getString(R.string.custom_dns_enter_manually_text), "", "",
+                "", "", "None", custom = true
+            )
+        )
+
         //      Google Dns Data
         dnsList.add(
             Dns(

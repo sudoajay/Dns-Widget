@@ -541,7 +541,7 @@ class AdVpnThread(private val vpnService: VpnService, private val notify: Notify
                 builder,
                 format,
                 ipv6Template,
-                InetAddress.getByName(selectedDns!!.dns1)
+                InetAddress.getByName(getWorkingDNSInfo())
             )
         } catch (e: Exception) {
             Log.e(
@@ -575,6 +575,20 @@ class AdVpnThread(private val vpnService: VpnService, private val notify: Notify
         Log.i(TAG, "Configured")
         return pfd
     }
+
+    private fun getWorkingDNSInfo(): String {
+        val dnsList = listOf(
+            selectedDns!!.dns1,
+            selectedDns!!.dns2,
+            selectedDns!!.dns3,
+            selectedDns!!.dns4
+        )
+        for (i in dnsList) {
+            if  (i.isNotEmpty()) return  i
+        }
+        return ""
+    }
+
 
     interface Notify {
         fun run(value: Int)

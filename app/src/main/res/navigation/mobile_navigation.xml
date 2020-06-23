@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_settings">
 
     <fragment
         android:id="@+id/nav_home"
@@ -39,12 +39,22 @@
         android:label="@string/action_app_filter"
         tools:layout="@layout/activity_app_filter" />
 
+    <activity
+        android:id="@+id/nav_send_feedback"
+        android:name="com.sudoajay.dnswidget.ui.sendFeedback.SendFeedback"
+        android:label="@string/action_send_feedback"
+        tools:layout="@layout/activity_send_feeback" />
+
 
     <fragment
         android:id="@+id/nav_settings"
         android:name="com.sudoajay.dnswidget.ui.setting.SettingFragment"
         android:label="@string/action_send_feedback"
-        tools:layout="@layout/settings_activity" />
+        tools:layout="@layout/settings_activity" >
+        <action
+            android:id="@+id/action_nav_settings_to_nav_send_feedback"
+            app:destination="@id/nav_send_feedback" />
+    </fragment>
 
 
 </navigation>

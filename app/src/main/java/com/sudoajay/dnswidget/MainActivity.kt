@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             dnsShortcutId -> R.id.nav_custom_dns
             settingShortcutId ->
                 R.id.nav_settings
-            else -> R.id.nav_home
+            else -> R.id.nav_settings
         }
         navGraph.startDestination = destination
         navController.graph = navGraph

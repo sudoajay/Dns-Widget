@@ -16,11 +16,10 @@ object NotificationChannels {
     private const val GROUP_UPDATE = "com.sudoajay.dnswidget.notifications.update"
     const val SERVICE_RUNNING = "com.sudoajay.dnswidget.notifications.service.running"
     const val SERVICE_PAUSED = "com.sudoajay.dnswidget.notifications.service.paused"
-    const val UPDATE_STATUS = "com.sudoajay.dnswidget.notifications.update.status"
 
     @RequiresApi(Build.VERSION_CODES.O)
     @JvmStatic
-    fun onCreate(context: Context) {
+    fun notificationOnCreate(context: Context) {
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannelGroup(
@@ -56,15 +55,7 @@ object NotificationChannels {
         pausedChannel.setShowBadge(false)
         notificationManager.createNotificationChannel(pausedChannel)
 
-        val updateChannel = NotificationChannel(
-            UPDATE_STATUS,
-            context.getString(R.string.notifications_update),
-            NotificationManager.IMPORTANCE_LOW
-        )
-        updateChannel.description = context.getString(R.string.notifications_update_desc)
-        updateChannel.group = GROUP_UPDATE
-        updateChannel.setShowBadge(false)
-        notificationManager.createNotificationChannel(updateChannel)
+
 
 
 

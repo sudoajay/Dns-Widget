@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import androidx.core.view.isNotEmpty
 import androidx.core.widget.CompoundButtonCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputLayout
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.LayoutAddCustomDnsBinding
@@ -94,6 +94,7 @@ class AddCustomDnsDialog(
 
         useDns4CheckBox
             .setOnCheckedChangeListener { _, isChecked ->
+                setVisibleDNSv4(isChecked)
                 if (isChecked) {
                     useDns6CheckBox.isEnabled = true
                     useDns6CheckBox.alpha = 1f
@@ -150,14 +151,14 @@ class AddCustomDnsDialog(
 
             }
 
+        useDns4CheckBox.isChecked = isVisibleDNSv4()
         useDns6CheckBox.isChecked = isVisibleDNSv6()
 
     }
 
 
     fun saveDnsDismiss() {
-
-        if (binding.nameTextInputLayout.editText!!.text.isNotEmpty() && (binding.dns1TextInputLayout.editText!!.text.isNotEmpty() || binding.dns3TextInputLayout.editText!!.text.isNotEmpty())) {
+        if (!isError()) {
             CoroutineScope(Dispatchers.IO).launch {
                 if (type != "Edit") {
                     customDnsViewModel.dnsRepository.insert(
@@ -183,20 +184,86 @@ class AddCustomDnsDialog(
                 }
 
             }
-
             customDnsViewModel.filterChanges()
             dismiss()
         }
     }
 
-    private fun isVisibleDNSv6(): Boolean {
-        return requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getBoolean("isDnsV6", false)
+    private fun isError(): Boolean {
+        if (binding.nameTextInputLayout.editText!!.text.isNotEmpty()) {
+            if (binding.useDns4CheckBox.isChecked) {
+
+                if ((binding.useDns6CheckBox.isChecked && addUnspecified(binding.dns1TextInputLayout) && addUnspecified(
+                        binding.dns2TextInputLayout)
+                            && addUnspecified(binding.dns3TextInputLayout) && addUnspecified(
+                        binding.dns4TextInputLayout
+                    ))
+                    || (!binding.useDns6CheckBox.isChecked && addUnspecified(binding.dns1TextInputLayout) && addUnspecified(
+                        binding.dns2TextInputLayout
+                    ))
+                ) {
+                    binding.nameTextInputLayout.isErrorEnabled = true
+                    binding.dns1TextInputLayout.error =
+                        getString(R.string.please_enter_dns_value_text)
+                    binding.dns3TextInputLayout.error = null
+                    binding.dns3TextInputLayout.isErrorEnabled = false
+                    return true
+                }
+            } else {
+
+                if (addUnspecified(binding.dns3TextInputLayout) && addUnspecified(
+                        binding.dns4TextInputLayout
+                    )
+                ) {
+                    binding.nameTextInputLayout.isErrorEnabled = true
+                    binding.dns3TextInputLayout.error =
+                        getString(R.string.please_enter_dns_value_text)
+                    binding.dns1TextInputLayout.error = null
+                    binding.dns1TextInputLayout.isErrorEnabled = false
+                    return true
+                }
+
+            }
+
+        } else {
+            binding.dns1TextInputLayout.error = null
+            binding.dns1TextInputLayout.isErrorEnabled = false
+            binding.dns3TextInputLayout.error = null
+            binding.dns3TextInputLayout.isErrorEnabled = false
+
+            binding.nameTextInputLayout.isErrorEnabled = true
+            binding.nameTextInputLayout.error = getString(R.string.please_enter_dns_name_text)
+
+            return true
+        }
+        return false
     }
 
+    private fun addUnspecified(layout: TextInputLayout): Boolean {
+        return layout.editText!!.text.toString().isEmpty()
+                || layout.editText!!.text.toString() == requireContext().getString(R.string.unspecified_text)
+    }
+
+
+    private fun isVisibleDNSv4(): Boolean {
+        return PreferenceManager
+            .getDefaultSharedPreferences(context).getBoolean("useDnsv4", true)
+    }
+
+    private fun setVisibleDNSv4(value: Boolean) {
+        PreferenceManager
+            .getDefaultSharedPreferences(context).edit().putBoolean("useDnsv4", value).apply()
+    }
+
+    private fun isVisibleDNSv6(): Boolean {
+        return PreferenceManager
+            .getDefaultSharedPreferences(context).getBoolean("useDnsv6", false)
+    }
+
+
     private fun setVisibleDNSv6(value: Boolean) {
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putBoolean("isDnsV6", value).apply()
+        PreferenceManager
+            .getDefaultSharedPreferences(context).edit().putBoolean("useDnsv6", value).apply()
     }
 
     private fun setText(textInputLayout: TextInputLayout): String {

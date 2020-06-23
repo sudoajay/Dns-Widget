@@ -200,10 +200,37 @@
     <string name="added_text">added </string>
     <string name="removed_text">removed </string>
 
-<!--    ShortCut Info -->
-    <string name="compose_shortcut_rest">Food menu</string>
+    <string name="custom_dns_enter_manually_text">Custom DNS (Enter Manually)</string>
+    <string name="please_enter_dns_name_text">Please enter dns name</string>
+    <string name="please_enter_dns_value_text">Please enter DNS!</string>
+
+    <!--    Root Setting preference-->
+    <string name="dns_type_text">DNS Type</string>
+    <string name="use_dnsv4_text">Use DnsV4</string>
+    <string name="use_dnsv6_text">Use DnsV6</string>
+    <string name="automation_text">Automation</string>
+    <string name="start_on_boot_text">Start on Boot</string>
+    <string name="start_on_boot_summary_text">Automatically start DNS Widget when your phone tuned on</string>
+    <string name="automatically_start_wifi_text">Automatically start (Wifi)</string>
+    <string name="start_wifi_summary_text">Automatically start DNS Widget when connecting to wifi network</string>
+    <string name="automatically_start_mobile_text">Automatically start (Mobile)</string>
+    <string name="start_mobile_summary_text">Automatically start DNS Widget when connecting to mobile network</string>
+    <string name="system_setting_text">System Settings</string>
+    <string name="use_dark_mode_text">Use Dark Mode</string>
+    <string name="help_support_text">Help &amp; Support</string>
+    <string name="privacy_policy_text">Privacy Policy</string>
+    <string name="report_a_bug_text">Report A Bug</string>
+    <string name="report_a_bug_summary_text">Submit an issue on Github issue page</string>
+    <string name="send_feedback_text">Send Feedback</string>
+    <string name="send_feedback_summary_text">submit feedback to fix the app bug</string>
+    <string name="at_least_one_dns_text">At least one Dns configuration is required </string>
 
 
+<!--    Dark Mode Bottom Sheet-->
+    <string name="dark_mode_text">Dark Mode</string>
+    <string name="off_text">Off</string>
+    <string name="on_text">On</string>
+    <string name="automatic_at_sunset_text">Automatic at sunset</string>
 
 
 </resources>

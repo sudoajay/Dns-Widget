@@ -28,7 +28,7 @@ import com.sudoajay.dnswidget.ui.customDns.database.DnsDao
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
 import com.sudoajay.dnswidget.vpnClasses.AdVpnThread.Notify
-import com.sudoajay.dnswidget.vpnClasses.NotificationChannels.onCreate
+import com.sudoajay.dnswidget.vpnClasses.NotificationChannels.notificationOnCreate
 import kotlinx.coroutines.*
 
 
@@ -98,8 +98,10 @@ class  AdVpnService : VpnService() {
     override fun onCreate() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            onCreate(this)
+            notificationOnCreate(applicationContext)
         }
+
+
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -426,48 +428,37 @@ class  AdVpnService : VpnService() {
         }
 
 
-//        fun checkStartVpnOnBoot(context: Context) {
-//            Log.i("BOOT", "Checking whether to start ad buster on boot")
-//            val config =
-//                FileHelper.loadCurrentSettings(context)
-//            if (config == null || !config.autoStart) {
-//                return
-//            }
-//            if (!context.getSharedPreferences("state", Context.MODE_PRIVATE)
-//                    .getBoolean("isDnsActive", false)
-//            ) {
-//                return
-//            }
-//            if (prepare(context) != null) {
-//                Log.i(
-//                    "BOOT",
-//                    "VPN preparation not confirmed by user, changing enabled to false"
-//                )
-//            }
-//            Log.i("BOOT", "Starting ad buster from boot")
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                onCreate(context)
-//            }
-//            val intent = getStartIntent(context)
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                context.startForegroundService(intent)
-//            } else {
-//                context.startService(intent)
-//            }
-//        }
-//
-//        private fun getStartIntent(context: Context): Intent {
-//            val intent = Intent(context, AdVpnService::class.java)
-//            intent.putExtra("COMMAND", Command.START.ordinal)
-//            intent.putExtra(
-//                "NOTIFICATION_INTENT",
-//                PendingIntent.getActivity(
-//                    context, 0,
-//                    Intent(context, MainActivity::class.java), 0
-//                )
-//            )
-//            return intent
-//        }
+        fun checkStartVpnOnBoot(context: Context) {
+            Log.i("BOOT", "Checking whether to start ad buster on boot")
+
+            if (!context.getSharedPreferences("state", Context.MODE_PRIVATE)
+                    .getBoolean("isDnsActive", false)
+            ) {
+                return
+            }
+            if (prepare(context) != null) {
+                Log.i(
+                    "BOOT",
+                    "VPN preparation not confirmed by user, changing enabled to false"
+                )
+            }
+            Log.i("BOOT", "Starting ad buster from boot")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                notificationOnCreate(context)
+            }
+            val intent = getStartIntent(context)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent)
+            } else {
+                context.startService(intent)
+            }
+        }
+
+        private fun getStartIntent(context: Context): Intent {
+            val intent = Intent(context, AdVpnService::class.java)
+            intent.putExtra("COMMAND", Command.START.ordinal)
+            return intent
+        }
 
 
     }

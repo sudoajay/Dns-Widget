@@ -1,5 +1,6 @@
 package com.sudoajay.dnswidget.ui.home
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
@@ -17,19 +18,28 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.widget.CompoundButtonCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.preference.PreferenceManager
+import com.google.android.material.textfield.TextInputLayout
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.FragmentHomeBinding
-import com.sudoajay.dnswidget.ui.customDns.database.Dns
+import com.sudoajay.dnswidget.helper.CustomToast
+import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
+import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
 import com.sudoajay.dnswidget.vpnClasses.AdVpnService
 import com.sudoajay.dnswidget.vpnClasses.Command
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.Serializable
 
 
-class HomeFragment : Fragment(), Serializable {
+class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
 
     private lateinit var homeViewModel: HomeViewModel
     private var requestDnsCode = 1
@@ -60,6 +70,7 @@ class HomeFragment : Fragment(), Serializable {
         return binding.root
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun reference() {
 
 
@@ -68,33 +79,44 @@ class HomeFragment : Fragment(), Serializable {
             binding.materialSpinner.setItems(it)
             Log.e(TAG, it.size.toString())
             if (it.isNotEmpty()) {
-                val index = 0
+                val index = requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
+                    .getLong("id", 2).toInt() - 1
                 binding.materialSpinner.selectedIndex = index
-                addItem(index)
-                if (isVisibleDNSv6()) {
-                    binding.dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns1)
-                    binding.dns2TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns2)
-                    binding.dns3TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns3)
-                    binding.dns4TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns4)
-                } else {
-                    binding.dns1TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns1)
-                    binding.dns3TextInputLayout.editText!!.setText(homeViewModel.dnsList[index].dns2)
-                }
+                addItem(index, firstTime = true)
+
+                addTextInputLayout()
             }
 
 
         })
         binding.materialSpinner.setOnItemSelectedListener { _, position, _, _ ->
+
             addItem(position)
-            binding.dns1TextInputLayout.editText!!.setText(dnsList[0])
-            binding.dns2TextInputLayout.editText!!.setText(dnsList[1])
-            binding.dns3TextInputLayout.editText!!.setText(dnsList[2])
-            binding.dns4TextInputLayout.editText!!.setText(dnsList[3])
+
+            addTextInputLayout()
+
+            binding.dns1TextInputLayout.error = null
+            binding.dns1TextInputLayout.isErrorEnabled = false
         }
+
+
+        binding.materialSpinner.setOnTouchListener { _, _ ->
+
+            binding.dns1TextInputLayout.editText!!.clearFocus()
+            binding.dns2TextInputLayout.editText!!.clearFocus()
+            binding.dns3TextInputLayout.editText!!.clearFocus()
+            binding.dns4TextInputLayout.editText!!.clearFocus()
+
+            false
+        }
+
 
 
         binding.useDns4CheckBox
             .setOnCheckedChangeListener { _, isChecked ->
+                binding.dns1TextInputLayout.error = null
+                binding.dns1TextInputLayout.isErrorEnabled = false
+                setVisibleDNSv4(isChecked)
 
                 if (isChecked) {
                     binding.useDns6CheckBox.isEnabled = true
@@ -116,8 +138,9 @@ class HomeFragment : Fragment(), Serializable {
 
                     binding.dns4TextInputLayout.visibility = View.VISIBLE
                     binding.dns4TextInputLayout.editText!!.setText(dnsList[3])
+
                 } else {
-                    binding.useDns6CheckBox.isEnabled = false
+
                     binding.useDns6CheckBox.alpha = .5f
                     binding.useDns6TextView.alpha = .5f
                     CompoundButtonCompat.setButtonTintList(
@@ -139,6 +162,8 @@ class HomeFragment : Fragment(), Serializable {
 
         binding.useDns6CheckBox
             .setOnCheckedChangeListener { _, isChecked ->
+                binding.dns1TextInputLayout.error = null
+                binding.dns1TextInputLayout.isErrorEnabled = false
                 setVisibleDNSv6(isChecked)
 
                 if (isChecked) {
@@ -150,6 +175,9 @@ class HomeFragment : Fragment(), Serializable {
                             ContextCompat.getColor(requireContext(), R.color.colorPrimary)
                         )
                     )
+                    binding.dns1TextInputLayout.hint = getString(R.string.dns1_text)
+                    binding.dns1TextInputLayout.editText!!.setText(dnsList[0])
+
                     binding.dns3TextInputLayout.hint = getString(R.string.dns3_text)
                     binding.dns3TextInputLayout.editText!!.setText(dnsList[2])
 
@@ -178,8 +206,9 @@ class HomeFragment : Fragment(), Serializable {
 
             }
 
-
+        binding.useDns4CheckBox.isChecked = isVisibleDNSv4()
         binding.useDns6CheckBox.isChecked = isVisibleDNSv6()
+
 
         binding.customDnsButton.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_open_custom_dns)
@@ -196,20 +225,32 @@ class HomeFragment : Fragment(), Serializable {
                 TAG,
                 binding.materialSpinner.selectedIndex.toString() + " --- " + homeViewModel.dnsList[binding.materialSpinner.selectedIndex].dnsName
             )
-            if (binding.connectDnsButton.text == requireContext().getString(R.string.start_text)) {
-                saveSelectedDnsInfo(homeViewModel.dnsList[binding.materialSpinner.selectedIndex])
+            if (!isError()) {
+                if (binding.connectDnsButton.text == requireContext().getString(R.string.start_text)) {
+                    var value = binding.materialSpinner.selectedIndex
+                    if (value == 0) {
 
-                Log.i(TAG, "Attempting to connect")
-                val intent = VpnService.prepare(requireContext())
-                if (intent != null) {
-                    Log.i(TAG, "Intent Not  Null ")
-                    startActivityForResult(intent, requestDnsCode)
+                        CustomToast.toastIt(requireContext(), " Value ")
+                        //        Creating Object and Initialization
+                        val dnsDao = DnsRoomDatabase.getDatabase(requireContext()).dnsDao()
+                        val dnsRepository = DnsRepository(requireContext(), dnsDao)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            dnsRepository.updateDns(
+                                value.toLong(),
+                                requireContext().getString(R.string.custom_dns_enter_manually_text),
+                                dnsList[0],
+                                dnsList[1],
+                                dnsList[2],
+                                dnsList[3]
+                            )
+                        }
+                    }
+                    value += 1
+                    startVpn(value.toLong())
+
                 } else {
-                    Log.i(TAG, "Intent Null ")
-                    onActivityResult(requestDnsCode, Activity.RESULT_OK, null)
+                    stopService()
                 }
-            } else {
-                stopService()
             }
 
         }
@@ -221,30 +262,152 @@ class HomeFragment : Fragment(), Serializable {
             binding.connectDnsButton.text = requireContext().getText(R.string.stop_text)
             binding.statusDnsTextView.text = requireContext().getText(R.string.connected_text)
         }
-    }
-    private fun saveSelectedDnsInfo(dns: Dns) {
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putLong("id", dns.id!!).apply()
 
+        binding.dns1TextInputLayout.editText!!.onFocusChangeListener = this
+        binding.dns2TextInputLayout.editText!!.onFocusChangeListener = this
+        binding.dns3TextInputLayout.editText!!.onFocusChangeListener = this
+        binding.dns4TextInputLayout.editText!!.onFocusChangeListener = this
+
+
+        binding.dns1TextInputLayout.editText!!.addTextChangedListener {
+            if (binding.useDns4CheckBox.isChecked) {
+                dnsList[0] = it.toString()
+            } else {
+                dnsList[2] = it.toString()
+            }
+        }
+        binding.dns2TextInputLayout.editText!!.addTextChangedListener {
+            dnsList[1] = it.toString()
+        }
+        binding.dns3TextInputLayout.editText!!.addTextChangedListener {
+            if (binding.useDns4CheckBox.isChecked && binding.useDns6CheckBox.isChecked) {
+                dnsList[2] = it.toString()
+            } else if (binding.useDns4CheckBox.isChecked) {
+                dnsList[1] = it.toString()
+            } else {
+                dnsList[3] = it.toString()
+            }
+        }
+        binding.dns4TextInputLayout.editText!!.addTextChangedListener {
+            dnsList[3] = it.toString()
+        }
+    }
+
+    private fun isError(): Boolean {
+        if (binding.useDns4CheckBox.isChecked) {
+
+            if ((binding.useDns6CheckBox.isChecked && addUnspecified(binding.dns1TextInputLayout) && addUnspecified(
+                    binding.dns2TextInputLayout
+                )
+                        && addUnspecified(binding.dns3TextInputLayout) && addUnspecified(binding.dns4TextInputLayout))
+                || (!binding.useDns6CheckBox.isChecked && addUnspecified(binding.dns1TextInputLayout) && addUnspecified(
+                    binding.dns3TextInputLayout
+                ))
+            ) {
+                binding.dns1TextInputLayout.error =
+                    getString(R.string.please_enter_dns_value_text)
+                return true
+
+            }
+        } else {
+
+            if (addUnspecified(binding.dns1TextInputLayout) && addUnspecified(binding.dns2TextInputLayout)) {
+                binding.dns1TextInputLayout.error =
+                    getString(R.string.please_enter_dns_value_text)
+                return true
+            }
+
+        }
+
+
+        return false
+    }
+
+    private fun addUnspecified(layout: TextInputLayout): Boolean {
+        return layout.editText!!.text.toString().isEmpty()
+                || layout.editText!!.text.toString() == requireContext().getString(R.string.unspecified_text)
+    }
+
+    private fun startVpn(value: Long) {
+
+
+        saveSelectedDnsInfo(value)
+
+        Log.i(TAG, "Attempting to connect")
+        val intent = VpnService.prepare(requireContext())
+        if (intent != null) {
+            Log.i(TAG, "Intent Not  Null ")
+            startActivityForResult(intent, requestDnsCode)
+        } else {
+            Log.i(TAG, "Intent Null ")
+            onActivityResult(requestDnsCode, Activity.RESULT_OK, null)
+        }
+    }
+
+    private fun addTextInputLayout() {
+        if (binding.useDns4CheckBox.isChecked && binding.useDns6CheckBox.isChecked) {
+            binding.dns1TextInputLayout.editText!!.setText(dnsList[0])
+            binding.dns2TextInputLayout.editText!!.setText(dnsList[1])
+            binding.dns3TextInputLayout.editText!!.setText(dnsList[2])
+            binding.dns4TextInputLayout.editText!!.setText(dnsList[3])
+
+        } else if (binding.useDns4CheckBox.isChecked) {
+            binding.dns1TextInputLayout.editText!!.setText(dnsList[0])
+            binding.dns3TextInputLayout.editText!!.setText(dnsList[1])
+        } else {
+            binding.dns1TextInputLayout.editText!!.setText(dnsList[2])
+            binding.dns3TextInputLayout.editText!!.setText(dnsList[3])
+        }
+    }
+
+
+    override fun onFocusChange(p0: View?, p1: Boolean) {
+        when (p0!!.id) {
+            R.id.dns1_TextInputLayoutEditText, R.id.dns2_TextInputLayoutEditText,
+            R.id.dns3_TextInputLayoutEditText, R.id.dns4_TextInputLayoutEditText ->
+                materialSpinner.selectedIndex = 0
+
+
+        }
+    }
+
+    private fun saveSelectedDnsInfo(id: Long) {
+
+        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putLong("id", id).apply()
+
+    }
+
+    private fun isVisibleDNSv4(): Boolean {
+        return PreferenceManager
+            .getDefaultSharedPreferences(context).getBoolean("useDnsv4", true)
+    }
+
+    private fun setVisibleDNSv4(value: Boolean) {
+        PreferenceManager
+            .getDefaultSharedPreferences(context).edit().putBoolean("useDnsv4", value).apply()
     }
 
     private fun isVisibleDNSv6(): Boolean {
-        return requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getBoolean("isDnsV6", false)
+        return PreferenceManager
+            .getDefaultSharedPreferences(context).getBoolean("useDnsv6", false)
     }
+
 
     private fun setVisibleDNSv6(value: Boolean) {
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putBoolean("isDnsV6", value).apply()
+        PreferenceManager
+            .getDefaultSharedPreferences(context).edit().putBoolean("useDnsv6", value).apply()
     }
 
 
-    private fun addItem(position: Int) {
-        dnsList.clear()
-        dnsList.add(homeViewModel.dnsList[position].dns1)
-        dnsList.add(homeViewModel.dnsList[position].dns2)
-        dnsList.add(homeViewModel.dnsList[position].dns3)
-        dnsList.add(homeViewModel.dnsList[position].dns4)
+    private fun addItem(position: Int, firstTime: Boolean = false) {
+        if (firstTime || position != 0) {
+            dnsList.clear()
+            dnsList.add(homeViewModel.dnsList[position].dns1)
+            dnsList.add(homeViewModel.dnsList[position].dns2)
+            dnsList.add(homeViewModel.dnsList[position].dns3)
+            dnsList.add(homeViewModel.dnsList[position].dns4)
+        }
     }
 
 
@@ -277,7 +440,7 @@ class HomeFragment : Fragment(), Serializable {
             .setNegativeButton("Ok") { _, _ ->
 
             }
-            .setIcon(R.drawable.error_icon)
+            .setIcon(R.drawable.ic_error)
             .setCancelable(true)
             .show()
     }
@@ -342,4 +505,6 @@ class HomeFragment : Fragment(), Serializable {
             mIsBound = false
         }
     }
+
+
 }

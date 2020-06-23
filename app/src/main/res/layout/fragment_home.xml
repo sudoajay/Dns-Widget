@@ -14,6 +14,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:background="#fff"
             android:paddingBottom="50dp"
             tools:context=".ui.home.HomeFragment">
@@ -82,7 +83,6 @@
                 android:hint="@string/dns1_text"
                 android:textColorHint="@color/textBlackColor"
                 app:boxStrokeWidth="1dp"
-
                 app:boxStrokeWidthFocused="2dp"
                 app:hintTextColor="@color/colorPrimary"
                 app:layout_constraintEnd_toStartOf="@+id/dns2_TextInputLayout"
@@ -91,6 +91,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/materialSpinner">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dns1_TextInputLayoutEditText"
                     android:layout_width="match_parent"
                     android:inputType="number"
                     android:imeOptions="actionNext"
@@ -117,6 +118,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/materialSpinner">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dns2_TextInputLayoutEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -144,6 +146,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/dns1_TextInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dns3_TextInputLayoutEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
@@ -170,6 +173,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/dns2_TextInputLayout">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dns4_TextInputLayoutEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:imeOptions="actionDone"
