@@ -52,7 +52,7 @@
                 android:layout_marginTop="@dimen/secondary_text_margin"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/secondary_text" />
+                android:textColor="@color/third_text" />
         </LinearLayout>
 
         <CheckBox

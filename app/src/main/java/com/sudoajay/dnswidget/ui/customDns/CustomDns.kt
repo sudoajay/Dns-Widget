@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sudoajay.dnswidget.BaseActivity
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.ActivityCustomDnsBinding
 import com.sudoajay.dnswidget.helper.CustomToast
@@ -24,7 +25,7 @@ import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import java.util.*
 
 
-class CustomDns : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFragment {
+class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFragment {
 
 
     private lateinit var binding: ActivityCustomDnsBinding

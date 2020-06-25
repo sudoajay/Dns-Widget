@@ -1,8 +1,10 @@
 package com.sudoajay.dnswidget.ui.setting
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.core.app.ActivityCompat.recreate
 import androidx.navigation.Navigation
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -12,7 +14,7 @@ import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
 
 
-class SettingConfiguration : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
+class SettingConfiguration : PreferenceFragmentCompat() {
     override fun onCreatePreferences(
         savedInstanceState: Bundle?,
         rootKey: String?
@@ -51,6 +53,15 @@ class SettingConfiguration : PreferenceFragmentCompat(), Preference.OnPreference
             }
 
 
+        val useDarkTheme =
+            findPreference("useDarkTheme") as Preference?
+        useDarkTheme!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            //open browser or intent here
+            showDarkMode()
+            true
+        }
+
+
         val privacyPolicy =
             findPreference("privacyPolicy") as Preference?
         privacyPolicy!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -75,15 +86,6 @@ class SettingConfiguration : PreferenceFragmentCompat(), Preference.OnPreference
             true
         }
 
-        updateOptions(useDnsv4.isChecked, "useDnsv4")
-
-
-    }
-
-
-    private fun updateOptions(checked: Boolean, pref: String) {
-
-
     }
 
     private fun openPrivacyPolicy() {
@@ -101,8 +103,13 @@ class SettingConfiguration : PreferenceFragmentCompat(), Preference.OnPreference
         startActivity(i)
     }
 
-    override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
-        return true
+    private fun showDarkMode() {
+        val darkModeBottomSheet = DarkModeBottomSheet()
+        darkModeBottomSheet.show(
+            childFragmentManager.beginTransaction(),
+            "darkModeBottomSheet"
+        )
+
     }
 
 

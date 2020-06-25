@@ -1,7 +1,9 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
-        <item name="colorPrimary">@color/colorPrimary</item>
+    <style name="Base.Theme.App"
+        parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
+        <item name="windowNoTitle">true</item>
+
         <item name="colorPrimaryVariant">#000000</item>
         <item name="colorOnPrimary">#FFFFFF</item>
         <item name="colorSecondary">#2962FF</item>
@@ -14,7 +16,30 @@
         <item name="android:colorBackground">@color/background</item>
         <item name="colorOnBackground">#212121</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+
     </style>
+
+    <style name="AppTheme" parent="Base.Theme.App">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="DarkTheme" parent="Base.Theme.App">
+
+
+        <item name="colorPrimary">@color/mintColorPrimary</item>
+        <item name="colorPrimaryDark">@color/mintColorPrimaryDark</item>
+        <item name="colorAccent">@color/mintColorAccent</item>
+        <item name="primaryTextColor">@color/mintPrimaryText</item>
+        <item name="buttonNormalColor">@color/mintButtonNormal</item>
+        <item name="buttonHighlightColor">
+            @color/mintButtonHighlight
+        </item>
+        <item name="buttonTextColor">@color/mintButtonText</item>
+    </style>
+
 
 
     <style name="AppTheme.NoActionBar">

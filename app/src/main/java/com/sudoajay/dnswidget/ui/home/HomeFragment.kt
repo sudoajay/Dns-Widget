@@ -372,7 +372,6 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
     }
 
     private fun saveSelectedDnsInfo(id: Long) {
-
         requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
             .putLong("id", id).apply()
 

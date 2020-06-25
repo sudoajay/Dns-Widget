@@ -7,12 +7,8 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.view.MenuItem
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -36,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
@@ -45,12 +41,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private val ratingLink =
         "https://play.google.com/store/apps/details?id=com.sudoajay.duplication_data"
-
-    //  Shortcut Info Id
-    private val homeShortcutId = "homeShortcut"
-    private val dnsShortcutId = "dnsShortcut"
-    private val settingShortcutId = "settingShortcut"
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,23 +56,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         dnsDatabaseConfiguration()
 
 
+        if (!intent.action.isNullOrEmpty()) {
 
-        val navHostFragment = nav_host_fragment as NavHostFragment
-        val graphInflater = navHostFragment.navController.navInflater
-        navGraph = graphInflater.inflate(R.navigation.mobile_navigation)
-        navController = navHostFragment.navController
+            val navHostFragment = nav_host_fragment as NavHostFragment
+            val graphInflater = navHostFragment.navController.navInflater
+            navGraph = graphInflater.inflate(R.navigation.mobile_navigation)
+            navController = navHostFragment.navController
 
 
-        val intent = intent
-        val destination = when (intent.action) {
-            dnsShortcutId -> R.id.nav_custom_dns
-            settingShortcutId ->
-                R.id.nav_settings
-            else -> R.id.nav_settings
+            val intent = intent
+            val destination = when (intent.action) {
+                dnsShortcutId -> R.id.nav_custom_dns
+                settingShortcutId ->
+                    R.id.nav_settings
+                else -> R.id.nav_home
+            }
+            navGraph.startDestination = destination
+            navController.graph = navGraph
         }
-        navGraph.startDestination = destination
-        navController.graph = navGraph
-
 
 
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -145,7 +136,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         val settingShortcut =
-            ShortcutInfo.Builder(applicationContext, settingShortcutId)
+            ShortcutInfo.Builder(applicationContext, Companion.settingShortcutId)
                 .setLongLabel(getString(R.string.action_setting))
                 .setShortLabel(getString(R.string.action_setting))
                 .setIcon(
@@ -158,7 +149,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     Intent(
                         applicationContext,
                         MainActivity::class.java
-                    ).setAction(settingShortcutId)
+                    ).setAction(Companion.settingShortcutId)
                 )
                 .build()
         shortcutManager!!.dynamicShortcuts = listOf(homeShortcut, dnsShortcut, settingShortcut)
@@ -236,6 +227,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(link)
         startActivity(i)
+    }
+
+    companion object {
+        const val settingShortcutId = "settingShortcut"
+
+        //  Shortcut Info Id
+        const val homeShortcutId = "homeShortcut"
+        const val dnsShortcutId = "dnsShortcut"
     }
 
 }

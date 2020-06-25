@@ -16,13 +16,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import com.sudoajay.dnswidget.BaseActivity
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.ActivityAppFilterBinding
 import com.sudoajay.dnswidget.helper.CustomToast
 import java.util.*
 
 
-class AppFilter : AppCompatActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFragment {
+class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFragment {
 
     lateinit var appFilterViewModel: AppFilterViewModel
     private lateinit var binding: ActivityAppFilterBinding

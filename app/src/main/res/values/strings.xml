@@ -231,6 +231,11 @@
     <string name="off_text">Off</string>
     <string name="on_text">On</string>
     <string name="automatic_at_sunset_text">Automatic at sunset</string>
+    <string name="automatic_text">Automatic</string>
+
+    <string name="current_theme_text">Current Theme</string>
+    <string name="app_theme_text">App Theme</string>
+    <string name="dark_theme_text">Dark Theme</string>
 
 
 </resources>

@@ -18,11 +18,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.sudoajay.dnswidget.BaseActivity
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
 
 
-class SendFeedback : AppCompatActivity(){
+class SendFeedback : BaseActivity(){
     private val requestCode = 100
     private var imageUri: Uri? = null
     private lateinit var feedbackEditText: EditText

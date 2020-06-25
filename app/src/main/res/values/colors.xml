@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#376db6</color>
     <color name="colorPrimaryDark">#1e5397</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#376db6</color>
+    <color name="colorAccent">#376db6</color>
     <color name="fabColor_DnsSpeedTest">#337DDC</color>
 
     <!--Toast Color Background and text Color-->
@@ -21,7 +21,8 @@
     <color name="heading_text_color">#3A3838</color>
 
     <color name="primary_text">@android:color/black</color>
-    <color name="secondary_text">#727272</color>
+    <color name="secondary_text">#2C2B2B</color>
+    <color name="third_text">#727272</color>
 
     <color name="divider">#E6E6E6</color>
 
@@ -31,4 +32,51 @@
     <color name="ping3">#F30B26</color>
 
 
+
+<!--    Dark Mode-->
+
+    <color name="mintColorPrimary">#76be2f</color>
+    <color name="mintColorPrimaryDark">#289b23</color>
+    <color name="mintColorAccent">#f9a825</color>
+    <color name="mintPrimaryText">#424242</color>
+    <color name="mintButtonNormal">#76be2f</color>
+    <color name="mintButtonHighlight">#81c784</color>
+    <color name="mintButtonText">#FFFFFF</color>
+
+
+
+<!--    <color name="colorPrimary">#1c2737</color>-->
+<!--    <color name="colorPrimaryLight">#248ff1</color>-->
+<!--    <color name="colorPrimaryDark">#151e29</color>-->
+<!--    <color name="colorPrimaryDarkLight">#173144</color>-->
+<!--    <color name="colorBackground">#151e29</color>-->
+<!--    <color name="colorWhite">#FFF</color>-->
+<!--    <color name="colorDarkLine">#0c1217</color>-->
+<!--    <color name="colorDarkLineDarker">#05080a</color>-->
+<!--    <color name="colorLightGrey">#d4e9fc</color>-->
+<!--    <color name="colorLightGreyTransparent">#99d4e9fc</color>-->
+<!--    <color name="colorAccent">#248ff1</color>-->
+<!--    <color name="colorRedLight">#FFffa3c4</color>-->
+<!--    <color name="colorRed">#FFd8004e</color>-->
+
+
+    <!--Light Color-->
+<!--    <color name="colorPrimary">#f44336</color>-->
+<!--    <color name="colorPrimaryDark">#d32f2f</color>-->
+<!--    <color name="colorAccent">#009688</color>-->
+<!--    <color name="primaryTitleColor">#D9000000</color>-->
+<!--    <color name="primaryDescriptionColor">#8C000000</color>-->
+<!--    <color name="primaryDateColor">#8C000000</color>-->
+<!--    <color name="primaryBackgroundColor">#FAFAFA</color>-->
+<!--    <color name="primaryCardBackgroundColor">#F5F5F5</color>-->
+
+<!--    &lt;!&ndash;Night Color&ndash;&gt;-->
+<!--    <color name="colorPrimaryNight">#212121</color>-->
+<!--    <color name="colorPrimaryDarkNight">#000000</color>-->
+<!--    <color name="colorAccentNight">#f44336</color>-->
+<!--    <color name="primaryTitleColorNight">#FFFFFF</color>-->
+<!--    <color name="primaryDescriptionColorNight">#B3FFFFFF</color>-->
+<!--    <color name="primaryDateColorNight">#B3FFFFFF</color>-->
+<!--    <color name="primaryBackgroundColorNight">#303030</color>-->
+<!--    <color name="primaryCardBackgroundColorNight">#424242</color>-->
 </resources>
