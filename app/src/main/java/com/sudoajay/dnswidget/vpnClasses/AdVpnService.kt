@@ -175,7 +175,7 @@ class  AdVpnService : VpnService() {
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .setContentTitle(getString(R.string.notification_paused_title))
                 .setContentText(getString(R.string.notification_paused_text))
-                .setColor(ContextCompat.getColor(applicationContext, R.color.fabColor_DnsSpeedTest))
+                .setColor(ContextCompat.getColor(applicationContext, R.color.colorPrimary))
                 .setContentIntent(
                     getResumePendingIntent()
                 )

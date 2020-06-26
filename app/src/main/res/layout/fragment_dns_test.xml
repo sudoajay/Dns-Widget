@@ -106,7 +106,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:maxImageSize="28dp"
-                    app:tint="#fff" />
+                    app:tint="?attr/mainBackgroundColor" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

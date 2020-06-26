@@ -34,7 +34,7 @@ class DnsRepository(private val context: Context, private val dnsDao: DnsDao) {
     }
 
     suspend fun getList(): List<Dns> {
-        return dnsDao.getList(context.getString(R.string.unspecified_text))
+        return dnsDao.getList(context.getString(R.string.custom_dns_enter_manually_text))
     }
 
 

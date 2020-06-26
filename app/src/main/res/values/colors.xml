@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--    App Theme Color-->
+    <color name="fabColor_DnsSpeedTest">#337DDC</color>
+
+
+    <!--    App Theme Color-->
     <color name="colorPrimaryDark">#1e5397</color>
     <color name="colorPrimary">#376db6</color>
     <color name="colorAccent">#376db6</color>
@@ -16,7 +19,7 @@
 <!--    Dark Theme Color-->
     <color name="colorPrimaryDark_DarkTheme">#121212</color>
     <color name="colorPrimary_DarkTheme">#272727</color>
-    <color name="colorAccent_DarkTheme">#376db6</color>
+    <color name="colorAccent_DarkTheme">#74A0EE</color>
     <color name="primaryAppColor_DarkTheme">#74A0EE</color>
     <color name="white_DarkTheme">#dae1e7</color>
     <color name="errorBoxColor_DarkTheme">#CF6679</color>
@@ -46,13 +49,17 @@
     <color name="divider">#E6E6E6</color>
 
 <!-- Colo Define Ping -->
-    <color name="ping1">#2CEC16</color>
-    <color name="ping2">#E8D885</color>
-    <color name="ping3">#F30B26</color>
+    <color name="ping1">#2c9f45</color>
+    <color name="ping2">#ffc845</color>
+    <color name="ping3">#F44336</color>
+
+    <color name="ping1_DarkTheme">#89B68A</color>
+    <color name="ping2_DarkTheme">#FFC267</color>
+    <color name="ping3_DarkTheme">#CF6679</color>
 
 
 
-<!--    Dark Mode-->
+    <!--    Dark Mode-->
 
     <color name="mintColorPrimary">#76be2f</color>
     <color name="mintColorPrimaryDark">#289b23</color>

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
@@ -16,6 +17,7 @@ class DnsTestViewModel(application: Application) : AndroidViewModel(application)
 
 
     var dnsRepository: DnsRepository
+    private var _application: Application = application
     private var dnsDao = DnsRoomDatabase.getDatabase(application).dnsDao()
     var dnsList: List<Dns> = ArrayList()
     val msList: MutableList<Long> = mutableListOf()
@@ -37,7 +39,7 @@ class DnsTestViewModel(application: Application) : AndroidViewModel(application)
             withContext(Dispatchers.IO) {
 
                 for (dns in dnsList) {
-                    msList.add(PingInfo.run(dns.dns1))
+                    msList.add(PingInfo.run(getCorrectDns(dns)))
                     show!!.postValue("progressRecyclerList")
                 }
 
@@ -46,6 +48,17 @@ class DnsTestViewModel(application: Application) : AndroidViewModel(application)
         }
 
 
+    }
+
+    private fun getCorrectDns(dns: Dns): String? {
+        val get = _application.getString(R.string.unspecified_text)
+        return when {
+            dns.dns1 != get -> dns.dns1
+            dns.dns2 != get -> dns.dns2
+            dns.dns3 != get -> dns.dns3
+            dns.dns4 != get -> dns.dns4
+            else -> null
+        }
     }
 
     fun onRefresh() {

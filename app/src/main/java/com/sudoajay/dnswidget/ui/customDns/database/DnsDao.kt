@@ -22,8 +22,8 @@ interface DnsDao {
     @Query("Select * FROM DnsTable ")
     suspend fun getDns(): List<Dns>
 
-    @Query("SELECT * FROM DnsTable Where Dns1 != :unspecified_text ")
-    suspend fun getList(unspecified_text: String): List<Dns>
+    @Query("SELECT * FROM DnsTable Where Name != :dnsName ")
+    suspend fun getList(dnsName :String): List<Dns>
 
 
     @Query("SELECT * FROM DnsTable Where id == :id ")

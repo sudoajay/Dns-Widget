@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.databinding.LayoutDnsSpeedTestItemBinding
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 
@@ -19,6 +20,8 @@ class DnsSpeedTestAdapter(
 
 ) :
     RecyclerView.Adapter<DnsSpeedTestAdapter.MyViewHolder>() {
+
+    private lateinit var isDarkTheme: String
 
 
     class MyViewHolder(
@@ -39,6 +42,7 @@ class DnsSpeedTestAdapter(
             LayoutInflater.from(parent.context),
             R.layout.layout_dns_speed_test_item, parent, false
         )
+        isDarkTheme = BaseActivity.getDarkMode(context)
         return MyViewHolder(binding)
 
 
@@ -66,19 +70,28 @@ class DnsSpeedTestAdapter(
             in 80 downTo 0 -> holder.msTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.ping1
+                    if (isDarkTheme == context.getString(
+                            R.string.off_text
+                        )
+                    ) R.color.ping1 else R.color.ping1_DarkTheme
                 )
             )
             in 200 downTo 80 -> holder.msTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.ping2
+                    if (isDarkTheme == context.getString(
+                            R.string.off_text
+                        )
+                    ) R.color.ping2 else R.color.ping2_DarkTheme
                 )
             )
             else -> holder.msTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.ping3
+                    if (isDarkTheme == context.getString(
+                            R.string.off_text
+                        )
+                    ) R.color.ping3 else R.color.ping3_DarkTheme
                 )
             )
         }

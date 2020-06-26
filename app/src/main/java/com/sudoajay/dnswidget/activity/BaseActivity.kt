@@ -10,19 +10,13 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-         currentTheme = getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getString(getString(R.string.dark_mode_text), getString(
-                R.string.off_text
-            )).toString()
+         currentTheme = getDarkMode(applicationContext)
         setAppTheme(currentTheme)
     }
 
     override fun onResume() {
         super.onResume()
-        val theme = getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getString(getString(R.string.dark_mode_text), getString(
-                R.string.off_text
-            )).toString()
+        val theme = getDarkMode(applicationContext)
         if (currentTheme != theme)
             recreate()
     }
@@ -33,6 +27,17 @@ open class BaseActivity : AppCompatActivity() {
                 R.style.AppTheme
             )
             else -> setTheme(R.style.DarkTheme)
+        }
+    }
+
+    companion object {
+         fun getDarkMode(context: Context): String {
+            return context.getSharedPreferences("state", Context.MODE_PRIVATE)
+                .getString(
+                    context.getString(R.string.dark_mode_text), context.getString(
+                        R.string.off_text
+                    )
+                ).toString()
         }
     }
 }

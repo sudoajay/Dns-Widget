@@ -26,6 +26,7 @@ import androidx.navigation.Navigation
 import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputLayout
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.databinding.FragmentHomeBinding
 import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
@@ -429,13 +430,13 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
 
     private fun errorVpnService() {
 
-        val theme = requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getString(getString(R.string.dark_mode_text), getString(
-                R.string.off_text
-            )).toString()
+
         val builder: AlertDialog.Builder =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                AlertDialog.Builder(requireContext(), if(theme == getString(R.string.off_text)) android.R.style.Theme_Material_Light_Dialog_Alert else android.R.style.Theme_Material_Dialog_Alert)
+                AlertDialog.Builder(
+                    requireContext(),
+                    if (BaseActivity.getDarkMode(requireContext()) == getString(R.string.off_text)) android.R.style.Theme_Material_Light_Dialog_Alert else android.R.style.Theme_Material_Dialog_Alert
+                )
             } else {
                 AlertDialog.Builder(requireContext())
             }

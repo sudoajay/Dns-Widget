@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.databinding.FragmentDnsTestBinding
 import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.appFilter.InsetDivider
@@ -20,6 +21,7 @@ class DnsTestFragment : Fragment() {
 
     private lateinit var dnsTestViewModel: DnsTestViewModel
     private lateinit var binding: FragmentDnsTestBinding
+    private lateinit var isDarkTheme: String
 
     @SuppressLint("InflateParams")
     override fun onCreateView(
@@ -42,11 +44,17 @@ class DnsTestFragment : Fragment() {
     }
 
     private fun reference() {
+        isDarkTheme = BaseActivity.getDarkMode(requireContext())
 
         setRecyclerView()
 
-        //      Setup Swipe RecyclerView
-        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+
+        binding.swipeRefresh.setColorSchemeResources(
+            if (isDarkTheme == getString(
+                    R.string.off_text
+                )
+            ) R.color.colorPrimary else R.color.primaryAppColor_DarkTheme
+        )
         binding.swipeRefresh.isEnabled = false
         binding.swipeRefresh.setOnRefreshListener {
             dnsTestViewModel.onRefresh()
@@ -97,7 +105,10 @@ class DnsTestFragment : Fragment() {
 
     private fun getInsetDivider(): RecyclerView.ItemDecoration {
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
-        val dividerColor = ContextCompat.getColor(requireContext(), R.color.divider)
+        val dividerColor = ContextCompat.getColor(
+            requireContext(),
+            if (isDarkTheme == getString(R.string.off_text)) R.color.bgWhiteColor else R.color.backgroundBoxColor_DarkTheme
+        )
         val marginLeft = resources.getDimensionPixelSize(R.dimen.divider_inset)
         return InsetDivider.Builder(requireContext())
             .orientation(InsetDivider.VERTICAL_LIST)
