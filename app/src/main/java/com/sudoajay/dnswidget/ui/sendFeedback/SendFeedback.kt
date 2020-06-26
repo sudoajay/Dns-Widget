@@ -16,9 +16,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.sudoajay.dnswidget.BaseActivity
+import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
 

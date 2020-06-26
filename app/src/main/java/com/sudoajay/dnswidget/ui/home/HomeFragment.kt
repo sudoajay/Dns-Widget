@@ -428,9 +428,14 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
 
 
     private fun errorVpnService() {
+
+        val theme = requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
+            .getString(getString(R.string.dark_mode_text), getString(
+                R.string.off_text
+            )).toString()
         val builder: AlertDialog.Builder =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                AlertDialog.Builder(requireContext(), android.R.style.Theme_Material_Dialog_Alert)
+                AlertDialog.Builder(requireContext(), if(theme == getString(R.string.off_text)) android.R.style.Theme_Material_Light_Dialog_Alert else android.R.style.Theme_Material_Dialog_Alert)
             } else {
                 AlertDialog.Builder(requireContext())
             }

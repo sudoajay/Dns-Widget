@@ -1,4 +1,4 @@
-package com.sudoajay.dnswidget
+package com.sudoajay.dnswidget.activity
 
 import android.content.Intent
 import android.content.pm.ShortcutInfo
@@ -18,6 +18,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
+import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.ui.appFilter.LoadApps
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppDao
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository
@@ -26,6 +27,8 @@ import com.sudoajay.dnswidget.ui.customDns.LoadDns
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
 import com.sudoajay.dnswidget.ui.sendFeedback.SendFeedback
+import com.sudoajay.dnswidget.ui.setting.DarkModeBottomSheet
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -82,9 +85,17 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_custom_dns, R.id.nav_dns_test, R.id.nav_app_filter,
-            R.id.nav_share, R.id.nav_rate_us, R.id.nav_more_app
-            , R.id.nav_send_feedback, R.id.nav_settings, R.id.nav_about
+            R.id.nav_home,
+            R.id.nav_custom_dns,
+            R.id.nav_dns_test,
+            R.id.nav_app_filter,
+            R.id.nav_share,
+            R.id.nav_rate_us,
+            R.id.nav_more_app
+            ,
+            R.id.nav_send_feedback,
+            R.id.nav_settings,
+            R.id.nav_about
         ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -97,6 +108,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             shortcutManager()
         }
 
+//        Dark Mode Configuration
+        darkModeConfiguration()
+    }
+
+    private fun darkModeConfiguration() {
+        nightMode_ImageView.setOnClickListener {
+            showDarkMode()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N_MR1)
@@ -105,19 +124,31 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val shortcutManager = getSystemService<ShortcutManager>(ShortcutManager::class.java)
 
 
-        val homeShortcut = ShortcutInfo.Builder(applicationContext, homeShortcutId)
+        val homeShortcut = ShortcutInfo.Builder(
+            applicationContext,
+            homeShortcutId
+        )
             .setShortLabel(getString(R.string.action_home))
             .setLongLabel(getString(R.string.action_home))
-            .setIcon(Icon.createWithResource(applicationContext, R.drawable.ic_home))
+            .setIcon(
+                Icon.createWithResource(
+                    applicationContext,
+                    R.drawable.ic_home
+                )
+            )
             .setIntent(
-                Intent(applicationContext, MainActivity::class.java).setAction(homeShortcutId)
+                Intent(applicationContext, MainActivity::class.java).setAction(
+                    homeShortcutId
+                )
             )
             .build()
 
 
-
         val dnsShortcut =
-            ShortcutInfo.Builder(applicationContext, dnsShortcutId)
+            ShortcutInfo.Builder(
+                applicationContext,
+                dnsShortcutId
+            )
                 .setLongLabel(getString(R.string.add_custom_dns_text))
                 .setShortLabel(getString(R.string.add_custom_dns_text))
                 .setIcon(
@@ -136,7 +167,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
 
         val settingShortcut =
-            ShortcutInfo.Builder(applicationContext, Companion.settingShortcutId)
+            ShortcutInfo.Builder(
+                applicationContext,
+                settingShortcutId
+            )
                 .setLongLabel(getString(R.string.action_setting))
                 .setShortLabel(getString(R.string.action_setting))
                 .setIcon(
@@ -149,7 +183,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     Intent(
                         applicationContext,
                         MainActivity::class.java
-                    ).setAction(Companion.settingShortcutId)
+                    ).setAction(settingShortcutId)
                 )
                 .build()
         shortcutManager!!.dynamicShortcuts = listOf(homeShortcut, dnsShortcut, settingShortcut)
@@ -202,9 +236,18 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return handled
     }
 
-        override fun onSupportNavigateUp(): Boolean {
-            val navController = findNavController(R.id.nav_host_fragment)
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun showDarkMode() {
+        val darkModeBottomSheet = DarkModeBottomSheet(homeShortcutId)
+        darkModeBottomSheet.show(
+            supportFragmentManager.beginTransaction(),
+            "darkModeBottomSheet"
+        )
+
     }
 
 

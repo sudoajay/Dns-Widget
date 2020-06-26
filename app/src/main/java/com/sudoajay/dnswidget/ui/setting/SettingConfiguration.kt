@@ -1,16 +1,15 @@
 package com.sudoajay.dnswidget.ui.setting
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.core.app.ActivityCompat.recreate
 import androidx.navigation.Navigation
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.TwoStatePreference
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.helper.CustomToast
 
 
@@ -104,7 +103,7 @@ class SettingConfiguration : PreferenceFragmentCompat() {
     }
 
     private fun showDarkMode() {
-        val darkModeBottomSheet = DarkModeBottomSheet()
+        val darkModeBottomSheet = DarkModeBottomSheet(MainActivity.settingShortcutId)
         darkModeBottomSheet.show(
             childFragmentManager.beginTransaction(),
             "darkModeBottomSheet"

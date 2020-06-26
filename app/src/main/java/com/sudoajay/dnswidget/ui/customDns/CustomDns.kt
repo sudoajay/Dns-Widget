@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -16,7 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sudoajay.dnswidget.BaseActivity
+import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.ActivityCustomDnsBinding
 import com.sudoajay.dnswidget.helper.CustomToast

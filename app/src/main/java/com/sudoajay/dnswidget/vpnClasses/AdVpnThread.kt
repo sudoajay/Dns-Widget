@@ -9,7 +9,7 @@ import android.system.Os
 import android.system.OsConstants
 import android.system.StructPollfd
 import android.util.Log
-import com.sudoajay.dnswidget.MainActivity
+import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppDao
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository

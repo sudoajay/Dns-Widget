@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="primaryTextColor" format="reference"/>
-    <attr name="buttonNormalColor" format="reference"/>
-    <attr name="buttonHighlightColor" format="reference" />
-    <attr name="buttonTextColor" format="reference" />
-    <attr name="primaryButtonTheme" format="reference" />
+    <attr name="primaryAppColor" format="reference"/>
+    <attr name="primaryBoxTextColor" format="reference"/>
+    <attr name="headingNormalTextColor" format="reference"/>
+    <attr name="boxTextColor" format="reference"/>
+    <attr name="boxHoverColor" format="reference"/>
+    <attr name="errorBoxColor" format="reference"/>
+    <attr name="mainBackgroundColor" format="reference"/>
+    <attr name="backgroundBoxColor" format="reference"/>
 </resources>

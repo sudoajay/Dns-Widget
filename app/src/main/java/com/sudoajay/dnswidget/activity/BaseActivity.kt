@@ -1,8 +1,9 @@
-package com.sudoajay.dnswidget
+package com.sudoajay.dnswidget.activity
 
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.sudoajay.dnswidget.R
 
 open class BaseActivity : AppCompatActivity() {
     private lateinit var currentTheme: String
@@ -10,21 +11,27 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
          currentTheme = getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getString(getString(R.string.dark_mode_text), getString(R.string.off_text)).toString()
+            .getString(getString(R.string.dark_mode_text), getString(
+                R.string.off_text
+            )).toString()
         setAppTheme(currentTheme)
     }
 
     override fun onResume() {
         super.onResume()
         val theme = getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getString(getString(R.string.dark_mode_text), getString(R.string.off_text)).toString()
+            .getString(getString(R.string.dark_mode_text), getString(
+                R.string.off_text
+            )).toString()
         if (currentTheme != theme)
             recreate()
     }
 
     private fun setAppTheme(currentTheme: String) {
         when (currentTheme) {
-            getString(R.string.off_text) -> setTheme(R.style.AppTheme)
+            getString(R.string.off_text) -> setTheme(
+                R.style.AppTheme
+            )
             else -> setTheme(R.style.DarkTheme)
         }
     }

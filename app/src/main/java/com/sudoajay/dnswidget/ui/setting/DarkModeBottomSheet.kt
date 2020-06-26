@@ -2,18 +2,17 @@ package com.sudoajay.dnswidget.ui.setting
 
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.sudoajay.dnswidget.MainActivity
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.databinding.LayoutDarkModeBottomSheetBinding
 
 
-class DarkModeBottomSheet : BottomSheetDialogFragment() {
+class DarkModeBottomSheet(var passAction: String) : BottomSheetDialogFragment() {
 
 
     override fun onCreateView(
@@ -46,7 +45,7 @@ class DarkModeBottomSheet : BottomSheetDialogFragment() {
             .putString(getString(R.string.dark_mode_text), value).apply()
 
         val intent = Intent(requireContext() , MainActivity::class.java)
-        intent.action = MainActivity.settingShortcutId
+        intent.action = passAction
         requireActivity().finish()
         startActivity(intent)
 

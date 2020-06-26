@@ -23,21 +23,33 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="primaryAppColor" >@color/colorPrimary</item>
+        <item name="primaryBoxTextColor">@color/primaryBoxTextColor</item>
+        <item name="headingNormalTextColor">@color/headingNormalTextColor</item>
+        <item name="boxTextColor">@color/boxTextColor</item>
+        <item name="boxHoverColor">@color/colorPrimary</item>
+        <item name="errorBoxColor">@color/errorBoxColor</item>
+        <item name="mainBackgroundColor">@color/bgWhiteColor</item>
+        <item name="backgroundBoxColor">@color/bgWhiteColor</item>
+
+
     </style>
 
 
     <style name="DarkTheme" parent="Base.Theme.App">
-
-
-        <item name="colorPrimary">@color/mintColorPrimary</item>
-        <item name="colorPrimaryDark">@color/mintColorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary_DarkTheme</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_DarkTheme</item>
         <item name="colorAccent">@color/mintColorAccent</item>
-        <item name="primaryTextColor">@color/mintPrimaryText</item>
-        <item name="buttonNormalColor">@color/mintButtonNormal</item>
-        <item name="buttonHighlightColor">
-            @color/mintButtonHighlight
-        </item>
-        <item name="buttonTextColor">@color/mintButtonText</item>
+
+        <item name="primaryAppColor" >@color/primaryAppColor_DarkTheme</item>
+        <item name="headingNormalTextColor">@color/white_DarkTheme</item>
+        <item name="boxTextColor">@color/white_DarkTheme</item>
+        <item name="boxHoverColor">@color/white_DarkTheme</item>
+        <item name="errorBoxColor">@color/errorBoxColor_DarkTheme</item>
+        <item name="mainBackgroundColor">@color/mainBackgroundColor_DarkTheme</item>
+        <item name="backgroundBoxColor">@color/backgroundBoxColor_DarkTheme</item>
+
     </style>
 
 
