@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="fabColor_DnsSpeedTest">#337DDC</color>
-
 <!--    App Theme Color-->
     <color name="colorPrimaryDark">#1e5397</color>
     <color name="colorPrimary">#376db6</color>
