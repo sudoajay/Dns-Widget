@@ -2,12 +2,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory app:title="@string/dns_type_text">
-                <SwitchPreferenceCompat
-                    app:key="useDnsv4"
-                    app:title="@string/use_dnsv4_text" />
-                <SwitchPreferenceCompat
-                    app:key="useDnsv6"
-                    app:title="@string/use_dnsv6_text" />
+        <SwitchPreferenceCompat
+            app:key="useDnsv4"
+            app:title="@string/use_dnsv4_text" />
+        <SwitchPreferenceCompat
+            app:key="useDnsv6"
+            app:title="@string/use_dnsv6_text" />
 
     </PreferenceCategory>
 

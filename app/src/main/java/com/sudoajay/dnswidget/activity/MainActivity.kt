@@ -81,22 +81,26 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
+        if (getDarkMode(applicationContext) != getString(R.string.off_text)) {
+            navView.itemBackground = getDrawable(R.drawable.drawer_item_bg_dark_mode)
+        }
         navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home,
-            R.id.nav_custom_dns,
-            R.id.nav_dns_test,
-            R.id.nav_app_filter,
-            R.id.nav_share,
-            R.id.nav_rate_us,
-            R.id.nav_more_app
-            ,
-            R.id.nav_send_feedback,
-            R.id.nav_settings,
-            R.id.nav_about
-        ), drawerLayout
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_home,
+                R.id.nav_custom_dns,
+                R.id.nav_dns_test,
+                R.id.nav_app_filter,
+                R.id.nav_share,
+                R.id.nav_rate_us,
+                R.id.nav_more_app
+                ,
+                R.id.nav_send_feedback,
+                R.id.nav_settings,
+                R.id.nav_about
+            ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

@@ -13,18 +13,19 @@
     <color name="boxTextColor">#353131</color>
     <color name="errorBoxColor">#F44336</color>
     <color name="bgWhiteColor">#ffffff</color>
+    <color name="navigationViewBackgroundChecked">#FAF8FF</color>
 
 
 
-<!--    Dark Theme Color-->
+
+    <!--    Dark Theme Color-->
     <color name="colorPrimaryDark_DarkTheme">#121212</color>
     <color name="colorPrimary_DarkTheme">#272727</color>
     <color name="colorAccent_DarkTheme">#74A0EE</color>
-    <color name="primaryAppColor_DarkTheme">#74A0EE</color>
     <color name="white_DarkTheme">#dae1e7</color>
     <color name="errorBoxColor_DarkTheme">#CF6679</color>
     <color name="mainBackgroundColor_DarkTheme">#121212</color>
-    <color name="backgroundBoxColor_DarkTheme">#CC272727</color>
+
 
 
     <!--Toast Color Background and text Color-->

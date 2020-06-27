@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.navigation.Navigation
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import androidx.preference.TwoStatePreference
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.activity.MainActivity
@@ -21,8 +20,7 @@ class SettingConfiguration : PreferenceFragmentCompat() {
         // Load the preferences from an XML resource
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-        val sharedPref = PreferenceManager
-            .getDefaultSharedPreferences(context)
+
 
 
         val useDnsv4 = findPreference("useDnsv4") as TwoStatePreference?
