@@ -22,7 +22,7 @@ class MoreOptionBottomSheet(var customDns: CustomDns, var dns: Dns) : BottomShee
         savedInstanceState: Bundle?
     ): View? {
 
-        val myDrawerView = layoutInflater.inflate(R.layout.layout_moreoption_bottomsheet_, null)
+        val myDrawerView = layoutInflater.inflate(R.layout.layout_moreoption_bottomsheet, null)
         val binding = LayoutMoreoptionBottomsheetBinding.inflate(
             layoutInflater,
             myDrawerView as ViewGroup,
@@ -32,13 +32,8 @@ class MoreOptionBottomSheet(var customDns: CustomDns, var dns: Dns) : BottomShee
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-    }
-
-
-     fun share() {
+    fun share() {
         val i = Intent(Intent.ACTION_SEND)
         i.type = "text/plain"
         i.putExtra(Intent.EXTRA_SUBJECT, "Dns")

@@ -236,6 +236,7 @@
     <string name="current_theme_text">Current Theme</string>
     <string name="app_theme_text">App Theme</string>
     <string name="dark_theme_text">Dark Theme</string>
+    <string name="filter_option_text">Filter Option</string>
 
 
 </resources>

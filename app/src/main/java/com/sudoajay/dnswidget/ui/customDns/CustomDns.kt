@@ -15,8 +15,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.databinding.ActivityCustomDnsBinding
 import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.appFilter.InsetDivider
@@ -29,13 +29,18 @@ class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
 
     private lateinit var binding: ActivityCustomDnsBinding
     lateinit var customDnsViewModel: CustomDnsViewModel
+    private lateinit var isDarkTheme: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        isDarkTheme = getDarkMode(applicationContext)
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            if (isDarkTheme == getString(R.string.off_text))
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_custom_dns)
 
@@ -55,21 +60,47 @@ class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
      */
     private fun changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val window = window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
+            if (isDarkTheme == getString(R.string.off_text)) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = Color.TRANSPARENT
+            }
         }
     }
 
     private fun reference() {
 
-        val bottomAppBar = binding.bottomAppBar
-        setSupportActionBar(bottomAppBar)
+        binding.bottomAppBar.navigationIcon?.mutate()?.let {
+            it.setTint(
+                ContextCompat.getColor(
+                    applicationContext, if (isDarkTheme == getString(
+                            R.string.off_text
+                        )
+                    ) R.color.boxTextColor else R.color.colorAccent_DarkTheme
+                )
+            )
+            binding.bottomAppBar.navigationIcon = it
+        }
+
+        setSupportActionBar(binding.bottomAppBar)
 
         setRecyclerView()
 
 //      Setup Swipe RecyclerView
-        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+        binding.swipeRefresh.setColorSchemeResources(
+            if (isDarkTheme == getString(
+                    R.string.off_text
+                )
+            ) R.color.colorPrimary else R.color.colorAccent_DarkTheme
+        )
+        binding.swipeRefresh.setProgressBackgroundColorSchemeColor(
+            if (isDarkTheme == getString(R.string.off_text)) ContextCompat.getColor(
+                applicationContext,
+                R.color.bgWhiteColor
+            ) else ContextCompat.getColor(
+                applicationContext,
+                R.color.colorPrimary_DarkTheme)
+        )
         binding.swipeRefresh.setOnRefreshListener {
             customDnsViewModel.onRefresh()
         }
@@ -108,7 +139,10 @@ class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
 
     private fun getInsetDivider(): RecyclerView.ItemDecoration {
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
-        val dividerColor = ContextCompat.getColor(applicationContext, R.color.divider)
+        val dividerColor = ContextCompat.getColor(
+            applicationContext,
+            if (isDarkTheme == getString(R.string.off_text)) R.color.bgWhiteColor else R.color.colorPrimary_DarkTheme
+        )
         val marginLeft = resources.getDimensionPixelSize(R.dimen.divider_inset)
         return InsetDivider.Builder(this)
             .orientation(InsetDivider.VERTICAL_LIST)

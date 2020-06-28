@@ -11,22 +11,36 @@
             type="com.sudoajay.dnswidget.ui.customDns.FilterDnsBottomSheet" />
     </data>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="32dp"
+        android:background="?attr/mainBackgroundColor"
         android:paddingBottom="32dp">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="35dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bottom_sheet_top_effect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/ShowBy_TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_menu_show"
-            android:textColor="@color/secondary_text"
+            android:layout_marginTop="12dp"
+            android:text="@string/filter_option_text"
+            android:textColor="?attr/headingNormalTextColor"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.092"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/defaultShow_ConstraintLayout"
@@ -50,7 +64,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:text="@string/menu_default_dns"
-                android:textColor="@color/primary_text"
+                android:textColor="?attr/boxTextColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -64,7 +78,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/defaultShow_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/defaultShow_TextView"
-                app:srcCompat="@drawable/ic_done" />
+                app:srcCompat="@drawable/ic_done"
+                app:tint="?attr/boxTextColor"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -89,7 +104,8 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:text="@string/action_custom_dns"
-                android:textColor="@color/primary_text"
+                android:textColor="?attr/boxTextColor"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -104,7 +120,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/customShow_TextView"
                 app:layout_constraintVertical_bias="0.261"
-                app:srcCompat="@drawable/ic_done" />
+                app:srcCompat="@drawable/ic_done"
+                app:tint="?attr/boxTextColor"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
