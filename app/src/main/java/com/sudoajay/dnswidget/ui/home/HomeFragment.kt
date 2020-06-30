@@ -332,7 +332,7 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
     private fun startVpn(value: Long) {
 
 
-        saveSelectedDnsInfo(value)
+        saveSelectedDnsInfo(requireContext(),value)
 
         Log.i(TAG, "Attempting to connect")
         val intent = VpnService.prepare(requireContext())
@@ -372,11 +372,7 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
         }
     }
 
-    private fun saveSelectedDnsInfo(id: Long) {
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putLong("id", id).apply()
 
-    }
 
     private fun isVisibleDNSv4(): Boolean {
         return PreferenceManager
@@ -508,6 +504,14 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
         if(mIsBound) {
             requireContext().unbindService(serviceConnection)
             mIsBound = false
+        }
+    }
+
+    companion object{
+        fun saveSelectedDnsInfo(context: Context,id: Long) {
+            context.getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+                .putLong("id", id).apply()
+
         }
     }
 

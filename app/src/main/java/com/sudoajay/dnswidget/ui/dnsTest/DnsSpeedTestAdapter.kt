@@ -2,6 +2,7 @@ package com.sudoajay.dnswidget.ui.dnsTest
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -9,8 +10,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.activity.BaseActivity
+import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.databinding.LayoutDnsSpeedTestItemBinding
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
+import com.sudoajay.dnswidget.ui.home.HomeFragment
 
 
 class DnsSpeedTestAdapter(
@@ -33,6 +36,7 @@ class DnsSpeedTestAdapter(
         var dns1TextView = binding.dns1TextView
         var dns2TextView = binding.dns2TextView
         var msTextView = binding.msTextView
+        var useItButton = binding.useItButton
 
 
     }
@@ -61,7 +65,15 @@ class DnsSpeedTestAdapter(
 
         holder.dns1TextView.text = dns.dns1
         holder.dns2TextView.text = dns.dns2
+        holder.useItButton.setOnClickListener {
 
+            HomeFragment.saveSelectedDnsInfo(context = context, id = dns.id!!)
+
+            val intent = Intent(context, MainActivity::class.java)
+            intent.action = MainActivity.homeShortcutId
+            context.startActivity(intent)
+
+        }
 
         val ms = msList[position].toInt()
 

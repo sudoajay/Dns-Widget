@@ -69,7 +69,7 @@ class DnsTestViewModel(application: Application) : AndroidViewModel(application)
 
     private fun getShow(): LiveData<String> {
         if (show == null) {
-            show = MutableLiveData<String>()
+            show = MutableLiveData()
             loadShow()
         }
         return show as MutableLiveData<String>

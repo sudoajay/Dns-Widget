@@ -8,75 +8,59 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.databinding.LayoutSystemInfoBinding
 import com.sudoajay.dnswidget.helper.ConnectivityType
 import com.sudoajay.dnswidget.helper.FileSize
 
 
-class SystemInfoDialog : DialogFragment(), View.OnClickListener {
-    private lateinit var rootview: View
+class SystemInfoDialog : DialogFragment() {
+    private lateinit var binding: LayoutSystemInfoBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        rootview = inflater.inflate(R.layout.layout_system_info, container, false)
+        binding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),
+            R.layout.layout_system_info,
+            null,
+            false
+        )
+        binding.dialog = this
 
         mainFun()
 
-        return rootview
+        return binding.root
     }
 
     @SuppressLint("SetTextI18n", "DefaultLocale")
     private fun mainFun() { // Reference Object
 
-        val closeImageView: ImageView = rootview.findViewById(R.id.close_ImageView)
-        val okButton: Button = rootview.findViewById(R.id.cancel_Button)
-        val deviceInfoText: TextView = rootview.findViewById(R.id.deviceInfoText_TextView)
-        val osApiLevelText: TextView = rootview.findViewById(R.id.osApiLevelText_TextView)
-        val appVersionText: TextView = rootview.findViewById(R.id.appVersionText_TextView)
-        val languageText: TextView = rootview.findViewById(R.id.languageText_TextView)
-        val totalMemoryText: TextView = rootview.findViewById(R.id.totalMemoryText_TextView)
-        val freeMemoryText: TextView = rootview.findViewById(R.id.freeMemoryText_TextView)
-        val screenText: TextView = rootview.findViewById(R.id.screenText_TextView)
-        val networkTypeText: TextView = rootview.findViewById(R.id.networkTypeText_TextView)
-
 
         // setup dialog box
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        rootview.findViewById<ConstraintLayout>(R.id.constraintLayout).setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.tabBackgroundColor
-            )
-        )
-//         On click Listener
-        closeImageView.setOnClickListener(this)
-        okButton.setOnClickListener(this)
 
 
         val systemInfo = SystemInfo(requireActivity())
 
 
 //        Fill in the text View
-        deviceInfoText.text =
+        binding.deviceInfoTextTextView.text =
             systemInfo.getInfo("MANUFACTURER") + "  " + systemInfo.getInfo("MODEL") + " (" + systemInfo.getInfo(
                 "PRODUCT"
             ) + ")"
-        osApiLevelText.text = systemInfo.getInfo("SDK_INT")
-        appVersionText.text = systemInfo.getAppInfo().versionName
-        languageText.text = systemInfo.getLanguage()
-        totalMemoryText.text = FileSize.convertIt(systemInfo.getHeapTotalSize())
-        freeMemoryText.text = FileSize.convertIt(systemInfo.getHeapFreeSize())
-        screenText.text =
+        binding.osApiLevelTextTextView.text = systemInfo.getInfo("SDK_INT")
+        binding.appVersionTextTextView.text = systemInfo.getAppInfo().versionName
+        binding.languageTextTextView.text = systemInfo.getLanguage()
+        binding.totalMemoryTextTextView.text = FileSize.convertIt(systemInfo.getHeapTotalSize())
+        binding.freeMemoryTextTextView.text = FileSize.convertIt(systemInfo.getHeapFreeSize())
+        binding.screenTextTextView.text =
             systemInfo.getScreenSize().heightPixels.toString() + " x " + systemInfo.getScreenSize().widthPixels.toString()
-        networkTypeText.text = ConnectivityType.getNetworkProvider(requireContext())
+        binding.networkTypeTextTextView.text = ConnectivityType.getNetworkProvider(requireContext())
 
     }
 
@@ -109,12 +93,6 @@ class SystemInfoDialog : DialogFragment(), View.OnClickListener {
         } while (current!!.parent != null)
         // Request a layout to be re-done
         current!!.requestLayout()
-    }
-
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            R.id.close_ImageView, R.id.cancel_Button -> dismiss()
-        }
     }
 
 

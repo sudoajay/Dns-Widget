@@ -45,6 +45,7 @@
                         android:layout_marginLeft="16dp"
                         android:fontFamily="@font/lato"
                         android:text="@string/add_custom_dns_text"
+                        android:textColor="?attr/headingNormalTextColor"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
