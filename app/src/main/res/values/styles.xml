@@ -17,12 +17,11 @@
         <item name="mainBackgroundColor">@color/bgWhiteColor</item>
         <item name="backgroundBoxColor">@color/bgWhiteColor</item>
         <item name="bottomItemTintColor">@color/boxTextColor</item>
+        <item name="feedbackBoxBgColor">@color/feedbackBoxBgColor</item>
 
         <item name="colorError">@color/errorBoxColor</item>
         <item name="colorOnError">@color/bgWhiteColor</item>
         <item name="colorOnPrimary">@color/bgWhiteColor</item>
-
-
 
 
     </style>
@@ -46,6 +45,7 @@
         <item name="mainBackgroundColor">@color/mainBackgroundColor_DarkTheme</item>
         <item name="backgroundBoxColor">@color/colorPrimary_DarkTheme</item>
         <item name="bottomItemTintColor">@color/colorAccent_DarkTheme</item>
+        <item name="feedbackBoxBgColor">@color/colorPrimary_DarkTheme</item>
 
         <item name="colorError">@color/errorBoxColor_DarkTheme</item>
         <item name="colorOnError">@color/white_DarkTheme</item>

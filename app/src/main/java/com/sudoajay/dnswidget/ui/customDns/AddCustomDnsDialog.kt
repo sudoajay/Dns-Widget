@@ -59,12 +59,6 @@ class AddCustomDnsDialog(
         // setup dialog box
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        binding.constraintLayout.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.tabBackgroundColor
-            )
-        )
 
         val dns1TextInputLayout: TextInputLayout = binding.dns1TextInputLayout
         val dns2TextInputLayout: TextInputLayout = binding.dns2TextInputLayout

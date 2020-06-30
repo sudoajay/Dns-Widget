@@ -141,7 +141,7 @@ class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
         val dividerColor = ContextCompat.getColor(
             applicationContext,
-            if (isDarkTheme == getString(R.string.off_text)) R.color.bgWhiteColor else R.color.colorPrimary_DarkTheme
+            if (isDarkTheme == getString(R.string.off_text)) R.color.divider else R.color.headingNormalTextColor
         )
         val marginLeft = resources.getDimensionPixelSize(R.dimen.divider_inset)
         return InsetDivider.Builder(this)

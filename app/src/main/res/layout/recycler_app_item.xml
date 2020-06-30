@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
+        android:background="?attr/mainBackgroundColor"
         android:paddingBottom="10dp">
 
         <ImageView
@@ -43,7 +44,8 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/primary_text" />
+                android:textColor="?attr/boxTextColor"
+                />
 
             <TextView
                 android:id="@+id/appPackage_TextView"
@@ -52,7 +54,8 @@
                 android:layout_marginTop="@dimen/secondary_text_margin"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/third_text" />
+                android:textColor="?attr/boxTextColor"
+                />
         </LinearLayout>
 
         <CheckBox

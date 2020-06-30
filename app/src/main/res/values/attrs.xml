@@ -10,4 +10,5 @@
     <attr name="mainBackgroundColor" format="reference"/>
     <attr name="backgroundBoxColor" format="reference"/>
     <attr name="bottomItemTintColor" format="reference"/>
+    <attr name="feedbackBoxBgColor" format="reference"/>
 </resources>

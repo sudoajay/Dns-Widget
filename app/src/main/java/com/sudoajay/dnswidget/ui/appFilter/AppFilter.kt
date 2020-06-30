@@ -15,8 +15,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
-import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.databinding.ActivityAppFilterBinding
 import com.sudoajay.dnswidget.helper.CustomToast
 import java.util.*
@@ -26,12 +26,16 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
 
     lateinit var appFilterViewModel: AppFilterViewModel
     private lateinit var binding: ActivityAppFilterBinding
+    private lateinit var isDarkTheme: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        isDarkTheme = getDarkMode(applicationContext)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            if (isDarkTheme == getString(R.string.off_text))
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_app_filter)
 
@@ -49,7 +53,22 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
     private fun reference() {
 
         setRecyclerView()
-        binding.swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
+        //      Setup Swipe RecyclerView
+        binding.swipeRefresh.setColorSchemeResources(
+            if (isDarkTheme == getString(
+                    R.string.off_text
+                )
+            ) R.color.colorPrimary else R.color.colorAccent_DarkTheme
+        )
+        binding.swipeRefresh.setProgressBackgroundColorSchemeColor(
+            if (isDarkTheme == getString(R.string.off_text)) ContextCompat.getColor(
+                applicationContext,
+                R.color.bgWhiteColor
+            ) else ContextCompat.getColor(
+                applicationContext,
+                R.color.colorPrimary_DarkTheme
+            )
+        )
         binding.swipeRefresh.setOnRefreshListener {
             appFilterViewModel.onRefresh()
         }
@@ -62,8 +81,19 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
     }
 
     private fun setRecyclerView() {
-        val bottomAppBar = binding.bottomAppBar
-        setSupportActionBar(bottomAppBar)
+        binding.bottomAppBar.navigationIcon?.mutate()?.let {
+            it.setTint(
+                ContextCompat.getColor(
+                    applicationContext, if (isDarkTheme == getString(
+                            R.string.off_text
+                        )
+                    ) R.color.boxTextColor else R.color.colorAccent_DarkTheme
+                )
+            )
+            binding.bottomAppBar.navigationIcon = it
+        }
+
+        setSupportActionBar(binding.bottomAppBar)
 
         val recyclerView = binding.recyclerView
         val divider = getInsetDivider()
@@ -89,7 +119,10 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
 
     private fun getInsetDivider(): ItemDecoration {
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
-        val dividerColor = ContextCompat.getColor(applicationContext, R.color.divider)
+        val dividerColor = ContextCompat.getColor(
+            applicationContext,
+            if (isDarkTheme == getString(R.string.off_text)) R.color.divider else R.color.headingNormalTextColor
+        )
         val marginLeft = resources.getDimensionPixelSize(R.dimen.divider_inset)
         return InsetDivider.Builder(this)
             .orientation(InsetDivider.VERTICAL_LIST)
@@ -162,9 +195,11 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
      */
     private fun changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val window = window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
+            if (isDarkTheme == getString(R.string.off_text)) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = Color.TRANSPARENT
+            }
         }
     }
 
@@ -173,12 +208,6 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
         appFilterViewModel.filterChanges()
     }
 
-    override fun onPause() {
-        super.onPause()
-
-
-
-    }
 
 
 }

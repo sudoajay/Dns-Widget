@@ -17,25 +17,28 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.helper.CustomToast
 
 
-class SendFeedback : BaseActivity(){
+class SendFeedback : BaseActivity() {
     private val requestCode = 100
     private var imageUri: Uri? = null
     private lateinit var feedbackEditText: EditText
     private lateinit var addScreenshotTextView: TextView
     private lateinit var addScreenshotSmallImageView: ImageView
     private lateinit var addScreenshotLargeImageView: ImageView
-
+    private lateinit var isDarkTheme: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        isDarkTheme = getDarkMode(applicationContext)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            if (isDarkTheme == getString(R.string.off_text))
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         setContentView(R.layout.activity_send_feeback)
         changeStatusBarColor()
@@ -156,9 +159,11 @@ class SendFeedback : BaseActivity(){
      */
     private fun changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val window = window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
+            if (isDarkTheme == getString(R.string.off_text)) {
+                val window = window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = Color.TRANSPARENT
+            }
         }
     }
 

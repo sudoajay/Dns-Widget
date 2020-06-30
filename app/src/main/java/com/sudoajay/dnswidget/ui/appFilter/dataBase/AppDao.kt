@@ -51,6 +51,9 @@ interface AppDao {
     @Query("UPDATE AppTable SET Selected = :selected  Where Package_Name = :packageName")
     suspend fun updateSelectedApp(selected: Boolean, packageName: String)
 
+    @Query("UPDATE AppTable SET Selected = 1  Where Package_Name = :packageName")
+    suspend fun listRefresh( packageName: String)
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(app: App)
 

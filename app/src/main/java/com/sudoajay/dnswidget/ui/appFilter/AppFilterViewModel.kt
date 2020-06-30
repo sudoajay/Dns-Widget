@@ -88,7 +88,19 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun onRefresh() {
 
-        appList!!.value!!.dataSource.invalidate()
+        CoroutineScope(IO).launch {
+            withContext(IO) {
+                val value = appRepository.getPackageFromSelected(false)
+
+                for (packageName in value) {
+                    appRepository.listRefresh(packageName)
+                }
+            }
+            appList!!.value!!.dataSource.invalidate()
+
+        }
+
+
     }
 
 

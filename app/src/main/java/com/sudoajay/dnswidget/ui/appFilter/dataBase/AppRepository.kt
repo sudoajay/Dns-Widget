@@ -1,6 +1,5 @@
 package com.sudoajay.dnswidget.ui.appFilter.dataBase
 
-import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ResolveInfo
@@ -181,12 +180,17 @@ class AppRepository(private val context: Context, private val appDao: AppDao) {
             appDao.deleteRow(i)
         }
     }
-    suspend fun updateSelectedApp(selected: Boolean, packageName: String){
+
+    suspend fun updateSelectedApp(selected: Boolean, packageName: String) {
         appDao.updateSelectedApp(selected, packageName)
     }
 
-    suspend fun getPackageFromSelected(selected: Boolean):MutableList<String>{
+    suspend fun getPackageFromSelected(selected: Boolean): MutableList<String> {
         return appDao.getPackageFromSelected(selected)
+    }
+
+    suspend fun listRefresh(packageName: String) {
+        appDao.listRefresh(packageName)
     }
 
     suspend fun getCount(): Int {

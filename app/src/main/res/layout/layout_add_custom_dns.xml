@@ -28,7 +28,7 @@
                     android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:background="?attr/mainBackgroundColor"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginRight="5dp"
@@ -61,10 +61,15 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
                         android:hint="@string/name_text"
-                        android:textColorHint="@color/textBlackColor"
+                        android:textColorHint="?attr/boxTextColor"
+                        app:boxBackgroundColor="?attr/backgroundBoxColor"
+                        app:boxStrokeColor="?attr/boxHoverColor"
+                        app:counterTextColor="?attr/errorBoxColor"
+                        app:errorIconTint="?attr/errorBoxColor"
+                        app:errorTextColor="?attr/errorBoxColor"
                         app:boxStrokeWidth="1dp"
                         app:boxStrokeWidthFocused="2dp"
-                        app:hintTextColor="@color/colorPrimary"
+                        app:hintTextColor="?attr/boxHoverColor"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -75,6 +80,7 @@
                             android:layout_width="match_parent"
                             android:imeOptions="actionNext"
                             android:inputType="text"
+                            android:textColor="?attr/boxTextColor"
                             android:layout_height="wrap_content" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,8 +93,8 @@
                         android:layout_marginTop="16dp"
                         android:checked="true"
                         android:text="@string/use_dns_v4_text"
-                        android:textColor="@color/textBlackColor"
-                        app:buttonTint="@color/colorPrimary"
+                        app:buttonTint="?attr/primaryAppColor"
+                        android:textColor="?attr/headingNormalTextColor"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/name_TextInputLayout" />
 
@@ -103,10 +109,15 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
                         android:hint="@string/dns1_text"
-                        android:textColorHint="@color/textBlackColor"
+                        android:textColorHint="?attr/boxTextColor"
+                        app:boxBackgroundColor="?attr/backgroundBoxColor"
+                        app:boxStrokeColor="?attr/boxHoverColor"
+                        app:counterTextColor="?attr/errorBoxColor"
+                        app:errorIconTint="?attr/errorBoxColor"
+                        app:errorTextColor="?attr/errorBoxColor"
                         app:boxStrokeWidth="1dp"
                         app:boxStrokeWidthFocused="2dp"
-                        app:hintTextColor="@color/colorPrimary"
+                        app:hintTextColor="?attr/boxHoverColor"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -116,6 +127,7 @@
                             android:layout_width="match_parent"
                             android:imeOptions="actionNext"
                             android:inputType="number"
+                            android:textColor="?attr/boxTextColor"
                             android:layout_height="wrap_content" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -131,10 +143,15 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
                         android:hint="@string/dns2_text"
-                        android:textColorHint="@color/textBlackColor"
+                        android:textColorHint="?attr/boxTextColor"
+                        app:boxBackgroundColor="?attr/backgroundBoxColor"
+                        app:boxStrokeColor="?attr/boxHoverColor"
+                        app:counterTextColor="?attr/errorBoxColor"
+                        app:errorIconTint="?attr/errorBoxColor"
+                        app:errorTextColor="?attr/errorBoxColor"
                         app:boxStrokeWidth="1dp"
                         app:boxStrokeWidthFocused="2dp"
-                        app:hintTextColor="@color/colorPrimary"
+                        app:hintTextColor="?attr/boxHoverColor"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -144,6 +161,7 @@
                             android:layout_width="match_parent"
                             android:imeOptions="actionDone"
                             android:inputType="number"
+                            android:textColor="?attr/boxTextColor"
                             android:layout_height="wrap_content" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -157,8 +175,8 @@
                         android:layout_marginTop="16dp"
                         android:checked="true"
                         android:text="@string/use_dns_v6_text"
-                        android:textColor="@color/textBlackColor"
-                        app:buttonTint="@color/colorPrimary"
+                        android:textColor="?attr/headingNormalTextColor"
+                        app:buttonTint="?attr/primaryAppColor"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/dns2_TextInputLayout" />
 
@@ -173,10 +191,15 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
                         android:hint="@string/dns3_text"
-                        android:textColorHint="@color/textBlackColor"
+                        android:textColorHint="?attr/boxTextColor"
+                        app:boxBackgroundColor="?attr/backgroundBoxColor"
+                        app:boxStrokeColor="?attr/boxHoverColor"
+                        app:counterTextColor="?attr/errorBoxColor"
+                        app:errorIconTint="?attr/errorBoxColor"
+                        app:errorTextColor="?attr/errorBoxColor"
                         app:boxStrokeWidth="1dp"
                         app:boxStrokeWidthFocused="2dp"
-                        app:hintTextColor="@color/colorPrimary"
+                        app:hintTextColor="?attr/boxHoverColor"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -186,6 +209,7 @@
                             android:layout_width="match_parent"
                             android:imeOptions="actionNext"
                             android:inputType="text"
+                            android:textColor="?attr/boxTextColor"
                             android:layout_height="wrap_content" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -201,10 +225,15 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginRight="16dp"
                         android:hint="@string/dns4_text"
-                        android:textColorHint="@color/textBlackColor"
+                        android:textColorHint="?attr/boxTextColor"
+                        app:boxBackgroundColor="?attr/backgroundBoxColor"
+                        app:boxStrokeColor="?attr/boxHoverColor"
+                        app:counterTextColor="?attr/errorBoxColor"
+                        app:errorIconTint="?attr/errorBoxColor"
+                        app:errorTextColor="?attr/errorBoxColor"
                         app:boxStrokeWidth="1dp"
                         app:boxStrokeWidthFocused="2dp"
-                        app:hintTextColor="@color/colorPrimary"
+                        app:hintTextColor="?attr/boxHoverColor"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -214,6 +243,7 @@
                             android:layout_width="match_parent"
                             android:imeOptions="actionDone"
                             android:inputType="text"
+                            android:textColor="?attr/boxTextColor"
                             android:layout_height="wrap_content" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -229,7 +259,7 @@
                         android:text="@string/cancel_text"
                         android:textAllCaps="false"
                         android:onClick="@{() -> dialog.dismiss()}"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="?attr/boxTextColor"
                         android:visibility="visible"
                         app:layout_constraintEnd_toStartOf="@+id/ok_Button"
                         app:layout_constraintTop_toBottomOf="@+id/dns4_TextInputLayout" />
@@ -244,8 +274,7 @@
                         android:layout_marginRight="32dp"
                         android:text="@string/ok_text"
                         android:onClick="@{() -> dialog.saveDnsDismiss()}"
-
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="?attr/boxTextColor"
                         android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/dns4_TextInputLayout" />
@@ -261,6 +290,7 @@
                     android:layout_marginRight="8dp"
                     android:clickable="true"
                     android:focusable="true"
+                    android:tint="?attr/colorAccent"
                     android:onClick="@{() -> dialog.dismiss()}"
                     app:srcCompat="@drawable/ic_close_window"
                     tools:ignore="ContentDescription,RtlHardcoded" />
