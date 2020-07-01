@@ -78,7 +78,7 @@
             android:id="@+id/filter_floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_app_filter"
+            app:srcCompat="@drawable/ic_app_filter"
             app:backgroundTint="?attr/backgroundBoxColor"
             app:fabSize="normal"
             app:layout_anchor="@id/bottomAppBar"

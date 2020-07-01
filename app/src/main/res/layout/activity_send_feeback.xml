@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ems="10"
-                    android:gravity="top|left"
+                    android:gravity="start|top"
                     android:imeOptions="actionNext"
                     android:inputType="textMultiLine"
                     android:lines="8"
@@ -83,7 +83,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
-                android:layout_marginRight="50dp"
                 android:fontFamily="@font/lato"
                 android:text="@string/add_screenshot_text"
 
@@ -102,14 +101,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginLeft="4dp"
                 android:tint="?attr/boxTextColor"
 
                 app:layout_constraintBottom_toBottomOf="@+id/addScreenshot_TextView"
                 app:layout_constraintStart_toEndOf="@+id/addScreenshot_TextView"
                 app:layout_constraintTop_toTopOf="@+id/addScreenshot_TextView"
                 app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/ic_image_small" />
+                app:srcCompat="@drawable/ic_image_small"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/addScreenshotLarge_ImageView"
@@ -121,14 +120,14 @@
                 app:layout_constraintEnd_toEndOf="@+id/image_Button"
                 app:layout_constraintStart_toStartOf="@+id/image_Button"
                 app:layout_constraintTop_toBottomOf="@+id/image_Button"
-                app:srcCompat="@drawable/ic_image_large" />
+                app:srcCompat="@drawable/ic_image_large"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/systemInfo_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/lato"
 

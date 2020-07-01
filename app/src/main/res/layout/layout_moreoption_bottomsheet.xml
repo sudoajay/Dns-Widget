@@ -60,6 +60,8 @@
                 android:layout_height="60dp"
                 android:onClick="@{() -> moreOption.share()}"
                 android:orientation="horizontal"
+                android:background="?selectableItemBackground"
+
                 android:padding="16dp"
                 tools:ignore="UseCompoundDrawables">
 
@@ -86,6 +88,8 @@
                 android:id="@+id/statusDns_textView"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:background="?selectableItemBackground"
+
                 android:onClick="@{() -> moreOption.editItem()}"
                 android:orientation="horizontal"
                 android:padding="16dp"
@@ -117,6 +121,8 @@
                 android:layout_height="60dp"
                 android:onClick="@{() -> moreOption.deleteItem()}"
                 android:orientation="horizontal"
+                android:background="?selectableItemBackground"
+
                 android:padding="16dp"
                 tools:ignore="UseCompoundDrawables">
 
@@ -145,6 +151,8 @@
                 android:layout_height="60dp"
                 android:onClick="@{() -> moreOption.copyItem()}"
                 android:orientation="horizontal"
+                android:background="?selectableItemBackground"
+
                 android:padding="16dp"
                 tools:ignore="UseCompoundDrawables">
 
