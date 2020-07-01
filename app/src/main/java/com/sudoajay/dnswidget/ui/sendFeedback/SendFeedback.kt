@@ -25,15 +25,15 @@ class SendFeedback : BaseActivity() {
     private var imageUri: Uri? = null
     private lateinit var binding: ActivitySendFeebackBinding
 
-    private lateinit var isDarkTheme: String
+    private  var isDarkTheme: Boolean =false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        isDarkTheme = getDarkMode(applicationContext)
+        isDarkTheme = isDarkMode(applicationContext)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (isDarkTheme == getString(R.string.off_text))
+            if (!isDarkTheme )
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
 
@@ -61,7 +61,7 @@ class SendFeedback : BaseActivity() {
                 super.updateDrawState(ds)
                 ds.color = ContextCompat.getColor(
                     applicationContext,
-                    if (isDarkTheme == getString(R.string.off_text)) R.color.colorAccent else R.color.colorAccent_DarkTheme
+                    if (!isDarkTheme) R.color.colorAccent else R.color.colorAccent_DarkTheme
                 )
                 ds.isUnderlineText = true
 
@@ -151,7 +151,7 @@ class SendFeedback : BaseActivity() {
      */
     private fun changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (isDarkTheme == getString(R.string.off_text)) {
+            if (!isDarkTheme) {
                 val window = window
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                 window.statusBarColor = Color.TRANSPARENT

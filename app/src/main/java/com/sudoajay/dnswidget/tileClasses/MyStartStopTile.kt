@@ -1,16 +1,12 @@
 package com.sudoajay.dnswidget.tileClasses
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_MULTIPLE_TASK
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.drawable.Icon
 import android.os.Build
-import android.os.IBinder
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast

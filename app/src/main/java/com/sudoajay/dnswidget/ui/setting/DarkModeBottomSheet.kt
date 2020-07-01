@@ -37,18 +37,21 @@ class DarkModeBottomSheet(var passAction: String) : BottomSheetDialogFragment() 
 
     fun getValue(): String {
         return requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getString(getString(R.string.dark_mode_text), getString(R.string.off_text)).toString()
+            .getString(getString(R.string.dark_mode_text), getString(R.string.system_default_text))
+            .toString()
     }
 
     fun setValue(value: String) {
-        requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putString(getString(R.string.dark_mode_text), value).apply()
+        if (getValue() == value) dismiss()
+        else {
+            requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+                .putString(getString(R.string.dark_mode_text), value).apply()
 
-        val intent = Intent(requireContext() , MainActivity::class.java)
-        intent.action = passAction
-        requireActivity().finish()
-        startActivity(intent)
-
+            val intent = Intent(requireContext(), MainActivity::class.java)
+            intent.action = passAction
+            requireActivity().finish()
+            startActivity(intent)
+        }
     }
 
 

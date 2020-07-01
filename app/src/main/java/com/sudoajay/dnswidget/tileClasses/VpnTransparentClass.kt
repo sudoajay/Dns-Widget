@@ -40,6 +40,7 @@ class VpnTransparentClass : AppCompatActivity() {
         }else if(intent.action.equals("StopService")){
             stopService()
         }
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -53,7 +54,7 @@ class VpnTransparentClass : AppCompatActivity() {
             applicationContext.startService(startIntent)
 
         }
-        finish()
+
     }
 
     private fun errorVpnService() {
@@ -79,6 +80,6 @@ class VpnTransparentClass : AppCompatActivity() {
         stopIntent.putExtra("COMMAND", Command.STOP.ordinal)
         applicationContext.startService(stopIntent)
 
-      onDestroy()
+
     }
 }

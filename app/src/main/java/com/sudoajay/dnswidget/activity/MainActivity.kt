@@ -81,7 +81,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-        if (getDarkMode(applicationContext) != getString(R.string.off_text)) {
+        if (isDarkMode(applicationContext)) {
             navView.itemBackground = getDrawable(R.drawable.drawer_item_bg_dark_mode)
         }
         navController = findNavController(R.id.nav_host_fragment)

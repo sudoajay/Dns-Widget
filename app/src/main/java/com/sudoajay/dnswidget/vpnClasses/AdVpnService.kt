@@ -18,8 +18,8 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
-import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.helper.ConnectivitySpeed
 import com.sudoajay.dnswidget.helper.ConnectivityType
 import com.sudoajay.dnswidget.helper.ImageUtils
@@ -348,7 +348,6 @@ class  AdVpnService : VpnService() {
             )
         }
 
-//        closeNotification()
         stopForeground(true)
         updateVpnStatus(VPN_STATUS_STOPPED)
         stopSelf()

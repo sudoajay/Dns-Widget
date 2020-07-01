@@ -24,7 +24,7 @@ class DnsSpeedTestAdapter(
 ) :
     RecyclerView.Adapter<DnsSpeedTestAdapter.MyViewHolder>() {
 
-    private lateinit var isDarkTheme: String
+    private  var isDarkTheme: Boolean = false
 
 
     class MyViewHolder(
@@ -46,7 +46,7 @@ class DnsSpeedTestAdapter(
             LayoutInflater.from(parent.context),
             R.layout.layout_dns_speed_test_item, parent, false
         )
-        isDarkTheme = BaseActivity.getDarkMode(context)
+        isDarkTheme = BaseActivity.isDarkMode(context)
         return MyViewHolder(binding)
 
 
@@ -82,27 +82,21 @@ class DnsSpeedTestAdapter(
             in 80 downTo 0 -> holder.msTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    if (isDarkTheme == context.getString(
-                            R.string.off_text
-                        )
+                    if (!isDarkTheme
                     ) R.color.ping1 else R.color.ping1_DarkTheme
                 )
             )
             in 200 downTo 80 -> holder.msTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    if (isDarkTheme == context.getString(
-                            R.string.off_text
-                        )
+                    if (!isDarkTheme
                     ) R.color.ping2 else R.color.ping2_DarkTheme
                 )
             )
             else -> holder.msTextView.setTextColor(
                 ContextCompat.getColor(
                     context,
-                    if (isDarkTheme == context.getString(
-                            R.string.off_text
-                        )
+                    if (!isDarkTheme
                     ) R.color.ping3 else R.color.ping3_DarkTheme
                 )
             )

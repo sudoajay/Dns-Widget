@@ -245,6 +245,8 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
                                 dnsList[3]
                             )
                         }
+
+
                     }
                     value += 1
                     startVpn(value.toLong())
@@ -328,6 +330,7 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
         return layout.editText!!.text.toString().isEmpty()
                 || layout.editText!!.text.toString() == requireContext().getString(R.string.unspecified_text)
     }
+
 
     private fun startVpn(value: Long) {
 
@@ -425,13 +428,11 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
 
 
     private fun errorVpnService() {
-
-
         val builder: AlertDialog.Builder =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 AlertDialog.Builder(
                     requireContext(),
-                    if (BaseActivity.getDarkMode(requireContext()) == getString(R.string.off_text)) android.R.style.Theme_Material_Light_Dialog_Alert else android.R.style.Theme_Material_Dialog_Alert
+                    if (!BaseActivity.isDarkMode(requireContext())) android.R.style.Theme_Material_Light_Dialog_Alert else android.R.style.Theme_Material_Dialog_Alert
                 )
             } else {
                 AlertDialog.Builder(requireContext())

@@ -13,7 +13,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="?attr/mainBackgroundColor"
         android:paddingBottom="32dp">
 
@@ -129,7 +129,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue(@string/automatic_text)}"
+            android:onClick="@{() -> bottomSheet.setValue(@string/automatic_at_sunset_text)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,8 +143,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:text="@string/automatic_at_sunset_text"
-                               android:textColor="?attr/headingNormalTextColor"
-
+                android:textColor="?attr/headingNormalTextColor"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -155,10 +154,93 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:visibility="@{(bottomSheet.getValue().equals(@string/automatic_text))  ?  View.VISIBLE : View.GONE}"
+                android:visibility="@{(bottomSheet.getValue().equals(@string/automatic_at_sunset_text))  ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/automatic_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/automatic_TextView"
+                app:layout_constraintVertical_bias="0.261"
+                app:srcCompat="@drawable/ic_done" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/batterySaver_ConstraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="@{() -> bottomSheet.setValue(@string/set_by_battery_saver_text)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/automatic_ConstraintLayout">
+
+            <TextView
+                android:id="@+id/batterySave_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/set_by_battery_saver_text"
+                android:textColor="?attr/headingNormalTextColor"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/batterySaver_ImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:visibility="@{(bottomSheet.getValue().equals(@string/set_by_battery_saver_text))  ?  View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/batterySave_TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/batterySave_TextView"
+                app:layout_constraintVertical_bias="0.261"
+                app:srcCompat="@drawable/ic_done" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/systemDefault_ConstraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="@{() -> bottomSheet.setValue(@string/system_default_text)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/batterySaver_ConstraintLayout">
+
+            <TextView
+                android:id="@+id/systemDefault_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/system_default_text"
+                android:textColor="?attr/headingNormalTextColor"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/systemDefault_ImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:visibility="@{(bottomSheet.getValue().equals(@string/system_default_text))  ?  View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/systemDefault_TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/systemDefault_TextView"
                 app:layout_constraintVertical_bias="0.261"
                 app:srcCompat="@drawable/ic_done" />
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -88,8 +88,8 @@
     <!--    DNS Notification-->
     <string name="dns_channel_id">DNS Notification</string>
     <string name="notification_action_pause">Pause</string>
-    <string name="start_text">Start</string>
-    <string name="stop_text">Stop</string>
+    <string name="start_text">Start Dns</string>
+    <string name="stop_text">Stop Dns </string>
     <string name="stopping_text">Stopping…</string>
 
 
@@ -228,10 +228,13 @@
 
 <!--    Dark Mode Bottom Sheet-->
     <string name="dark_mode_text">Dark Mode</string>
+    <string name="is_dark_mode_text">isDarkMode</string>
     <string name="off_text">Off</string>
     <string name="on_text">On</string>
     <string name="automatic_at_sunset_text">Automatic at sunset</string>
-    <string name="automatic_text">Automatic</string>
+    <string name="set_by_battery_saver_text">Set by battery saver</string>
+    <string name="system_default_text">System Default</string>
+
 
     <string name="current_theme_text">Current Theme</string>
     <string name="app_theme_text">App Theme</string>

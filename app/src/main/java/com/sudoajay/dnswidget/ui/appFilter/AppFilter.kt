@@ -26,15 +26,15 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
 
     lateinit var appFilterViewModel: AppFilterViewModel
     private lateinit var binding: ActivityAppFilterBinding
-    private lateinit var isDarkTheme: String
+    private var isDarkTheme: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        isDarkTheme = getDarkMode(applicationContext)
+        isDarkTheme = isDarkMode(applicationContext)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (isDarkTheme == getString(R.string.off_text))
+            if (!isDarkTheme)
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_app_filter)
@@ -55,13 +55,10 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
         setRecyclerView()
         //      Setup Swipe RecyclerView
         binding.swipeRefresh.setColorSchemeResources(
-            if (isDarkTheme == getString(
-                    R.string.off_text
-                )
-            ) R.color.colorPrimary else R.color.colorAccent_DarkTheme
+            if (!isDarkTheme) R.color.colorPrimary else R.color.colorAccent_DarkTheme
         )
         binding.swipeRefresh.setProgressBackgroundColorSchemeColor(
-            if (isDarkTheme == getString(R.string.off_text)) ContextCompat.getColor(
+            if (!isDarkTheme) ContextCompat.getColor(
                 applicationContext,
                 R.color.bgWhiteColor
             ) else ContextCompat.getColor(
@@ -84,9 +81,7 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
         binding.bottomAppBar.navigationIcon?.mutate()?.let {
             it.setTint(
                 ContextCompat.getColor(
-                    applicationContext, if (isDarkTheme == getString(
-                            R.string.off_text
-                        )
+                    applicationContext, if (!isDarkTheme
                     ) R.color.boxTextColor else R.color.colorAccent_DarkTheme
                 )
             )
@@ -121,7 +116,7 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
         val dividerColor = ContextCompat.getColor(
             applicationContext,
-            if (isDarkTheme == getString(R.string.off_text)) R.color.divider else R.color.headingNormalTextColor
+            if (!isDarkTheme) R.color.divider else R.color.headingNormalTextColor
         )
         val marginLeft = resources.getDimensionPixelSize(R.dimen.divider_inset)
         return InsetDivider.Builder(this)
@@ -195,7 +190,7 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
      */
     private fun changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (isDarkTheme == getString(R.string.off_text)) {
+            if (!isDarkTheme) {
                 val window = window
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                 window.statusBarColor = Color.TRANSPARENT
