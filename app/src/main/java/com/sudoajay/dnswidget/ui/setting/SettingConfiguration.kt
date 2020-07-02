@@ -22,7 +22,6 @@ class SettingConfiguration : PreferenceFragmentCompat() {
 
 
 
-
         val useDnsv4 = findPreference("useDnsv4") as TwoStatePreference?
 
         val useDnsv6 = findPreference("useDnsv6") as TwoStatePreference?

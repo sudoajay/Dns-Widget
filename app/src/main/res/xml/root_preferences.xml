@@ -4,6 +4,7 @@
     <PreferenceCategory app:title="@string/dns_type_text">
         <SwitchPreferenceCompat
             app:key="useDnsv4"
+            app:defaultValue="true"
             app:title="@string/use_dnsv4_text" />
         <SwitchPreferenceCompat
             app:key="useDnsv6"

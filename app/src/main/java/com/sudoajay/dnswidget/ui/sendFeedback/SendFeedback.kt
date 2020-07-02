@@ -126,7 +126,7 @@ class SendFeedback : BaseActivity() {
                 emailIntent.putExtra(Intent.EXTRA_STREAM, imageUri)
             }
             emailIntent.type = "image/*"
-            val to = arrayOf("sudoajay@gmail.com")
+            val to = arrayOf("devsudoajay@gmail.com")
             emailIntent.putExtra(Intent.EXTRA_EMAIL, to)
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback About DNS App")
             emailIntent.putExtra(
