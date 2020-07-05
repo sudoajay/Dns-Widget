@@ -167,6 +167,11 @@
 <string name="app_theme_text">ਐਪ ਥੀਮ</string>
 <string name="dark_theme_text">ਡਾਰਕ ਥੀਮ</string>
 <string name="filter_option_text">ਫਿਲਟਰ ਵਿਕਲਪ</string>
-    <string name="select_language_text">ਭਾਸ਼ਾ ਚੁਣੋ</string>
+    <string name="clear_cache_text">ਕੈਸ਼ ਸਾਫ ਕਰੋ</string>
+    <string name="modify_notification_text" translatable="false">ਸੂਚਨਾ ਨੂੰ ਸੋਧੋ</string>
+    <string name="notification_with_network_speed_text" translatable="false">ਨੈਟਵਰਕ ਦੀ ਗਤੀ ਨਾਲ ਸੂਚਨਾ</string>
+    <string name="notification_with_more_option_text" translatable="false">ਹੋਰ ਵਿਕਲਪ ਦੇ ਨਾਲ ਨੋਟੀਫਿਕੇਸ਼ਨ</string>
+    <string name="change_language_text" translatable="false">ਭਾਸ਼ਾ ਬਦਲੋ</string>
+    <string name="successfully_cache_data_is_deleted_text">ਸਫਲਤਾਪੂਰਵਕ ਕੈਚ ਡਾਟਾ ਮਿਟਾ ਦਿੱਤਾ ਗਿਆ ਹੈ</string>
 
 </resources>

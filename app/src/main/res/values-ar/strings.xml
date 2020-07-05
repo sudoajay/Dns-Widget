@@ -167,6 +167,11 @@
 <string name="app_theme_text">موضوع التطبيق</string>
 <string name="dark_theme_text">مظهر معتم</string>
 <string name="filter_option_text">خيار التصفية</string>
-    <string name="select_language_text">اختار اللغة</string>
+    <string name="change_language_text">تغيير اللغة</string>
+    <string name="clear_cache_text">مسح ذاكرة التخزين المؤقت</string>
+    <string name="modify_notification_text" translatable="false">تعديل الإخطار</string>
+    <string name="notification_with_network_speed_text" translatable="false">الإخطار بسرعة الشبكة</string>
+    <string name="notification_with_more_option_text" translatable="false">الإخطار مع المزيد من الخيارات</string>
+    <string name="successfully_cache_data_is_deleted_text">تم حذف بيانات ذاكرة التخزين المؤقت بنجاح</string>
 
 </resources>

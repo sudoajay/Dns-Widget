@@ -167,6 +167,11 @@
 <string name="app_theme_text">Chủ đề ứng dụng</string>
 <string name="dark_theme_text">Chủ đề tối</string>
 <string name="filter_option_text">Tùy chọn bộ lọc</string>
-    <string name="select_language_text">Chọn ngôn ngữ</string>
+    <string name="clear_cache_text">Xóa bộ nhớ cache</string>
+    <string name="modify_notification_text" translatable="false">Sửa đổi thông báo</string>
+    <string name="notification_with_network_speed_text" translatable="false">Thông báo với tốc độ mạng</string>
+    <string name="notification_with_more_option_text" translatable="false">Thông báo với nhiều lựa chọn hơn</string>
+    <string name="change_language_text" translatable="false">Thay đổi ngôn ngữ</string>
+    <string name="successfully_cache_data_is_deleted_text">Dữ liệu bộ nhớ cache được xóa thành công</string>
 
 </resources>

@@ -35,13 +35,26 @@
             app:title="@string/use_dark_mode_text" />
 
 
+        <ListPreference
+            android:defaultValue="en"
+            android:entries="@array/LanguageList"
+            android:entryValues="@array/languagesValues"
+            android:key="changeLanguage"
+            android:title="@string/change_language_text" />
+
+
+        <ListPreference
+            android:defaultValue="Notification with more option"
+            android:entries="@array/notificationList"
+            android:entryValues="@array/notificationValues"
+            android:key="modifyNotification"
+            android:title="@string/modify_notification_text" />
+
+        <Preference
+            app:key="clearCache"
+            app:title="@string/clear_cache_text" />
+
     </PreferenceCategory>
-    <ListPreference
-        android:defaultValue="English"
-        android:entries="@array/LanguageList"
-        android:entryValues="@array/languagesValues"
-        android:key="selectLanguage"
-        android:title="@string/select_language_text" />
 
     <PreferenceCategory app:title="@string/help_support_text">
         <Preference

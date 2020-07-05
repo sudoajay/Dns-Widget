@@ -167,6 +167,11 @@
 <string name="app_theme_text">Тема приложения</string>
 <string name="dark_theme_text">Темная тема</string>
 <string name="filter_option_text">Опция фильтра</string>
-    <string name="select_language_text">Выберите язык</string>
+    <string name="clear_cache_text">Очистить кэш</string>
+    <string name="modify_notification_text" translatable="false">Изменить уведомление</string>
+    <string name="notification_with_network_speed_text" translatable="false">Уведомление со скоростью сети</string>
+    <string name="notification_with_more_option_text" translatable="false">Уведомление с дополнительной опцией</string>
+    <string name="change_language_text" translatable="false">Изменить язык</string>
+    <string name="successfully_cache_data_is_deleted_text">Данные кэша успешно удалены</string>
 
 </resources>

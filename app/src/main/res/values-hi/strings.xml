@@ -159,14 +159,19 @@
 <string name="send_feedback_summary_text">एप्लिकेशन बग को ठीक करने के लिए फ़ीडबैक सबमिट करें</string>
 <string name="at_least_one_dns_text">कम से कम एक Dns विन्यास की आवश्यकता है</string>
     <string name="off_trans_text">बंद</string>
-<string name="on_trans_text">पर</string>
-<string name="automatic_at_sunset_trans_text">सूर्यास्त के समय स्वचालित</string>
-<string name="set_by_battery_saver_trans_text">बैटरी सेवर द्वारा सेट करें</string>
-<string name="system_default_trans_text">सिस्टम डिफ़ॉल्ट</string>
-<string name="current_theme_text">वर्तमान थीम</string>
-<string name="app_theme_text">ऐप थीम</string>
-<string name="dark_theme_text">डार्क थीम</string>
-<string name="filter_option_text">फ़िल्टर विकल्प</string>
-    <string name="select_language_text">भाषा का चयन करें</string>
+    <string name="on_trans_text">पर</string>
+    <string name="automatic_at_sunset_trans_text">सूर्यास्त के समय स्वचालित</string>
+    <string name="set_by_battery_saver_trans_text">बैटरी सेवर द्वारा सेट करें</string>
+    <string name="system_default_trans_text">सिस्टम डिफ़ॉल्ट</string>
+    <string name="current_theme_text">वर्तमान थीम</string>
+    <string name="app_theme_text">ऐप थीम</string>
+    <string name="dark_theme_text">डार्क थीम</string>
+    <string name="filter_option_text">फ़िल्टर विकल्प</string>
+    <string name="change_language_text">भाषा का चयन करें</string>
+    <string name="clear_cache_text">कैश को साफ़ करें</string>
+    <string name="modify_notification_text" translatable="false">अधिसूचना संशोधित करें</string>
+    <string name="notification_with_network_speed_text" translatable="false">नेटवर्क की गति के साथ अधिसूचना</string>
+    <string name="notification_with_more_option_text" translatable="false">अधिक विकल्प के साथ अधिसूचना</string>
+    <string name="successfully_cache_data_is_deleted_text">सफलतापूर्वक कैश डेटा हटा दिया गया है</string>
 
 </resources>

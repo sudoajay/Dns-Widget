@@ -159,14 +159,19 @@
 <string name="send_feedback_summary_text">envoyer des commentaires pour corriger le bug de l\'application</string>
 <string name="at_least_one_dns_text">Au moins une configuration DNS est requise</string>
     <string name="off_trans_text">De</string>
-<string name="on_trans_text">Sur</string>
-<string name="automatic_at_sunset_trans_text">Automatique au coucher du soleil</string>
-<string name="set_by_battery_saver_trans_text">Défini par l\'économiseur de batterie</string>
-<string name="system_default_trans_text">Défaut du système</string>
-<string name="current_theme_text">Thème actuel</string>
-<string name="app_theme_text">Thème de l\'application</string>
-<string name="dark_theme_text">Thème sombre</string>
-<string name="filter_option_text">Option de filtre</string>
-    <string name="select_language_text">Choisir la langue</string>
+    <string name="on_trans_text">Sur</string>
+    <string name="automatic_at_sunset_trans_text">Automatique au coucher du soleil</string>
+    <string name="set_by_battery_saver_trans_text">Défini par l\'économiseur de batterie</string>
+    <string name="system_default_trans_text">Défaut du système</string>
+    <string name="current_theme_text">Thème actuel</string>
+    <string name="app_theme_text">Thème de l\'application</string>
+    <string name="dark_theme_text">Thème sombre</string>
+    <string name="filter_option_text">Option de filtre</string>
+    <string name="change_language_text">Choisir la langue</string>
+    <string name="clear_cache_text">Vider le cache</string>
+    <string name="modify_notification_text" translatable="false">Modifier la notification</string>
+    <string name="notification_with_network_speed_text" translatable="false">Notification avec la vitesse du réseau</string>
+    <string name="notification_with_more_option_text" translatable="false">Notification avec plus d\'options</string>
+    <string name="successfully_cache_data_is_deleted_text">Les données de cache ont bien été supprimées</string>
 
 </resources>

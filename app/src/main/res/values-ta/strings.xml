@@ -167,6 +167,11 @@
 <string name="app_theme_text">பயன்பாட்டு தீம்</string>
 <string name="dark_theme_text">இருண்ட தீம்</string>
 <string name="filter_option_text">வடிகட்டி விருப்பம்</string>
-    <string name="select_language_text">மொழியை தேர்ந்தெடுங்கள்</string>
+    <string name="clear_cache_text">தற்காலிக சேமிப்பு</string>
+    <string name="modify_notification_text" translatable="false">அறிவிப்பை மாற்றவும்</string>
+    <string name="notification_with_network_speed_text" translatable="false">பிணைய வேகத்துடன் அறிவிப்பு</string>
+    <string name="notification_with_more_option_text" translatable="false">கூடுதல் விருப்பத்துடன் அறிவிப்பு</string>
+    <string name="change_language_text" translatable="false">மொழியை மாற்றுங்கள்</string>
+    <string name="successfully_cache_data_is_deleted_text">கேச் தரவு வெற்றிகரமாக நீக்கப்பட்டது</string>
 
 </resources>

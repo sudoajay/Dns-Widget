@@ -167,6 +167,11 @@
 <string name="app_theme_text">Tema Aplikasi</string>
 <string name="dark_theme_text">Tema gelap</string>
 <string name="filter_option_text">Opsi Filter</string>
-    <string name="select_language_text">Pilih bahasa</string>
+    <string name="change_language_text">Ganti BAHASA</string>
+    <string name="clear_cache_text">Bersihkan Cache</string>
+    <string name="modify_notification_text" translatable="false">Ubah Notifikasi</string>
+    <string name="notification_with_network_speed_text" translatable="false">Pemberitahuan dengan kecepatan jaringan</string>
+    <string name="notification_with_more_option_text" translatable="false">Pemberitahuan dengan lebih banyak opsi</string>
+    <string name="successfully_cache_data_is_deleted_text">Data Tembolok Berhasil Dihapus</string>
 
 </resources>

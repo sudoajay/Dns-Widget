@@ -51,7 +51,16 @@
         <item name="urdu">ur</item>
         <item name="vietnamese">vi</item>
         <item name="chinese">zh</item>
+    </string-array>
 
+    <string-array name="notificationList">
+        <item>@string/notification_with_network_speed_text</item>
+        <item>@string/notification_with_more_option_text</item>
+    </string-array>
+
+    <string-array name="notificationValues">
+        <item>Notification with network speed</item>
+        <item>Notification with more option</item>
     </string-array>
 
 

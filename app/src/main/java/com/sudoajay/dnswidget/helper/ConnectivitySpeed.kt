@@ -4,18 +4,15 @@ import android.net.TrafficStats
 import android.util.Log
 import java.util.*
 
-class ConnectivitySpeed {
-
-    companion object {
-        private const val GB: Long = 1000000000
-        private const val MB: Long = 1000000
-        private const val KB: Long = 1000
-    }
+object ConnectivitySpeed {
+    private const val GB: Long = 1000000000
+    private const val MB: Long = 1000000
+    private const val KB: Long = 1000
 
     fun getNetworkSpeed(): String {
 
-        var downloadSpeedOutput = ""
-        var units = ""
+        var downloadSpeedOutput: String
+        val units: String
         val mBytesPrevious = TrafficStats.getTotalRxBytes() + TrafficStats.getTotalTxBytes()
 
         try {

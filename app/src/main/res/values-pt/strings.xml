@@ -167,6 +167,11 @@
 <string name="app_theme_text">Tema do aplicativo</string>
 <string name="dark_theme_text">Tema escuro</string>
 <string name="filter_option_text">Opção de filtro</string>
-    <string name="select_language_text">Selecione o idioma</string>
+    <string name="clear_cache_text">Limpar cache</string>
+    <string name="modify_notification_text" translatable="false">Modificar notificação</string>
+    <string name="notification_with_network_speed_text" translatable="false">Notificação com velocidade de rede</string>
+    <string name="notification_with_more_option_text" translatable="false">Notificação com mais opção</string>
+    <string name="change_language_text" translatable="false">Mudar idioma</string>
+    <string name="successfully_cache_data_is_deleted_text">Dados de cache com êxito são excluídos</string>
 
 </resources>

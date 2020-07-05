@@ -167,6 +167,11 @@
 <string name="app_theme_text">Uygulama Teması</string>
 <string name="dark_theme_text">Koyu Tema</string>
 <string name="filter_option_text">Filtre Seçeneği</string>
-    <string name="select_language_text">Dil Seçin</string>
+    <string name="clear_cache_text">Önbelleği Temizle</string>
+    <string name="modify_notification_text" translatable="false">Bildirimi Değiştir</string>
+    <string name="notification_with_network_speed_text" translatable="false">Ağ hızıyla bildirim</string>
+    <string name="notification_with_more_option_text" translatable="false">Daha fazla seçenek içeren bildirim</string>
+    <string name="change_language_text" translatable="false">Dili değiştir</string>
+    <string name="successfully_cache_data_is_deleted_text">Önbellek Verileri Başarıyla Silindi</string>
 
 </resources>

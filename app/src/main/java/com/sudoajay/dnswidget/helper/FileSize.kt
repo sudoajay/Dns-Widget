@@ -22,7 +22,7 @@ object FileSize {
         }
     }
 
-    fun getDecimal2Round(time: Double): String {
+    private fun getDecimal2Round(time: Double): String {
         val df = DecimalFormat("#.#")
         return java.lang.Double.valueOf(df.format(time)).toString()
     }

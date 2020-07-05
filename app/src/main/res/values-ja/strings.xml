@@ -167,6 +167,11 @@
 <string name="app_theme_text">アプリのテーマ</string>
 <string name="dark_theme_text">暗いテーマ</string>
 <string name="filter_option_text">フィルターオプション</string>
-    <string name="select_language_text">言語を選択する</string>
+    <string name="clear_cache_text">キャッシュの消去</string>
+    <string name="modify_notification_text" translatable="false">通知を変更</string>
+    <string name="notification_with_network_speed_text" translatable="false">ネットワーク速度による通知</string>
+    <string name="notification_with_more_option_text" translatable="false">追加オプション付きの通知</string>
+    <string name="change_language_text" translatable="false">言語を変更</string>
+    <string name="successfully_cache_data_is_deleted_text">キャッシュデータが正常に削除されました</string>
 
 </resources>

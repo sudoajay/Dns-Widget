@@ -167,6 +167,11 @@
 <string name="app_theme_text">ایپ تھیم</string>
 <string name="dark_theme_text">سیاہ تھیم</string>
 <string name="filter_option_text">فلٹر آپشن</string>
-    <string name="select_language_text">زبان منتخب کریں</string>
+    <string name="clear_cache_text">کیشے صاف کریں</string>
+    <string name="modify_notification_text" translatable="false">اطلاع میں ترمیم کریں</string>
+    <string name="notification_with_network_speed_text" translatable="false">نیٹ ورک کی رفتار کے ساتھ اطلاع</string>
+    <string name="notification_with_more_option_text" translatable="false">مزید اختیارات کے ساتھ اطلاع</string>
+    <string name="change_language_text" translatable="false">زبان تبدیل کریں</string>
+    <string name="successfully_cache_data_is_deleted_text">کامیابی کے ساتھ کیشے کا ڈیٹا حذف ہوگیا</string>
 
 </resources>

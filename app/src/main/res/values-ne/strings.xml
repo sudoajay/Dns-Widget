@@ -167,6 +167,11 @@
 <string name="app_theme_text">अनुप्रयोग थिम</string>
 <string name="dark_theme_text">गाढा विषयवस्तु</string>
 <string name="filter_option_text">फिल्टर विकल्प</string>
-    <string name="select_language_text">भाषा छनोट गर्नुस</string>
+    <string name="clear_cache_text">क्यास खाली गर्नुहोस्</string>
+    <string name="modify_notification_text" translatable="false">अधिसूचना परिमार्जन गर्नुहोस्</string>
+    <string name="notification_with_network_speed_text" translatable="false">नेटवर्क गति संग अधिसूचना</string>
+    <string name="notification_with_more_option_text" translatable="false">अधिक विकल्पको साथ सूचना</string>
+    <string name="change_language_text" translatable="false">भाषा परिवर्तन गर्नुहोस्</string>
+    <string name="successfully_cache_data_is_deleted_text">सफलतापूर्वक क्यास डाटा मेटाईएको छ</string>
 
 </resources>

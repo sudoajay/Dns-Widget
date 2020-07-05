@@ -12,10 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.dnswidget.R
-import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.databinding.FragmentDnsTestBinding
 import com.sudoajay.dnswidget.helper.CustomToast
-import com.sudoajay.dnswidget.ui.appFilter.InsetDivider
+import com.sudoajay.dnswidget.helper.InsetDivider
 
 class DnsTestFragment : Fragment() {
 

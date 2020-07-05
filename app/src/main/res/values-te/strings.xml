@@ -167,6 +167,11 @@
 <string name="app_theme_text">అనువర్తన థీమ్</string>
 <string name="dark_theme_text">డార్క్ థీమ్</string>
 <string name="filter_option_text">ఫిల్టర్ ఎంపిక</string>
-    <string name="select_language_text">భాషను ఎంచుకోండి</string>
+    <string name="clear_cache_text">కాష్ క్లియర్</string>
+    <string name="modify_notification_text" translatable="false">నోటిఫికేషన్‌ను సవరించండి</string>
+    <string name="notification_with_network_speed_text" translatable="false">నెట్‌వర్క్ వేగంతో నోటిఫికేషన్</string>
+    <string name="notification_with_more_option_text" translatable="false">మరింత ఎంపికతో నోటిఫికేషన్</string>
+    <string name="change_language_text" translatable="false">భాష మార్చు</string>
+    <string name="successfully_cache_data_is_deleted_text">కాష్ డేటా విజయవంతంగా తొలగించబడింది</string>
 
 </resources>

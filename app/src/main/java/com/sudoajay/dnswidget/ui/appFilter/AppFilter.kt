@@ -19,6 +19,7 @@ import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.databinding.ActivityAppFilterBinding
 import com.sudoajay.dnswidget.helper.CustomToast
+import com.sudoajay.dnswidget.helper.InsetDivider
 import java.util.*
 
 

@@ -167,6 +167,11 @@
     <string name="app_theme_text">应用主题</string>
     <string name="dark_theme_text">黑暗主题</string>
     <string name="filter_option_text">筛选选项</string>
-    <string name="select_language_text">选择语言</string>
+    <string name="clear_cache_text">清除缓存</string>
+    <string name="modify_notification_text" translatable="false">修改通知</string>
+    <string name="notification_with_network_speed_text" translatable="false">网络速度通知</string>
+    <string name="notification_with_more_option_text" translatable="false">通知更多选项</string>
+    <string name="change_language_text" translatable="false">改变语言</string>
+    <string name="successfully_cache_data_is_deleted_text">成功删除缓存数据</string>
 
 </resources>

@@ -217,6 +217,12 @@
     <string name="start_mobile_summary_text">Automatically start DNS Widget when connecting to mobile network</string>
     <string name="system_setting_text">System Settings</string>
     <string name="use_dark_mode_text">Use Dark Mode</string>
+    <string name="modify_notification_text">Modify Notification</string>
+    <string name="notification_with_network_speed_text">Notification with network speed</string>
+    <string name="notification_with_more_option_text">Notification with more option</string>
+
+
+    <string name="clear_cache_text">Clear Cache</string>
     <string name="help_support_text">Help &amp; Support</string>
     <string name="privacy_policy_text">Privacy Policy</string>
     <string name="report_a_bug_text">Report A Bug</string>
@@ -248,7 +254,8 @@
     <string name="dark_theme_text">Dark Theme</string>
     <string name="filter_option_text">Filter Option</string>
 
-    <string name="select_language_text">Select Language</string>
+    <string name="change_language_text">"Change Language "</string>
+    <string name="successfully_cache_data_is_deleted_text">Successfully Cache Data Is Deleted</string>
 
 
 </resources>

@@ -11,6 +11,7 @@ import androidx.preference.*
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.helper.CustomToast
+import com.sudoajay.dnswidget.helper.DeleteCache
 
 
 class SettingConfiguration : PreferenceFragmentCompat() {
@@ -19,7 +20,7 @@ class SettingConfiguration : PreferenceFragmentCompat() {
         rootKey: String?
     ) {
         // Load the preferences from an XML resource
-        setPreferencesFromResource(R.xml.root_preferences, rootKey)
+        setPreferencesFromResource(R.xml.setting_preferences, rootKey)
 
 
         val currentLocale = ConfigurationCompat.getLocales(resources.configuration)[0]
@@ -62,11 +63,20 @@ class SettingConfiguration : PreferenceFragmentCompat() {
         }
 
 
-        val selectLanguage = findPreference("selectLanguage") as ListPreference?
+        val selectLanguage = findPreference("changeLanguage") as ListPreference?
         selectLanguage!!.setOnPreferenceChangeListener { _, newValue ->
             if (newValue.toString() != getLanguage(requireContext())) {
-               requireActivity().recreate()
+                requireActivity().recreate()
             }
+            true
+        }
+
+
+        val clearCache =
+            findPreference("clearCache") as Preference?
+        clearCache!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            //open browser or intent here
+            DeleteCache.deleteCache(requireContext())
             true
         }
 
@@ -126,7 +136,7 @@ class SettingConfiguration : PreferenceFragmentCompat() {
 
         fun getLanguage(context: Context): String {
             return PreferenceManager
-                .getDefaultSharedPreferences(context).getString("selectLanguage", "en").toString()
+                .getDefaultSharedPreferences(context).getString("changeLanguage", "en").toString()
         }
     }
 

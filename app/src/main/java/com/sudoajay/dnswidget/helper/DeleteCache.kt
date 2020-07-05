@@ -1,6 +1,7 @@
 package com.sudoajay.dnswidget.helper
 
 import android.content.Context
+import com.sudoajay.dnswidget.R
 import java.io.File
 
 internal object DeleteCache {
@@ -8,7 +9,7 @@ internal object DeleteCache {
         try {
             val dir = context.cacheDir
             deleteWithFile(dir)
-            CustomToast.toastIt(context, "Successfully Cache Data Is Deleted")
+            CustomToast.toastIt(context, context.getString(R.string.successfully_cache_data_is_deleted_text))
         } catch (e: Exception) {
             e.printStackTrace()
         }

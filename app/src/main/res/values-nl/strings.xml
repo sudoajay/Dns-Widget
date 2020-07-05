@@ -167,6 +167,11 @@
 <string name="app_theme_text">App-thema</string>
 <string name="dark_theme_text">Donker thema</string>
 <string name="filter_option_text">Filteroptie</string>
-    <string name="select_language_text">Selecteer taal</string>
+    <string name="clear_cache_text">Cache wissen</string>
+    <string name="modify_notification_text" translatable="false">Melding wijzigen</string>
+    <string name="notification_with_network_speed_text" translatable="false">Melding met netwerksnelheid</string>
+    <string name="notification_with_more_option_text" translatable="false">Melding met meer optie</string>
+    <string name="change_language_text" translatable="false">Wijzig taal</string>
+    <string name="successfully_cache_data_is_deleted_text">Cachegegevens zijn verwijderd</string>
 
 </resources>

@@ -18,6 +18,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.helper.ConnectivitySpeed
@@ -47,7 +48,6 @@ class  AdVpnService : VpnService() {
 
     private var vpnThread: AdVpnThread? = AdVpnThread(this, object : Notify {
         override fun run(value: Int) {
-            Log.e(TAG, "$value --- VPN_MSG_STATUS_UPDATE ")
 
             updateVpnStatus(value)
         }
@@ -241,9 +241,8 @@ class  AdVpnService : VpnService() {
                 )
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    val connectivitySpeed = ConnectivitySpeed()
                     startCoroutineTimer {
-                        val networkSpeed = connectivitySpeed.getNetworkSpeed()
+                        val networkSpeed = ConnectivitySpeed.getNetworkSpeed()
                         val speed = networkSpeed.subSequence(0, networkSpeed.indexOf(" ") + 1)
                         val units =
                             networkSpeed.subSequence(
@@ -311,8 +310,11 @@ class  AdVpnService : VpnService() {
 
 
     private fun isNetworkSpeedNotification(): Boolean {
-        return applicationContext.getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getBoolean("isNetworkSpeed", true)
+        val str = "Notification with more option"
+
+        return str != PreferenceManager
+            .getDefaultSharedPreferences(applicationContext)
+            .getString("modifyNotification", str)
     }
 
 
