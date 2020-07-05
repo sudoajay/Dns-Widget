@@ -21,7 +21,6 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:textColor="?attr/headingNormalTextColor"
-            android:alpha="0.7"
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="18sp"

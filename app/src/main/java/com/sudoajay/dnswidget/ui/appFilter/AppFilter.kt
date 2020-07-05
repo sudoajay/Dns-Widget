@@ -23,7 +23,7 @@ import com.sudoajay.dnswidget.helper.InsetDivider
 import java.util.*
 
 
-class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFragment {
+class AppFilter : BaseActivity(), FilterAppBottomSheet.IsSelectedBottomSheetFragment {
 
     lateinit var appFilterViewModel: AppFilterViewModel
     private lateinit var binding: ActivityAppFilterBinding
@@ -70,7 +70,7 @@ class AppFilter : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
         }
 
         binding.filterFloatingActionButton.setOnClickListener {
-            val bottomSheetFragment = FilterDnsBottomSheet()
+            val bottomSheetFragment = FilterAppBottomSheet()
             bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
         }
 

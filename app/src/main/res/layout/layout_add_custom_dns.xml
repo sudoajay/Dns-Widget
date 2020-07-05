@@ -42,14 +42,15 @@
                         android:id="@+id/delete_BottomSheet"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
+                        android:ellipsize="end"
                         android:fontFamily="@font/lato"
+                        android:maxLines="1"
                         android:text="@string/add_custom_dns_text"
                         android:textColor="?attr/headingNormalTextColor"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/name_TextInputLayout"
+                        app:layout_constraintStart_toStartOf="@+id/name_TextInputLayout"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.textfield.TextInputLayout

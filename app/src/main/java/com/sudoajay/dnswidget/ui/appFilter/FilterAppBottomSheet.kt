@@ -11,7 +11,7 @@ import com.sudoajay.dnswidget.databinding.LayoutFilterAppBottomSheetBinding
 import com.sudoajay.dnswidget.helper.CustomToast
 
 
-class FilterDnsBottomSheet : BottomSheetDialogFragment() {
+class FilterAppBottomSheet : BottomSheetDialogFragment() {
 
     private var isSelectedBottomSheetFragment: IsSelectedBottomSheetFragment? = null
 

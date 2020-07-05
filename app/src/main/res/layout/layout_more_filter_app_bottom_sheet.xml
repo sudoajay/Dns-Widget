@@ -62,9 +62,13 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:textColor="?attr/boxTextColor"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/menu_all_apps_trans"
+                android:textColor="?attr/boxTextColor"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,8 +96,12 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:text="@string/menu_no_apps_trans"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="?attr/boxTextColor"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -122,10 +130,13 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/menu_only_system_apps_trans"
                 android:textColor="?attr/boxTextColor"
-
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,10 +165,13 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/menu_only_user_apps_trans"
                 android:textColor="?attr/boxTextColor"
-
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -184,9 +198,13 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/menu_system_app_except_browser_trans"
                 android:textColor="?attr/boxTextColor"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

@@ -12,7 +12,7 @@ import com.sudoajay.dnswidget.databinding.LayoutMoreFilterAppBottomSheetBinding
 
 class MoreFilterAppBottomSheet : BottomSheetDialogFragment() {
 
-    private var isSelectedDnsBottomSheetFragment: FilterDnsBottomSheet.IsSelectedBottomSheetFragment? = null
+    private var isSelectedAppBottomSheetFragment: FilterAppBottomSheet.IsSelectedBottomSheetFragment? = null
 
 
     override fun onCreateView(
@@ -30,7 +30,7 @@ class MoreFilterAppBottomSheet : BottomSheetDialogFragment() {
         )
         binding.bottomSheet = this
 
-        isSelectedDnsBottomSheetFragment = activity as FilterDnsBottomSheet.IsSelectedBottomSheetFragment?
+        isSelectedAppBottomSheetFragment = activity as FilterAppBottomSheet.IsSelectedBottomSheetFragment?
 
 
         return binding.root
@@ -39,7 +39,7 @@ class MoreFilterAppBottomSheet : BottomSheetDialogFragment() {
     fun setValue(key: String, value: String) {
         requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
             .putString(key, value).apply()
-        isSelectedDnsBottomSheetFragment!!.handleDialogClose()
+        isSelectedAppBottomSheetFragment!!.handleDialogClose()
 
         dismiss()
     }
