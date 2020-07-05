@@ -36,6 +36,13 @@
 
 
     </PreferenceCategory>
+    <ListPreference
+        android:defaultValue="English"
+        android:entries="@array/LanguageList"
+        android:entryValues="@array/languagesValues"
+        android:key="selectLanguage"
+        android:title="@string/select_language_text" />
+
     <PreferenceCategory app:title="@string/help_support_text">
         <Preference
             android:key="privacyPolicy"

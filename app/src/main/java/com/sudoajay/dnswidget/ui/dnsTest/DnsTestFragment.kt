@@ -21,7 +21,6 @@ class DnsTestFragment : Fragment() {
 
     private lateinit var dnsTestViewModel: DnsTestViewModel
     private lateinit var binding: FragmentDnsTestBinding
-    private var isDarkTheme: Boolean = false
 
     @SuppressLint("InflateParams")
     override fun onCreateView(
@@ -44,14 +43,12 @@ class DnsTestFragment : Fragment() {
     }
 
     private fun reference() {
-        isDarkTheme = BaseActivity.isDarkMode(requireContext())
 
         setRecyclerView()
 
 
         binding.swipeRefresh.setColorSchemeResources(
-            if (!isDarkTheme
-            ) R.color.colorPrimary else R.color.colorAccent_DarkTheme
+             R.color.primaryAppColor
         )
         binding.swipeRefresh.isEnabled = false
         binding.swipeRefresh.setOnRefreshListener {
@@ -105,7 +102,7 @@ class DnsTestFragment : Fragment() {
         val dividerHeight = resources.getDimensionPixelSize(R.dimen.divider_height)
         val dividerColor = ContextCompat.getColor(
             requireContext(),
-            if (!isDarkTheme) R.color.bgWhiteColor else R.color.colorPrimary_DarkTheme
+             R.color.divider
         )
         val marginLeft = resources.getDimensionPixelSize(R.dimen.divider_inset)
         return InsetDivider.Builder(requireContext())

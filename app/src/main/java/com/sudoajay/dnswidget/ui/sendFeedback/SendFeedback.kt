@@ -61,7 +61,7 @@ class SendFeedback : BaseActivity() {
                 super.updateDrawState(ds)
                 ds.color = ContextCompat.getColor(
                     applicationContext,
-                    if (!isDarkTheme) R.color.colorAccent else R.color.colorAccent_DarkTheme
+                    R.color.primaryAppColor
                 )
                 ds.isUnderlineText = true
 

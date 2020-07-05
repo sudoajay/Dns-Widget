@@ -1,12 +1,13 @@
 package com.sudoajay.dnswidget.ui.setting
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import androidx.core.os.ConfigurationCompat
 import androidx.navigation.Navigation
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.TwoStatePreference
+import androidx.preference.*
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.helper.CustomToast
@@ -20,6 +21,9 @@ class SettingConfiguration : PreferenceFragmentCompat() {
         // Load the preferences from an XML resource
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
+
+        val currentLocale = ConfigurationCompat.getLocales(resources.configuration)[0]
+        Log.e("getLocal", currentLocale.displayLanguage + currentLocale.displayCountry)
 
 
         val useDnsv4 = findPreference("useDnsv4") as TwoStatePreference?
@@ -58,6 +62,15 @@ class SettingConfiguration : PreferenceFragmentCompat() {
         }
 
 
+        val selectLanguage = findPreference("selectLanguage") as ListPreference?
+        selectLanguage!!.setOnPreferenceChangeListener { _, newValue ->
+            if (newValue.toString() != getLanguage(requireContext())) {
+               requireActivity().recreate()
+            }
+            true
+        }
+
+
         val privacyPolicy =
             findPreference("privacyPolicy") as Preference?
         privacyPolicy!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -84,6 +97,7 @@ class SettingConfiguration : PreferenceFragmentCompat() {
 
     }
 
+
     private fun openPrivacyPolicy() {
         val link = "https://play.google.com/store/apps/dev?id=5309601131127361849"
         val i = Intent(Intent.ACTION_VIEW)
@@ -108,5 +122,12 @@ class SettingConfiguration : PreferenceFragmentCompat() {
 
     }
 
+    companion object {
+
+        fun getLanguage(context: Context): String {
+            return PreferenceManager
+                .getDefaultSharedPreferences(context).getString("selectLanguage", "en").toString()
+        }
+    }
 
 }

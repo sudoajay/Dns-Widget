@@ -2,12 +2,13 @@ package com.sudoajay.dnswidget.activity
 
 import android.content.Context
 import android.content.res.Configuration
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import android.os.PowerManager
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.helper.LocalizationUtil
+import com.sudoajay.dnswidget.ui.setting.SettingConfiguration
 import java.util.*
 
 
@@ -17,8 +18,13 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         currentTheme = getDarkMode(applicationContext)
         setAppTheme(currentTheme)
-        Log.i("DarkMode", isSystemDefaultOn().toString())
 
+        val englishName =
+            getLocaleStringResource(
+                applicationContext,
+                Locale("en"),
+                R.string.menu_only_system_apps
+            )
     }
 
     override fun onResume() {
@@ -27,38 +33,42 @@ open class BaseActivity : AppCompatActivity() {
         if (currentTheme != theme)
             recreate()
     }
-
     private fun setAppTheme(currentTheme: String) {
         when (currentTheme) {
-            getString(R.string.off_text) -> saveTheme(false)
-            getString(R.string.automatic_at_sunset_text) -> saveTheme(isSunset())
-            getString(R.string.set_by_battery_saver_text) -> saveTheme(isPowerSaveMode())
-            getString(R.string.system_default_text) -> saveTheme(isSystemDefaultOn())
-            else -> saveTheme(true)
+            getLocaleStringResource(applicationContext, Locale("en"), R.string.off_text) -> {
+                setValue(false)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            getLocaleStringResource(applicationContext, Locale("en"), R.string.automatic_at_sunset_text) -> setDarkMode(isSunset())
+            getLocaleStringResource(applicationContext, Locale("en"), R.string.set_by_battery_saver_text) -> {
+                setValue(isPowerSaveMode())
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+                )
+            }
+            getLocaleStringResource(applicationContext, Locale("en"), R.string.system_default_text) -> {
+                setValue(isSystemDefaultOn())
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                )
+            }
+            else -> {
+                setValue(true)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
         }
+
     }
 
-    private fun saveTheme(isDarkMode: Boolean) {
-        getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putBoolean(getString(R.string.is_dark_mode_text), isDarkMode).apply()
+    private fun setDarkMode(isDarkMode: Boolean) {
+        setValue(isDarkMode)
         if (isDarkMode) {
-            setTheme(R.style.DarkTheme)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
-            setTheme(R.style.AppTheme)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 
-
-    private fun isSystemDefaultOn(): Boolean {
-        return resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
-    }
-
-    private fun isPowerSaveMode(): Boolean {
-        val powerManager =
-            getSystemService(Context.POWER_SERVICE) as PowerManager
-        return powerManager.isPowerSaveMode
-    }
 
     private fun isSunset(): Boolean {
         val rightNow: Calendar = Calendar.getInstance()
@@ -67,23 +77,61 @@ open class BaseActivity : AppCompatActivity() {
     }
 
 
+    private fun setValue(isDarkMode: Boolean) {
+        getSharedPreferences("state", Context.MODE_PRIVATE).edit()
+            .putBoolean(getString(R.string.is_dark_mode_text), isDarkMode).apply()
+    }
+
+
+    private fun isSystemDefaultOn(): Boolean {
+        return resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    }
+
+    private fun isPowerSaveMode(): Boolean {
+        val powerManager =
+            getSystemService(Context.POWER_SERVICE) as PowerManager
+        return powerManager.isPowerSaveMode
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(
+            LocalizationUtil.applyLanguage(
+                newBase,
+                SettingConfiguration.getLanguage(newBase)
+            )
+        )
+    }
+
     companion object {
 
         fun getDarkMode(context: Context): String {
             return context.getSharedPreferences("state", Context.MODE_PRIVATE)
                 .getString(
-                    context.getString(R.string.dark_mode_text), context.getString(
-                        R.string.system_default_text
-                    )
+                    getLocaleStringResource(context, Locale("en"), R.string.dark_mode_text),
+                    getLocaleStringResource(context, Locale("en"), R.string.system_default_text)
                 ).toString()
         }
 
         fun isDarkMode(context: Context): Boolean {
             return context.getSharedPreferences("state", Context.MODE_PRIVATE)
                 .getBoolean(
-                    context.getString(R.string.is_dark_mode_text), false
+                    getLocaleStringResource(context, Locale("en"), R.string.is_dark_mode_text), false
                 )
+        }
 
+        fun getLocaleStringResource(
+            context: Context,
+            requestedLocale: Locale?,
+            resourceId: Int
+        ): String? {
+            val result: String
+            // use latest api
+            val config =
+                Configuration(context.resources.configuration)
+            config.setLocale(requestedLocale)
+            result = context.createConfigurationContext(config).getText(resourceId).toString()
+            return result
         }
     }
 

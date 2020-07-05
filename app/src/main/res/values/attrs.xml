@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="changeStatusBarColor" format="reference"/>
     <attr name="primaryAppColor" format="reference"/>
     <attr name="primaryBoxTextColor" format="reference"/>
     <attr name="headingNormalTextColor" format="reference"/>

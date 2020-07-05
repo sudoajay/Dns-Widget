@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sudoajay.dnswidget.R
-import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.databinding.LayoutDnsSpeedTestItemBinding
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
@@ -24,7 +23,6 @@ class DnsSpeedTestAdapter(
 ) :
     RecyclerView.Adapter<DnsSpeedTestAdapter.MyViewHolder>() {
 
-    private  var isDarkTheme: Boolean = false
 
 
     class MyViewHolder(
@@ -46,7 +44,6 @@ class DnsSpeedTestAdapter(
             LayoutInflater.from(parent.context),
             R.layout.layout_dns_speed_test_item, parent, false
         )
-        isDarkTheme = BaseActivity.isDarkMode(context)
         return MyViewHolder(binding)
 
 
@@ -81,23 +78,17 @@ class DnsSpeedTestAdapter(
         when (ms) {
             in 80 downTo 0 -> holder.msTextView.setTextColor(
                 ContextCompat.getColor(
-                    context,
-                    if (!isDarkTheme
-                    ) R.color.ping1 else R.color.ping1_DarkTheme
+                    context, R.color.ping1
                 )
             )
             in 200 downTo 80 -> holder.msTextView.setTextColor(
                 ContextCompat.getColor(
-                    context,
-                    if (!isDarkTheme
-                    ) R.color.ping2 else R.color.ping2_DarkTheme
+                    context, R.color.ping2
                 )
             )
             else -> holder.msTextView.setTextColor(
                 ContextCompat.getColor(
-                    context,
-                    if (!isDarkTheme
-                    ) R.color.ping3 else R.color.ping3_DarkTheme
+                    context, R.color.ping3
                 )
             )
         }

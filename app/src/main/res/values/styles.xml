@@ -7,18 +7,17 @@
 
         <item name="windowNoTitle">true</item>
 
-        <item name="changeStatusBarColor">@color/bgWhiteColor</item>
-        <item name="primaryAppColor" >@color/colorPrimary</item>
+        <item name="primaryAppColor" >@color/primaryAppColor</item>
         <item name="primaryBoxTextColor">@color/primaryBoxTextColor</item>
         <item name="headingNormalTextColor">@color/headingNormalTextColor</item>
         <item name="boxTextColor">@color/boxTextColor</item>
-        <item name="boxHoverColor">@color/colorPrimary</item>
+        <item name="boxHoverColor">@color/boxHoverColor</item>
         <item name="errorBoxColor">@color/errorBoxColor</item>
-        <item name="mainBackgroundColor">@color/bgWhiteColor</item>
-        <item name="backgroundBoxColor">@color/bgWhiteColor</item>
-        <item name="bottomItemTintColor">@color/boxTextColor</item>
+        <item name="mainBackgroundColor">@color/mainBackgroundColor</item>
+        <item name="backgroundBoxColor">@color/backgroundBoxColor</item>
+        <item name="bottomItemTintColor">@color/bottomItemTintColor</item>
         <item name="feedbackBoxBgColor">@color/feedbackBoxBgColor</item>
-        <item name="dialogBgColorInfo">@color/infoLayout_BackColor</item>
+        <item name="dialogBgColorInfo">@color/dialogBgColorInfo</item>
 
 
         <item name="colorError">@color/errorBoxColor</item>
@@ -29,45 +28,12 @@
     </style>
 
 
-    <style name="DarkTheme"  parent="Theme.MaterialComponents.DayNight.DarkActionBar.Bridge">
-        <item name="colorPrimary">@color/colorPrimary_DarkTheme</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark_DarkTheme</item>
-        <item name="colorAccent">@color/colorAccent_DarkTheme</item>
-
-
-        <item name="windowNoTitle">true</item>
-
-        <item name="changeStatusBarColor">@color/colorPrimaryDark_DarkTheme</item>
-        <item name="primaryAppColor" >@color/colorAccent_DarkTheme</item>
-        <item name="primaryBoxTextColor">@color/white_DarkTheme</item>
-        <item name="headingNormalTextColor">@color/white_DarkTheme</item>
-        <item name="boxTextColor">@color/white_DarkTheme</item>
-        <item name="boxHoverColor">@color/white_DarkTheme</item>
-        <item name="errorBoxColor">@color/errorBoxColor_DarkTheme</item>
-        <item name="mainBackgroundColor">@color/mainBackgroundColor_DarkTheme</item>
-        <item name="backgroundBoxColor">@color/colorPrimary_DarkTheme</item>
-        <item name="bottomItemTintColor">@color/colorAccent_DarkTheme</item>
-        <item name="feedbackBoxBgColor">@color/colorPrimary_DarkTheme</item>
-        <item name="dialogBgColorInfo">@color/colorPrimary_DarkTheme</item>
-
-
-        <item name="colorError">@color/errorBoxColor_DarkTheme</item>
-        <item name="colorOnError">@color/white_DarkTheme</item>
-        <item name="colorOnPrimary">@color/white_DarkTheme</item>
-
-
-
-
-    </style>
-
-
-
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">?attr/changeStatusBarColor</item>
+        <item name="android:statusBarColor">?attr/mainBackgroundColor</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

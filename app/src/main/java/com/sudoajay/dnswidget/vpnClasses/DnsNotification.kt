@@ -106,7 +106,7 @@ class DnsNotification(private val context: Context) {
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .setSound(uri) // Provide a large icon, shown with the notification in the
 
-            .color = ContextCompat.getColor(context, R.color.fabColor_DnsSpeedTest)
+            .color = ContextCompat.getColor(context, R.color.primaryAppColor)
         // If this notification relates to a past or upcoming event, you
 
         //Content hen expanded

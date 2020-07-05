@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--    App Theme Color-->
+    <color name="colorPrimaryDark">#121212</color>
+    <color name="colorPrimary">#272727</color>
+    <color name="colorAccent">#74A0EE</color>
+
+
+    <!--    Modify  App Theme Color -->
+
+    <color name="primaryAppColor">#74A0EE</color>
+    <color name="primaryBoxTextColor">#dae1e7</color>
+    <color name="headingNormalTextColor">#dae1e7</color>
+    <color name="boxTextColor">#dae1e7</color>
+    <color name="boxHoverColor">#dae1e7</color>
+    <color name="errorBoxColor">#CF6679</color>
+    <color name="mainBackgroundColor">#121212</color>
+    <color name="backgroundBoxColor">#272727</color>
+    <color name="bottomItemTintColor">#74A0EE</color>
+    <color name="feedbackBoxBgColor">#272727</color>
+    <color name="dialogBgColorInfo">#272727</color>
+
+
+    <color name="colorError">#CF6679</color>
+    <color name="colorOnError">#dae1e7</color>
+    <color name="colorOnPrimary">#dae1e7</color>
+
+    <!-- Color Define Ping -->
+    <color name="ping1">#89B68A</color>
+    <color name="ping2">#FFC267</color>
+    <color name="ping3">#CF6679</color>
+
+    <color name="bgWhiteColor">#ffffff</color>
+    <color name="navigationViewBackgroundChecked">#FAF8FF</color>
+
+    <color name="divider">#dae1e7</color>
+
+
+    <!--Toast Color Background and text Color-->
+    <color name="toastBackgroundColor">#272727</color>
+    <color name="toastTextColor">#dae1e7</color>
+
+
+</resources>

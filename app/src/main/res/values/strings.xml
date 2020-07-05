@@ -228,7 +228,7 @@
 
 <!--    Dark Mode Bottom Sheet-->
     <string name="dark_mode_text">Dark Mode</string>
-    <string name="is_dark_mode_text">isDarkMode</string>
+    <string name="is_dark_mode_text" translatable="false">isDarkMode</string>
     <string name="off_text">Off</string>
     <string name="on_text">On</string>
     <string name="automatic_at_sunset_text">Automatic at sunset</string>
@@ -240,6 +240,12 @@
     <string name="app_theme_text">App Theme</string>
     <string name="dark_theme_text">Dark Theme</string>
     <string name="filter_option_text">Filter Option</string>
+
+    <string name="select_language_text">Select Language</string>
+
+
+
+
 
 
 </resources>

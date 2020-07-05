@@ -8,6 +8,9 @@
         <import type="android.view.View" />
 
         <variable
+            name="id"
+            type="re" />
+        <variable
             name="bottomSheet"
             type="com.sudoajay.dnswidget.ui.setting.DarkModeBottomSheet" />
     </data>
@@ -49,7 +52,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue(@string/off_text)}"
+            android:onClick="@{() -> bottomSheet.setValue()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
