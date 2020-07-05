@@ -260,7 +260,7 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
 
         val value =
             requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
-                .getBoolean("isDnsActive", false)
+                .getBoolean(getString(R.string.is_dns_active_text), false)
         if (value) {
             binding.connectDnsButton.text = requireContext().getText(R.string.stop_text)
             binding.statusDnsTextView.text = requireContext().getText(R.string.connected_text)

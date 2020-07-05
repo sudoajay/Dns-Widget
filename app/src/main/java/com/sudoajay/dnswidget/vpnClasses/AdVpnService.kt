@@ -142,7 +142,7 @@ class  AdVpnService : VpnService() {
                     dnsStatus.postValue(getString(R.string.connected_progress_text))
 
                     getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-                        .putBoolean("isDnsActive", true).apply()
+                        .putBoolean(getString(R.string.is_dns_active_text), true).apply()
                     startVpn()
                 }
 
@@ -152,7 +152,7 @@ class  AdVpnService : VpnService() {
                 Log.i(TAG, "onStartCommand  Command.Stop -  ")
 
                 getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-                    .putBoolean("isDnsActive", false).apply()
+                    .putBoolean(getString(R.string.is_dns_active_text), false).apply()
                 stopVpn()
             }
             Command.PAUSE -> {
@@ -433,7 +433,7 @@ class  AdVpnService : VpnService() {
             Log.i("BOOT", "Checking whether to start ad buster on boot")
 
             if (!context.getSharedPreferences("state", Context.MODE_PRIVATE)
-                    .getBoolean("isDnsActive", false)
+                    .getBoolean(context.getString(R.string.is_dns_active_text), false)
             ) {
                 return
             }

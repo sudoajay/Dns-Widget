@@ -49,7 +49,7 @@ class FilterDnsBottomSheet : BottomSheetDialogFragment() {
     fun setUpVisible(key: String) {
         setVisible(key)
 
-        if (!isVisible(getString(R.string.menu_default_dns)) && !isVisible(getString(R.string.menu_custom_dns))) {
+        if (!isVisible(getString(R.string.menu_default_dns_trans)) && !isVisible(getString(R.string.menu_custom_dns_trans))) {
             CustomToast.toastIt(requireContext(), getString(R.string.at_least_one_item_text))
             setVisible(key)
         } else {

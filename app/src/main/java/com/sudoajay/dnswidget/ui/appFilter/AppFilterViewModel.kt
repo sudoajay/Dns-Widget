@@ -68,7 +68,7 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
         _application.getSharedPreferences("state", Context.MODE_PRIVATE).edit()
             .putString(
                 _application.getString(R.string.title_menu_select_option),
-                "Custom Apps"
+                _application.getString(R.string.menu_custom_app)
             ).apply()
 
 
@@ -107,7 +107,7 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun getHideProgress(): LiveData<Boolean> {
         if (hideProgress == null) {
-            hideProgress = MutableLiveData<Boolean>()
+            hideProgress = MutableLiveData()
             loadHideProgress()
         }
         return hideProgress as MutableLiveData<Boolean>

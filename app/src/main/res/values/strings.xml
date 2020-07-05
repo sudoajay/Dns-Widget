@@ -1,10 +1,5 @@
 <resources>
     <string name="app_name">Dns Widget</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
 
@@ -29,22 +24,9 @@
     <string name="shareMessage">Hey, check This App which helps you to Delete Duplicate and Unnecessary Data from the phone -</string>
     <string name="title_activity_settings">Settings</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="feedbackEditTextHint">Please write your feedback</string>
     <string name="feedbackEditTextError">Please write something in feedback</string>
     <string name="systemInfo_text">Your System Info will be send to our developer team</string>
@@ -93,7 +75,6 @@
     <string name="stopping_text">Stopping…</string>
 
 
-    <!--    Modify Strings-->
     <!--    Ad Vpn service vpnStatusToTextId -->
     <string name="notification_starting">Starting</string>
     <string name="notification_running">Active</string>
@@ -121,28 +102,6 @@
     <string name="notification_paused_text">Tap to resume.</string>
 
 
-    <!--    Filer Helper-->
-    <string name="cannot_restore_previous_config">Cannot restore previous configuration: %s</string>
-    <string name="cannot_read_config">Cannot read configuration: %s</string>
-    <string name="cannot_load_default_config">Cannot read default settings: %s - This should not happen</string>
-    <string name="cannot_write_config">Cannot write configuration: %s</string>
-
-    <!--    Rule Database Update-->
-    <string name="update_incomplete">Update incomplete</string>
-    <string name="update_incomplete_description">Some host files could not be downloaded. If files were previously downloaded, old versions will continue to be used.</string>
-    <string name="updating_hostfiles">Updating hostfiles</string>
-    <string name="updating_n_host_files">Updating %1$d host files</string>
-    <string name="could_not_update_all_hosts">Could not update all hostfiles</string>
-
-    <!--    Rule Database Runnable-->
-    <string name="invalid_url_s">Invalid URL: %1$s</string>
-    <string name="file_not_found">File not found</string>
-    <string name="unknown_error_s">Unexpected error: %1$s</string>
-    <string name="requested_timed_out">Request timed out</string>
-    <string name="action_delete">Delete</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="host_update_error_item">Error %1$d: %2$s</string>
-
     <!--    status Dns -->
     <string name="not_connected_text">Not Connected</string>
     <string name="connected_progress_text">Connected…</string>
@@ -159,25 +118,29 @@
 
 
     <!--    Bottom sheet dialog-->
-    <string name="title_menu_order_by">Order by</string>
-    <string name="menu_alphabetical_order">Alphabetical order</string>
-    <string name="menu_installation_date">Installation date</string>
-    <string name="title_menu_show">Show</string>
-    <string name="menu_system_apps">System apps</string>
-    <string name="menu_user_apps">User apps</string>
+    <string name="title_menu_order_by_trans">Order by</string>
+    <string name="menu_alphabetical_order_trans">Alphabetical order</string>
+    <string name="menu_installation_date_trans">Installation date</string>
+    <string name="menu_system_apps_trans">System apps</string>
+    <string name="menu_user_apps_trans">User apps</string>
 
-    <string name="title_menu_select_option">Select Option</string>
-    <string name="menu_all_apps">All apps</string>
-    <string name="menu_no_apps">No apps</string>
+
+    <string name="filter_option_text">Filter Option</string>
+    <string name="title_menu_show">Show</string>
+
+
+    <string name="title_menu_select_option_trans">Select Option</string>
+    <string name="menu_all_apps_trans">All apps</string>
+    <string name="menu_no_apps_trans">No apps</string>
     <string name="title_menu_more_option">Multi - Select</string>
-    <string name="menu_only_system_apps">Only system apps</string>
-    <string name="menu_only_user_apps">Only user apps</string>
-    <string name="menu_system_app_except_browser">System app except browser</string>
-    <string name="menu_custom_app">Custom apps</string>
+    <string name="menu_only_system_apps_trans">Only system apps</string>
+    <string name="menu_only_user_apps_trans">Only user apps</string>
+    <string name="menu_system_app_except_browser_trans">System app except browser</string>
+    <string name="menu_custom_app_trans">Custom apps</string>
     <string name="page_refreshed_text">Page Refresh</string>
 
-    <string name="menu_default_dns">Default DNS</string>
-    <string name="menu_custom_dns">Custom DNS</string>
+    <string name="menu_default_dns_trans">Default DNS</string>
+    <string name="menu_custom_dns_trans">Custom DNS</string>
 
 
     <!--    Information text-->
@@ -233,14 +196,6 @@
 
 
     <!--    Dark Mode Bottom Sheet-->
-    <string name="dark_mode_text" translatable="false">Dark Mode</string>
-    <string name="is_dark_mode_text" translatable="false">isDarkMode</string>
-
-    <string name="off_text" translatable="false">Off</string>
-    <string name="on_text" translatable="false">On</string>
-    <string name="automatic_at_sunset_text" translatable="false">Automatic at sunset</string>
-    <string name="set_by_battery_saver_text" translatable="false">Set by battery saver</string>
-    <string name="system_default_text" translatable="false">System Default</string>
 
     <string name="off_trans_text">Off</string>
     <string name="on_trans_text">On</string>
@@ -252,10 +207,48 @@
     <string name="current_theme_text">Current Theme</string>
     <string name="app_theme_text">App Theme</string>
     <string name="dark_theme_text">Dark Theme</string>
-    <string name="filter_option_text">Filter Option</string>
+
 
     <string name="change_language_text">"Change Language "</string>
     <string name="successfully_cache_data_is_deleted_text">Successfully Cache Data Is Deleted</string>
+
+
+    <!--    No Trans String -->
+
+    <string name="menu_default_dns" translatable="false">Default DNS</string>
+    <string name="menu_custom_dns" translatable="false">Custom DNS</string>
+
+
+    <string name="is_dns_active_text" translatable="false">isDnsActive</string>
+
+
+    <string name="dark_mode_text" translatable="false">Dark Mode</string>
+    <string name="is_dark_mode_text" translatable="false">isDarkMode</string>
+
+<!--    Dark Mode Not Trans-->
+    <string name="off_text" translatable="false">Off</string>
+    <string name="on_text" translatable="false">On</string>
+    <string name="automatic_at_sunset_text" translatable="false">Automatic at sunset</string>
+    <string name="set_by_battery_saver_text" translatable="false">Set by battery saver</string>
+    <string name="system_default_text" translatable="false">System Default</string>
+
+
+    <!--    FilterDnsBottomSheet Not Trans-->
+    <string name="title_menu_order_by" translatable="false">Order by</string>
+    <string name="menu_alphabetical_order" translatable="false">Alphabetical order</string>
+    <string name="menu_installation_date" translatable="false">Installation date</string>
+    <string name="menu_system_apps" translatable="false">System apps</string>
+    <string name="menu_user_apps" translatable="false">User apps</string>
+
+    <string name="menu_custom_app" translatable="false">Custom apps</string>
+
+<!--    MoreFilterAppBottomSheet Not Trans-->
+    <string name="title_menu_select_option" translatable="false">Select Option</string>
+    <string name="menu_all_apps" translatable="false">All apps</string>
+    <string name="menu_no_apps" translatable="false">No apps</string>
+    <string name="menu_only_system_apps" translatable="false">Only system apps</string>
+    <string name="menu_only_user_apps" translatable="false">Only user apps</string>
+    <string name="menu_system_app_except_browser" translatable="false">System app except browser</string>
 
 
 </resources>

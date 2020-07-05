@@ -85,15 +85,15 @@ class AppRepository(private val context: Context, private val appDao: AppDao) {
             ).toString()
 
         when (selectedOption) {
-            context.getString(R.string.menu_no_apps) ->
+            context.getString(R.string.menu_no_apps_trans) ->
                 getId(1, SimpleSQLiteQuery("Select id From AppTable Where Selected = '1'"))
-            context.getString(R.string.menu_all_apps) ->
+            context.getString(R.string.menu_all_apps_trans) ->
                 getId(2, SimpleSQLiteQuery("Select id From AppTable Where Selected = '0'"))
-            context.getString(R.string.menu_only_user_apps) ->
+            context.getString(R.string.menu_only_user_apps_trans) ->
                 getId(3, SimpleSQLiteQuery("Select id From AppTable Where User_App = '1'"))
-            context.getString(R.string.menu_only_system_apps) ->
+            context.getString(R.string.menu_only_system_apps_trans) ->
                 getId(4, SimpleSQLiteQuery("Select id From AppTable Where System_App = '1'"))
-            context.getString(R.string.menu_system_app_except_browser) -> {
+            context.getString(R.string.menu_system_app_except_browser_trans) -> {
                 getAppExceptBrowser()
                 getId(5, SimpleSQLiteQuery(""))
             }

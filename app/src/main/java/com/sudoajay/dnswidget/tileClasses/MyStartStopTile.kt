@@ -116,7 +116,7 @@ class MyStartStopTile: TileService(){
 
         val tile = qsTile
         val value =
-            getSharedPreferences("state", Context.MODE_PRIVATE).getBoolean("isDnsActive", false)
+            getSharedPreferences("state", Context.MODE_PRIVATE).getBoolean(getString(R.string.is_dns_active_text), false)
 
         if (value) {
             tile.state = Tile.STATE_ACTIVE
