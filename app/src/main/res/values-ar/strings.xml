@@ -158,12 +158,11 @@
 <string name="send_feedback_text">ارسل رأيك</string>
 <string name="send_feedback_summary_text">إرسال تعليقات لإصلاح خطأ التطبيق</string>
 <string name="at_least_one_dns_text">مطلوب تكوين DNS واحد على الأقل</string>
-<string name="dark_mode_text">الوضع الداكن</string>
-    <string name="off_text">إيقاف</string>
-<string name="on_text">على</string>
-<string name="automatic_at_sunset_text">تلقائي عند الغروب</string>
-<string name="set_by_battery_saver_text">ضبط بواسطة توفير البطارية</string>
-<string name="system_default_text">النظام الافتراضي</string>
+    <string name="off_trans_text">إيقاف</string>
+<string name="on_trans_text">على</string>
+<string name="automatic_at_sunset_trans_text">تلقائي عند الغروب</string>
+<string name="set_by_battery_saver_trans_text">ضبط بواسطة توفير البطارية</string>
+<string name="system_default_trans_text">النظام الافتراضي</string>
 <string name="current_theme_text">الموضوع الحالي</string>
 <string name="app_theme_text">موضوع التطبيق</string>
 <string name="dark_theme_text">مظهر معتم</string>

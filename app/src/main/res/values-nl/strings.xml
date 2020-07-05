@@ -158,12 +158,11 @@
 <string name="send_feedback_text">Feedback verzenden</string>
 <string name="send_feedback_summary_text">stuur feedback om de app-bug op te lossen</string>
 <string name="at_least_one_dns_text">Er is ten minste één Dns-configuratie vereist</string>
-<string name="dark_mode_text">Donkere modus</string>
-    <string name="off_text">Uit</string>
-<string name="on_text">Aan</string>
-<string name="automatic_at_sunset_text">Automatisch bij zonsondergang</string>
-<string name="set_by_battery_saver_text">Ingesteld door batterijbesparing</string>
-<string name="system_default_text">Systeemfout</string>
+    <string name="off_trans_text">Uit</string>
+<string name="on_trans_text">Aan</string>
+<string name="automatic_at_sunset_trans_text">Automatisch bij zonsondergang</string>
+<string name="set_by_battery_saver_trans_text">Ingesteld door batterijbesparing</string>
+<string name="system_default_trans_text">Systeemfout</string>
 <string name="current_theme_text">Huidig ​​thema</string>
 <string name="app_theme_text">App-thema</string>
 <string name="dark_theme_text">Donker thema</string>

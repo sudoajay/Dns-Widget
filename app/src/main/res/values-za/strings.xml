@@ -158,12 +158,11 @@
     <string name="send_feedback_text">发送反馈</string>
     <string name="send_feedback_summary_text">提交反馈以修复应用程序错误</string>
     <string name="at_least_one_dns_text">至少需要一个Dns配置</string>
-    <string name="dark_mode_text">暗模式</string>
-    <string name="off_text">关</string>
-    <string name="on_text">上</string>
-    <string name="automatic_at_sunset_text">日落时自动</string>
-    <string name="set_by_battery_saver_text">由省电模式设定</string>
-    <string name="system_default_text">系统默认</string>
+    <string name="off_trans_text">关</string>
+    <string name="on_trans_text">上</string>
+    <string name="automatic_at_sunset_trans_text">日落时自动</string>
+    <string name="set_by_battery_saver_trans_text">由省电模式设定</string>
+    <string name="system_default_trans_text">系统默认</string>
     <string name="current_theme_text">当前主题</string>
     <string name="app_theme_text">应用主题</string>
     <string name="dark_theme_text">黑暗主题</string>

@@ -158,12 +158,11 @@
 <string name="send_feedback_text">رائے بھیجیں</string>
 <string name="send_feedback_summary_text">ایپ بگ کو ٹھیک کرنے کے لئے آراء جمع کروائیں</string>
 <string name="at_least_one_dns_text">کم از کم ایک Dns تشکیل ضروری ہے</string>
-<string name="dark_mode_text">ڈارک موڈ</string>
-    <string name="off_text">بند</string>
-<string name="on_text">پر</string>
-<string name="automatic_at_sunset_text">غروب آفتاب کے وقت خودکار</string>
-<string name="set_by_battery_saver_text">بیٹری سیور کے ذریعہ سیٹ کریں</string>
-<string name="system_default_text">سسٹم ڈیفالٹ</string>
+    <string name="off_trans_text">بند</string>
+<string name="on_trans_text">پر</string>
+<string name="automatic_at_sunset_trans_text">غروب آفتاب کے وقت خودکار</string>
+<string name="set_by_battery_saver_trans_text">بیٹری سیور کے ذریعہ سیٹ کریں</string>
+<string name="system_default_trans_text">سسٹم ڈیفالٹ</string>
 <string name="current_theme_text">موجودہ تھیم</string>
 <string name="app_theme_text">ایپ تھیم</string>
 <string name="dark_theme_text">سیاہ تھیم</string>

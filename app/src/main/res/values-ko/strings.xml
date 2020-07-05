@@ -158,12 +158,11 @@
 <string name="send_feedback_text">의견 보내기</string>
 <string name="send_feedback_summary_text">앱 버그 수정을위한 의견 제출</string>
 <string name="at_least_one_dns_text">하나 이상의 Dns 구성이 필요합니다</string>
-<string name="dark_mode_text">다크 모드</string>
-    <string name="off_text">떨어져서</string>
-<string name="on_text">의 위에</string>
-<string name="automatic_at_sunset_text">일몰시 자동</string>
-<string name="set_by_battery_saver_text">배터리 세이버로 설정</string>
-<string name="system_default_text">시스템 기본값</string>
+    <string name="off_trans_text">떨어져서</string>
+<string name="on_trans_text">의 위에</string>
+<string name="automatic_at_sunset_trans_text">일몰시 자동</string>
+<string name="set_by_battery_saver_trans_text">배터리 세이버로 설정</string>
+<string name="system_default_trans_text">시스템 기본값</string>
 <string name="current_theme_text">현재 테마</string>
 <string name="app_theme_text">앱 테마</string>
 <string name="dark_theme_text">어두운 테마</string>

@@ -8,9 +8,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="id"
-            type="re" />
-        <variable
             name="bottomSheet"
             type="com.sudoajay.dnswidget.ui.setting.DarkModeBottomSheet" />
     </data>
@@ -52,7 +49,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:background="?selectableItemBackground"
-            android:onClick="@{() -> bottomSheet.setValue()}"
+            android:onClick="@{() -> bottomSheet.setValue(@string/off_text)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +62,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:text="@string/off_text"
+                android:text="@string/off_trans_text"
                 android:textColor="?attr/headingNormalTextColor"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -106,7 +103,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:text="@string/on_text"
+                android:text="@string/on_trans_text"
                 android:textColor="?attr/headingNormalTextColor"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -148,7 +145,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:text="@string/automatic_at_sunset_text"
+                android:text="@string/automatic_at_sunset_trans_text"
                 android:textColor="?attr/headingNormalTextColor"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -190,7 +187,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:text="@string/set_by_battery_saver_text"
+                android:text="@string/set_by_battery_saver_trans_text"
                 android:textColor="?attr/headingNormalTextColor"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -233,7 +230,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:text="@string/system_default_text"
+                android:text="@string/system_default_trans_text"
                 android:textColor="?attr/headingNormalTextColor"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"

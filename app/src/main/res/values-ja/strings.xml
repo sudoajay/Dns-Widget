@@ -158,12 +158,11 @@
 <string name="send_feedback_text">フィードバックを送信する</string>
 <string name="send_feedback_summary_text">アプリのバグを修正するためのフィードバックを送信する</string>
 <string name="at_least_one_dns_text">少なくとも1つのDNS構成が必要です</string>
-<string name="dark_mode_text">ダークモード</string>
-    <string name="off_text">オフ</string>
-<string name="on_text">オン</string>
-<string name="automatic_at_sunset_text">日没時に自動</string>
-<string name="set_by_battery_saver_text">バッテリーセーバーで設定</string>
-<string name="system_default_text">システムのデフォルト</string>
+    <string name="off_trans_text">オフ</string>
+<string name="on_trans_text">オン</string>
+<string name="automatic_at_sunset_trans_text">日没時に自動</string>
+<string name="set_by_battery_saver_trans_text">バッテリーセーバーで設定</string>
+<string name="system_default_trans_text">システムのデフォルト</string>
 <string name="current_theme_text">現在のテーマ</string>
 <string name="app_theme_text">アプリのテーマ</string>
 <string name="dark_theme_text">暗いテーマ</string>

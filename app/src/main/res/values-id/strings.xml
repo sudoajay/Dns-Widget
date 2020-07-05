@@ -158,12 +158,11 @@
 <string name="send_feedback_text">Kirim Umpan Balik</string>
 <string name="send_feedback_summary_text">kirim umpan balik untuk memperbaiki bug aplikasi</string>
 <string name="at_least_one_dns_text">Setidaknya diperlukan satu konfigurasi Dns</string>
-<string name="dark_mode_text">Mode Gelap</string>
-    <string name="off_text">Mati</string>
-<string name="on_text">Di</string>
-<string name="automatic_at_sunset_text">Otomatis saat matahari terbenam</string>
-<string name="set_by_battery_saver_text">Diatur oleh penghemat baterai</string>
-<string name="system_default_text">Default Sistem</string>
+    <string name="off_trans_text">Mati</string>
+<string name="on_trans_text">Di</string>
+<string name="automatic_at_sunset_trans_text">Otomatis saat matahari terbenam</string>
+<string name="set_by_battery_saver_trans_text">Diatur oleh penghemat baterai</string>
+<string name="system_default_trans_text">Default Sistem</string>
 <string name="current_theme_text">Tema saat ini</string>
 <string name="app_theme_text">Tema Aplikasi</string>
 <string name="dark_theme_text">Tema gelap</string>

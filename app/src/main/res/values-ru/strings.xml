@@ -158,12 +158,11 @@
 <string name="send_feedback_text">Отправить отзыв</string>
 <string name="send_feedback_summary_text">отправить отзыв, чтобы исправить ошибку приложения</string>
 <string name="at_least_one_dns_text">Требуется как минимум одна конфигурация DNS</string>
-<string name="dark_mode_text">Темный режим</string>
-    <string name="off_text">от</string>
-<string name="on_text">На</string>
-<string name="automatic_at_sunset_text">Автомат на закате</string>
-<string name="set_by_battery_saver_text">Устанавливается с помощью аккумулятора</string>
-<string name="system_default_text">Системные установки по умолчанию</string>
+    <string name="off_trans_text">от</string>
+<string name="on_trans_text">На</string>
+<string name="automatic_at_sunset_trans_text">Автомат на закате</string>
+<string name="set_by_battery_saver_trans_text">Устанавливается с помощью аккумулятора</string>
+<string name="system_default_trans_text">Системные установки по умолчанию</string>
 <string name="current_theme_text">Текущая тема</string>
 <string name="app_theme_text">Тема приложения</string>
 <string name="dark_theme_text">Темная тема</string>

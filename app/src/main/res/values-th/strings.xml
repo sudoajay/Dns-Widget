@@ -158,12 +158,11 @@
 <string name="send_feedback_text">ส่งความคิดเห็น</string>
 <string name="send_feedback_summary_text">ส่งข้อเสนอแนะเพื่อแก้ไขข้อบกพร่องของแอป</string>
 <string name="at_least_one_dns_text">ต้องมีการกำหนดค่า Dns อย่างน้อยหนึ่งรายการ</string>
-<string name="dark_mode_text">โหมดมืด</string>
-    <string name="off_text">ปิด</string>
-<string name="on_text">บน</string>
-<string name="automatic_at_sunset_text">อัตโนมัติเมื่อพระอาทิตย์ตก</string>
-<string name="set_by_battery_saver_text">กำหนดโดยประหยัดแบตเตอรี่</string>
-<string name="system_default_text">ระบบเริ่มต้น</string>
+    <string name="off_trans_text">ปิด</string>
+<string name="on_trans_text">บน</string>
+<string name="automatic_at_sunset_trans_text">อัตโนมัติเมื่อพระอาทิตย์ตก</string>
+<string name="set_by_battery_saver_trans_text">กำหนดโดยประหยัดแบตเตอรี่</string>
+<string name="system_default_trans_text">ระบบเริ่มต้น</string>
 <string name="current_theme_text">ธีมปัจจุบัน</string>
 <string name="app_theme_text">ธีมแอพ</string>
 <string name="dark_theme_text">ธีมสีเข้ม</string>

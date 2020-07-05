@@ -158,12 +158,11 @@
 <string name="send_feedback_text">ਫੀਡਬੈਕ ਭੇਜੋ</string>
 <string name="send_feedback_summary_text">ਐਪ ਬੱਗ ਨੂੰ ਠੀਕ ਕਰਨ ਲਈ ਫੀਡਬੈਕ ਜਮ੍ਹਾ ਕਰੋ</string>
 <string name="at_least_one_dns_text">ਘੱਟੋ ਘੱਟ ਇੱਕ Dns ਕੌਂਫਿਗ੍ਰੇਸ਼ਨ ਲੋੜੀਂਦੀ ਹੈ</string>
-<string name="dark_mode_text">ਡਾਰਕ ਮੋਡ</string>
-    <string name="off_text">ਬੰਦ</string>
-<string name="on_text">ਚਾਲੂ</string>
-<string name="automatic_at_sunset_text">ਸੂਰਜ ਡੁੱਬਣ ਤੇ ਆਟੋਮੈਟਿਕ</string>
-<string name="set_by_battery_saver_text">ਬੈਟਰੀ ਸੇਵਰ ਦੁਆਰਾ ਸੈੱਟ ਕਰੋ</string>
-<string name="system_default_text">ਸਿਸਟਮ ਮੂਲ</string>
+    <string name="off_trans_text">ਬੰਦ</string>
+<string name="on_trans_text">ਚਾਲੂ</string>
+<string name="automatic_at_sunset_trans_text">ਸੂਰਜ ਡੁੱਬਣ ਤੇ ਆਟੋਮੈਟਿਕ</string>
+<string name="set_by_battery_saver_trans_text">ਬੈਟਰੀ ਸੇਵਰ ਦੁਆਰਾ ਸੈੱਟ ਕਰੋ</string>
+<string name="system_default_trans_text">ਸਿਸਟਮ ਮੂਲ</string>
 <string name="current_theme_text">ਮੌਜੂਦਾ ਥੀਮ</string>
 <string name="app_theme_text">ਐਪ ਥੀਮ</string>
 <string name="dark_theme_text">ਡਾਰਕ ਥੀਮ</string>

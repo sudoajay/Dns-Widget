@@ -158,12 +158,11 @@
 <string name="send_feedback_text">Invia feedback</string>
 <string name="send_feedback_summary_text">invia feedback per correggere il bug dell\'app</string>
 <string name="at_least_one_dns_text">È richiesta almeno una configurazione Dns</string>
-<string name="dark_mode_text">Modalità scura</string>
-    <string name="off_text">via</string>
-<string name="on_text">Sopra</string>
-<string name="automatic_at_sunset_text">Automatico al tramonto</string>
-<string name="set_by_battery_saver_text">Impostato dal risparmio batteria</string>
-<string name="system_default_text">Default del sistema</string>
+    <string name="off_trans_text">via</string>
+<string name="on_trans_text">Sopra</string>
+<string name="automatic_at_sunset_trans_text">Automatico al tramonto</string>
+<string name="set_by_battery_saver_trans_text">Impostato dal risparmio batteria</string>
+<string name="system_default_trans_text">Default del sistema</string>
 <string name="current_theme_text">Tema attuale</string>
 <string name="app_theme_text">Tema dell\'app</string>
 <string name="dark_theme_text">Tema scuro</string>

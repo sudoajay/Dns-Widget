@@ -158,12 +158,11 @@
 <string name="send_feedback_text">Gửi thông tin phản hồi</string>
 <string name="send_feedback_summary_text">gửi phản hồi để sửa lỗi ứng dụng</string>
 <string name="at_least_one_dns_text">Ít nhất một cấu hình Dns là bắt buộc</string>
-<string name="dark_mode_text">Chế độ tối</string>
-    <string name="off_text">Tắt</string>
-<string name="on_text">Trên</string>
-<string name="automatic_at_sunset_text">Tự động vào lúc hoàng hôn</string>
-<string name="set_by_battery_saver_text">Đặt bằng tiết kiệm pin</string>
-<string name="system_default_text">Mặc định hệ thống</string>
+    <string name="off_trans_text">Tắt</string>
+<string name="on_trans_text">Trên</string>
+<string name="automatic_at_sunset_trans_text">Tự động vào lúc hoàng hôn</string>
+<string name="set_by_battery_saver_trans_text">Đặt bằng tiết kiệm pin</string>
+<string name="system_default_trans_text">Mặc định hệ thống</string>
 <string name="current_theme_text">Chủ đề hiện tại</string>
 <string name="app_theme_text">Chủ đề ứng dụng</string>
 <string name="dark_theme_text">Chủ đề tối</string>

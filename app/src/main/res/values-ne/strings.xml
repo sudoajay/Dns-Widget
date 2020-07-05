@@ -158,12 +158,11 @@
 <string name="send_feedback_text">प्रतिक्रिया पठाउनुहोस्</string>
 <string name="send_feedback_summary_text">अनुप्रयोग बग समाधान गर्न प्रतिक्रिया बुझाउनुहोस्</string>
 <string name="at_least_one_dns_text">कम्तिमा एक Dns कन्फिगरेसन आवश्यक छ</string>
-<string name="dark_mode_text">गाढा मोड</string>
-    <string name="off_text">बन्द</string>
-<string name="on_text">खुल्ला</string>
-<string name="automatic_at_sunset_text">सूर्यास्तमा स्वचालित</string>
-<string name="set_by_battery_saver_text">ब्याट्री सेभर द्वारा सेट</string>
-<string name="system_default_text">प्रणाली पूर्वनिर्धारित</string>
+    <string name="off_trans_text">बन्द</string>
+<string name="on_trans_text">खुल्ला</string>
+<string name="automatic_at_sunset_trans_text">सूर्यास्तमा स्वचालित</string>
+<string name="set_by_battery_saver_trans_text">ब्याट्री सेभर द्वारा सेट</string>
+<string name="system_default_trans_text">प्रणाली पूर्वनिर्धारित</string>
 <string name="current_theme_text">हालको विषयवस्तु</string>
 <string name="app_theme_text">अनुप्रयोग थिम</string>
 <string name="dark_theme_text">गाढा विषयवस्तु</string>

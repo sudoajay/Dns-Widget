@@ -158,12 +158,11 @@
 <string name="send_feedback_text">Feedback abschicken</string>
 <string name="send_feedback_summary_text">Senden Sie Feedback, um den App-Fehler zu beheben</string>
 <string name="at_least_one_dns_text">Es ist mindestens eine DNS-Konfiguration erforderlich</string>
-<string name="dark_mode_text">Dunkler Modus</string>
-    <string name="off_text">aus</string>
-<string name="on_text">Auf</string>
-<string name="automatic_at_sunset_text">Automatisch bei Sonnenuntergang</string>
-<string name="set_by_battery_saver_text">Vom Batteriesparmodus eingestellt</string>
-<string name="system_default_text">Systemfehler</string>
+    <string name="off_trans_text">aus</string>
+<string name="on_trans_text">Auf</string>
+<string name="automatic_at_sunset_trans_text">Automatisch bei Sonnenuntergang</string>
+<string name="set_by_battery_saver_trans_text">Vom Batteriesparmodus eingestellt</string>
+<string name="system_default_trans_text">Systemfehler</string>
 <string name="current_theme_text">Aktuelles Thema</string>
 <string name="app_theme_text">App-Thema</string>
 <string name="dark_theme_text">Dunkles Thema</string>

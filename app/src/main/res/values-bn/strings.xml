@@ -158,12 +158,11 @@
 <string name="send_feedback_text">মতামত পাঠানো</string>
 <string name="send_feedback_summary_text">অ্যাপ্লিকেশন বাগটি ঠিক করতে প্রতিক্রিয়া জমা দিন</string>
 <string name="at_least_one_dns_text">কমপক্ষে একটি ডিএনএস কনফিগারেশন প্রয়োজন</string>
-<string name="dark_mode_text">গা .় মোড</string>
-    <string name="off_text">বন্ধ</string>
-<string name="on_text">চালু</string>
-<string name="automatic_at_sunset_text">সূর্যাস্তের সময় স্বয়ংক্রিয়</string>
-<string name="set_by_battery_saver_text">ব্যাটারি সেভার দ্বারা সেট করুন</string>
-<string name="system_default_text">সিস্টেমের ডিফল্ট</string>
+    <string name="off_trans_text">বন্ধ</string>
+<string name="on_trans_text">চালু</string>
+<string name="automatic_at_sunset_trans_text">সূর্যাস্তের সময় স্বয়ংক্রিয়</string>
+<string name="set_by_battery_saver_trans_text">ব্যাটারি সেভার দ্বারা সেট করুন</string>
+<string name="system_default_trans_text">সিস্টেমের ডিফল্ট</string>
 <string name="current_theme_text">বর্তমান থিম</string>
 <string name="app_theme_text">অ্যাপ থিম</string>
 <string name="dark_theme_text">গাark় থিম</string>

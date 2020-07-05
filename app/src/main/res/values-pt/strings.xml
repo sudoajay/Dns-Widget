@@ -158,12 +158,11 @@
 <string name="send_feedback_text">Enviar comentários</string>
 <string name="send_feedback_summary_text">envie feedback para corrigir o erro do aplicativo</string>
 <string name="at_least_one_dns_text">É necessária pelo menos uma configuração de DNS</string>
-<string name="dark_mode_text">Modo escuro</string>
-    <string name="off_text">Fora</string>
-<string name="on_text">Em</string>
-<string name="automatic_at_sunset_text">Automático ao pôr do sol</string>
-<string name="set_by_battery_saver_text">Definido pelo economizador de bateria</string>
-<string name="system_default_text">Sistema padrão</string>
+    <string name="off_trans_text">Fora</string>
+<string name="on_trans_text">Em</string>
+<string name="automatic_at_sunset_trans_text">Automático ao pôr do sol</string>
+<string name="set_by_battery_saver_trans_text">Definido pelo economizador de bateria</string>
+<string name="system_default_trans_text">Sistema padrão</string>
 <string name="current_theme_text">Tema atual</string>
 <string name="app_theme_text">Tema do aplicativo</string>
 <string name="dark_theme_text">Tema escuro</string>

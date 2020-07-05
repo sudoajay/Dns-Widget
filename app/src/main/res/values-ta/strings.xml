@@ -158,12 +158,11 @@
 <string name="send_feedback_text">கருத்தினை அனுப்பவும்</string>
 <string name="send_feedback_summary_text">பயன்பாட்டு பிழையை சரிசெய்ய கருத்துக்களை சமர்ப்பிக்கவும்</string>
 <string name="at_least_one_dns_text">குறைந்தது ஒரு Dns உள்ளமைவு தேவை</string>
-<string name="dark_mode_text">இருண்ட பயன்முறை</string>
-    <string name="off_text">முடக்கு</string>
-<string name="on_text">ஆன்</string>
-<string name="automatic_at_sunset_text">சூரிய அஸ்தமனத்தில் தானியங்கி</string>
-<string name="set_by_battery_saver_text">பேட்டரி சேவர் மூலம் அமைக்கப்பட்டது</string>
-<string name="system_default_text">கணினி இயல்புநிலை</string>
+    <string name="off_trans_text">முடக்கு</string>
+<string name="on_trans_text">ஆன்</string>
+<string name="automatic_at_sunset_trans_text">சூரிய அஸ்தமனத்தில் தானியங்கி</string>
+<string name="set_by_battery_saver_trans_text">பேட்டரி சேவர் மூலம் அமைக்கப்பட்டது</string>
+<string name="system_default_trans_text">கணினி இயல்புநிலை</string>
 <string name="current_theme_text">தற்போதைய தீம்</string>
 <string name="app_theme_text">பயன்பாட்டு தீம்</string>
 <string name="dark_theme_text">இருண்ட தீம்</string>

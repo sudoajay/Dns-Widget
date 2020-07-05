@@ -158,12 +158,11 @@
 <string name="send_feedback_text">प्रतिक्रिया भेजें</string>
 <string name="send_feedback_summary_text">एप्लिकेशन बग को ठीक करने के लिए फ़ीडबैक सबमिट करें</string>
 <string name="at_least_one_dns_text">कम से कम एक Dns विन्यास की आवश्यकता है</string>
-<string name="dark_mode_text">डार्क मोड</string>
-    <string name="off_text">बंद</string>
-<string name="on_text">पर</string>
-<string name="automatic_at_sunset_text">सूर्यास्त के समय स्वचालित</string>
-<string name="set_by_battery_saver_text">बैटरी सेवर द्वारा सेट करें</string>
-<string name="system_default_text">सिस्टम डिफ़ॉल्ट</string>
+    <string name="off_trans_text">बंद</string>
+<string name="on_trans_text">पर</string>
+<string name="automatic_at_sunset_trans_text">सूर्यास्त के समय स्वचालित</string>
+<string name="set_by_battery_saver_trans_text">बैटरी सेवर द्वारा सेट करें</string>
+<string name="system_default_trans_text">सिस्टम डिफ़ॉल्ट</string>
 <string name="current_theme_text">वर्तमान थीम</string>
 <string name="app_theme_text">ऐप थीम</string>
 <string name="dark_theme_text">डार्क थीम</string>

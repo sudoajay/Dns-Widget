@@ -158,12 +158,11 @@
 <string name="send_feedback_text">అభిప్రాయాన్ని పంపండి</string>
 <string name="send_feedback_summary_text">అనువర్తన బగ్‌ను పరిష్కరించడానికి అభిప్రాయాన్ని సమర్పించండి</string>
 <string name="at_least_one_dns_text">కనీసం ఒక Dns కాన్ఫిగరేషన్ అవసరం</string>
-<string name="dark_mode_text">డార్క్ మోడ్</string>
-    <string name="off_text">ఆఫ్</string>
-<string name="on_text">పై</string>
-<string name="automatic_at_sunset_text">సూర్యాస్తమయం వద్ద ఆటోమేటిక్</string>
-<string name="set_by_battery_saver_text">బ్యాటరీ సేవర్ ద్వారా సెట్ చేయబడింది</string>
-<string name="system_default_text">సిస్టమ్ డిఫాల్ట్</string>
+    <string name="off_trans_text">ఆఫ్</string>
+<string name="on_trans_text">పై</string>
+<string name="automatic_at_sunset_trans_text">సూర్యాస్తమయం వద్ద ఆటోమేటిక్</string>
+<string name="set_by_battery_saver_trans_text">బ్యాటరీ సేవర్ ద్వారా సెట్ చేయబడింది</string>
+<string name="system_default_trans_text">సిస్టమ్ డిఫాల్ట్</string>
 <string name="current_theme_text">ప్రస్తుత థీమ్</string>
 <string name="app_theme_text">అనువర్తన థీమ్</string>
 <string name="dark_theme_text">డార్క్ థీమ్</string>

@@ -158,12 +158,11 @@
 <string name="send_feedback_text">Geribildirim yolla</string>
 <string name="send_feedback_summary_text">uygulama hatasını düzeltmek için geri bildirim gönderme</string>
 <string name="at_least_one_dns_text">En az bir Dns yapılandırması gerekiyor</string>
-<string name="dark_mode_text">Karanlık Mod</string>
-    <string name="off_text">kapalı</string>
-<string name="on_text">üzerinde</string>
-<string name="automatic_at_sunset_text">Gün batımında otomatik</string>
-<string name="set_by_battery_saver_text">Pil tasarrufu ile ayarlanır</string>
-<string name="system_default_text">Sistem varsayılanı</string>
+    <string name="off_trans_text">kapalı</string>
+<string name="on_trans_text">üzerinde</string>
+<string name="automatic_at_sunset_trans_text">Gün batımında otomatik</string>
+<string name="set_by_battery_saver_trans_text">Pil tasarrufu ile ayarlanır</string>
+<string name="system_default_trans_text">Sistem varsayılanı</string>
 <string name="current_theme_text">Geçerli Tema</string>
 <string name="app_theme_text">Uygulama Teması</string>
 <string name="dark_theme_text">Koyu Tema</string>

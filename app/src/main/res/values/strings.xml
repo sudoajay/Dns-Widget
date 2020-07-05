@@ -226,14 +226,21 @@
     <string name="at_least_one_dns_text">At least one Dns configuration is required </string>
 
 
-<!--    Dark Mode Bottom Sheet-->
-    <string name="dark_mode_text">Dark Mode</string>
+    <!--    Dark Mode Bottom Sheet-->
+    <string name="dark_mode_text" translatable="false">Dark Mode</string>
     <string name="is_dark_mode_text" translatable="false">isDarkMode</string>
-    <string name="off_text">Off</string>
-    <string name="on_text">On</string>
-    <string name="automatic_at_sunset_text">Automatic at sunset</string>
-    <string name="set_by_battery_saver_text">Set by battery saver</string>
-    <string name="system_default_text">System Default</string>
+
+    <string name="off_text" translatable="false">Off</string>
+    <string name="on_text" translatable="false">On</string>
+    <string name="automatic_at_sunset_text" translatable="false">Automatic at sunset</string>
+    <string name="set_by_battery_saver_text" translatable="false">Set by battery saver</string>
+    <string name="system_default_text" translatable="false">System Default</string>
+
+    <string name="off_trans_text">Off</string>
+    <string name="on_trans_text">On</string>
+    <string name="automatic_at_sunset_trans_text">Automatic at sunset</string>
+    <string name="set_by_battery_saver_trans_text">Set by battery saver</string>
+    <string name="system_default_trans_text">System Default</string>
 
 
     <string name="current_theme_text">Current Theme</string>
@@ -242,10 +249,6 @@
     <string name="filter_option_text">Filter Option</string>
 
     <string name="select_language_text">Select Language</string>
-
-
-
-
 
 
 </resources>
