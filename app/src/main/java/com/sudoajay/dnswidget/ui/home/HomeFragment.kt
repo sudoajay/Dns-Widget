@@ -125,7 +125,7 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
                     binding.useDns6TextView.alpha = 1f
                     CompoundButtonCompat.setButtonTintList(
                         binding.useDns6CheckBox, ColorStateList.valueOf(
-                            ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+                            ContextCompat.getColor(requireContext(), R.color.primaryAppColor)
                         )
                     )
                     binding.dns1TextInputLayout.hint = getString(R.string.dns1_text)
@@ -173,7 +173,7 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
                     binding.useDns4TextView.alpha = 1f
                     CompoundButtonCompat.setButtonTintList(
                         binding.useDns4CheckBox, ColorStateList.valueOf(
-                            ContextCompat.getColor(requireContext(), R.color.colorPrimary)
+                            ContextCompat.getColor(requireContext(), R.color.primaryAppColor)
                         )
                     )
                     binding.dns1TextInputLayout.hint = getString(R.string.dns1_text)

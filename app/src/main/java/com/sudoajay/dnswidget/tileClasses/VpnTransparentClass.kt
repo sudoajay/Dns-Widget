@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.vpnClasses.AdVpnService
 import com.sudoajay.dnswidget.vpnClasses.Command
 
@@ -60,10 +61,15 @@ class VpnTransparentClass : AppCompatActivity() {
     private fun errorVpnService() {
         val builder: AlertDialog.Builder =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                AlertDialog.Builder(applicationContext, android.R.style.Theme_Material_Dialog_Alert)
+                AlertDialog.Builder(
+                    applicationContext,
+                    if (!BaseActivity.isDarkMode(applicationContext)) android.R.style.Theme_Material_Light_Dialog_Alert else android.R.style.Theme_Material_Dialog_Alert
+                )
             } else {
                 AlertDialog.Builder(applicationContext)
             }
+
+
         builder.setTitle(applicationContext.getString(R.string.error_vpn_text))
             .setMessage(applicationContext.getString(R.string.could_not_configure_vpn_service))
             .setNegativeButton("Ok") { _, _ ->
