@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="homeShortcutId"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:shortcutShortLabel="@string/action_home"
+        android:shortcutLongLabel="@string/action_home"
+        android:shortcutDisabledMessage="@string/action_home">
+        <intent
+            android:action="homeShortcut"
+            android:targetPackage="com.sudoajay.dnswidget"
+            android:targetClass="com.sudoajay.dnswidget.activity.MainActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="dnsShortcutId"
+        android:enabled="true"
+        android:icon="@drawable/ic_dns"
+        android:shortcutShortLabel="@string/add_custom_dns_text"
+        android:shortcutLongLabel="@string/add_custom_dns_text"
+        android:shortcutDisabledMessage="@string/add_custom_dns_text">
+        <intent
+            android:action="dnsShortcut"
+            android:targetPackage="com.sudoajay.dnswidget"
+            android:targetClass="com.sudoajay.dnswidget.activity.MainActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="settingShortcutId"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:shortcutShortLabel="@string/action_setting"
+        android:shortcutLongLabel="@string/action_setting"
+        android:shortcutDisabledMessage="@string/action_setting">
+        <intent
+            android:action="settingShortcut"
+            android:targetPackage="com.sudoajay.dnswidget"
+            android:targetClass="com.sudoajay.dnswidget.activity.MainActivity" />
+    </shortcut>
+</shortcuts>

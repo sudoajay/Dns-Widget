@@ -108,11 +108,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
 
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            shortcutManager()
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+//            shortcutManager()
+//        }
 
 //        Dark Mode Configuration
         darkModeConfiguration()
@@ -124,76 +122,76 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
-    private fun shortcutManager() {
-
-        val shortcutManager = getSystemService<ShortcutManager>(ShortcutManager::class.java)
-
-
-        val homeShortcut = ShortcutInfo.Builder(
-            applicationContext,
-            homeShortcutId
-        )
-            .setShortLabel(getString(R.string.action_home))
-            .setLongLabel(getString(R.string.action_home))
-            .setIcon(
-                Icon.createWithResource(
-                    applicationContext,
-                    R.drawable.ic_home
-                )
-            )
-            .setIntent(
-                Intent(applicationContext, MainActivity::class.java).setAction(
-                    homeShortcutId
-                )
-            )
-            .build()
-
-
-        val dnsShortcut =
-            ShortcutInfo.Builder(
-                applicationContext,
-                dnsShortcutId
-            )
-                .setLongLabel(getString(R.string.add_custom_dns_text))
-                .setShortLabel(getString(R.string.add_custom_dns_text))
-                .setIcon(
-                    Icon.createWithResource(
-                        applicationContext,
-                        R.drawable.ic_dns
-                    )
-                )
-                .setIntent(
-                    Intent(
-                        applicationContext,
-                        MainActivity::class.java
-                    ).setAction(dnsShortcutId)
-                )
-                .build()
-
-
-        val settingShortcut =
-            ShortcutInfo.Builder(
-                applicationContext,
-                settingShortcutId
-            )
-                .setLongLabel(getString(R.string.action_setting))
-                .setShortLabel(getString(R.string.action_setting))
-                .setIcon(
-                    Icon.createWithResource(
-                        applicationContext,
-                        R.drawable.ic_settings
-                    )
-                )
-                .setIntent(
-                    Intent(
-                        applicationContext,
-                        MainActivity::class.java
-                    ).setAction(settingShortcutId)
-                )
-                .build()
-        shortcutManager!!.dynamicShortcuts = listOf(homeShortcut, dnsShortcut, settingShortcut)
-    }
+//    @RequiresApi(Build.VERSION_CODES.N_MR1)
+//    private fun shortcutManager() {
+//
+//        val shortcutManager = getSystemService<ShortcutManager>(ShortcutManager::class.java)
+//
+//
+//        val homeShortcut = ShortcutInfo.Builder(
+//            applicationContext,
+//            homeShortcutId
+//        )
+//            .setShortLabel(getString(R.string.action_home))
+//            .setLongLabel(getString(R.string.action_home))
+//            .setIcon(
+//                Icon.createWithResource(
+//                    applicationContext,
+//                    R.drawable.ic_home
+//                )
+//            )
+//            .setIntent(
+//                Intent(applicationContext, MainActivity::class.java).setAction(
+//                    homeShortcutId
+//                )
+//            )
+//            .build()
+//
+//
+//        val dnsShortcut =
+//            ShortcutInfo.Builder(
+//                applicationContext,
+//                dnsShortcutId
+//            )
+//                .setLongLabel(getString(R.string.add_custom_dns_text))
+//                .setShortLabel(getString(R.string.add_custom_dns_text))
+//                .setIcon(
+//                    Icon.createWithResource(
+//                        applicationContext,
+//                        R.drawable.ic_dns
+//                    )
+//                )
+//                .setIntent(
+//                    Intent(
+//                        applicationContext,
+//                        MainActivity::class.java
+//                    ).setAction(dnsShortcutId)
+//                )
+//                .build()
+//
+//
+//        val settingShortcut =
+//            ShortcutInfo.Builder(
+//                applicationContext,
+//                settingShortcutId
+//            )
+//                .setLongLabel(getString(R.string.action_setting))
+//                .setShortLabel(getString(R.string.action_setting))
+//                .setIcon(
+//                    Icon.createWithResource(
+//                        applicationContext,
+//                        R.drawable.ic_settings
+//                    )
+//                )
+//                .setIntent(
+//                    Intent(
+//                        applicationContext,
+//                        MainActivity::class.java
+//                    ).setAction(settingShortcutId)
+//                )
+//                .build()
+//        shortcutManager!!.dynamicShortcuts = listOf(homeShortcut, dnsShortcut, settingShortcut)
+//    }
 
 
     private fun appDatabaseConfiguration() {
