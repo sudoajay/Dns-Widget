@@ -38,7 +38,6 @@
                     android:text="@{viewmodel.headingText}"
                     android:textColor="?attr/headingNormalTextColor"
                     android:textSize="@dimen/toolbar_title_size"
-                    app:fontFamily="@font/lato"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"

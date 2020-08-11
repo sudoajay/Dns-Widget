@@ -31,6 +31,7 @@
 
         </activity>
 
+
         <activity android:name=".tileClasses.VpnTransparentClass"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar"/>
         <activity

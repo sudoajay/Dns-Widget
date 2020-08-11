@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.sudoajay.dnswidget.R
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class SettingFragment : Fragment() {
 
     override fun onCreateView(

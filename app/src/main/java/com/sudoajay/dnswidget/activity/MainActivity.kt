@@ -201,7 +201,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val loadApps = LoadApps(applicationContext, appRepository)
 
         CoroutineScope(Dispatchers.IO).launch {
-            if (appRepository.getCount() == 0)
                 loadApps.searchInstalledApps()
         }
 

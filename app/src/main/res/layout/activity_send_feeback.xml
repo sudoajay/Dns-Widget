@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
-                android:fontFamily="@font/lato"
+       
                 android:text="@string/add_screenshot_text"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:tint="?attr/boxTextColor"
+                app:tint="?attr/boxTextColor"
 
                 app:layout_constraintBottom_toBottomOf="@+id/addScreenshot_TextView"
                 app:layout_constraintStart_toEndOf="@+id/addScreenshot_TextView"
@@ -114,7 +114,7 @@
                 android:id="@+id/addScreenshotLarge_ImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tint="?attr/boxTextColor"
+                app:tint="?attr/boxTextColor"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/image_Button"
                 app:layout_constraintEnd_toEndOf="@+id/image_Button"
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
-                android:fontFamily="@font/lato"
+       
 
                 android:text="@string/systemInfo_text"
                 android:textColor="?attr/headingNormalTextColor"
@@ -149,7 +149,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:background="@drawable/feedback_background_button"
-                android:fontFamily="@font/lato"
+       
                 android:text="@string/action_send_feedback"
                 android:textAllCaps="false"
                 android:textColor="?attr/headingNormalTextColor"

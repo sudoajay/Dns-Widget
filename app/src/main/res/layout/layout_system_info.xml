@@ -17,7 +17,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginLeft="8dp"
-                        android:fontFamily="@font/lato"
+
                         android:text="@string/system_info_text"
                         android:textSize="20sp"
                         android:textColor="?attr/headingNormalTextColor"
@@ -380,9 +381,9 @@
                     android:layout_marginRight="8dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:tint="?attr/colorAccent"
                     android:onClick="@{() -> dialog.dismiss()}"
-                    app:srcCompat="@drawable/ic_close_window"                    tools:ignore="ContentDescription,RtlHardcoded" />
+                    app:srcCompat="@drawable/ic_close_window"                    tools:ignore="ContentDescription,RtlHardcoded"
+                    app:tint="?attr/colorAccent" />
             </FrameLayout>
         </ScrollView>
     </LinearLayout>

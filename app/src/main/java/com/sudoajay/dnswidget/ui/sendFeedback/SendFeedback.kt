@@ -89,9 +89,6 @@ class SendFeedback : BaseActivity() {
     fun openImageManager() {
         val intent = getFileChooserIntent()
 
-        // Set your required file type
-        intent!!.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Select Image File "), requestCode)
     }
 

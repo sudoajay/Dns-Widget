@@ -22,11 +22,6 @@ class SettingConfiguration : PreferenceFragmentCompat() {
         // Load the preferences from an XML resource
         setPreferencesFromResource(R.xml.setting_preferences, rootKey)
 
-
-        val currentLocale = ConfigurationCompat.getLocales(resources.configuration)[0]
-        Log.e("getLocal", currentLocale.displayLanguage + currentLocale.displayCountry)
-
-
         val useDnsv4 = findPreference("useDnsv4") as TwoStatePreference?
 
         val useDnsv6 = findPreference("useDnsv6") as TwoStatePreference?

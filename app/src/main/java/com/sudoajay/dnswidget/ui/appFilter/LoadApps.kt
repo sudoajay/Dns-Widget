@@ -23,9 +23,7 @@ class LoadApps(private val context: Context, private  val appRepository: AppRepo
 
     private suspend fun appDatabaseConfiguration(installedApplicationsInfo: List<ApplicationInfo>) {
 
-//        Here we Just add default value of install app
 
-        appRepository.setDefaultValueInstall()
 
 //        Here we Just add new Install App Into Data base
 
@@ -39,6 +37,10 @@ class LoadApps(private val context: Context, private  val appRepository: AppRepo
                 packageName
             )
         }
+
+        //        Here we Just add default value of install app
+
+        appRepository.setDefaultValueInstall()
 
 //        Here we remove Uninstall App from Data base
         appRepository.removeUninstallAppFromDB()
