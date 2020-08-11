@@ -212,6 +212,9 @@
     <string name="change_language_text">"Change Language "</string>
     <string name="successfully_cache_data_is_deleted_text">Successfully Cache Data Is Deleted</string>
 
+    <!--    Delete Alert Dialog-->
+    <string name="confirm_delete_title_text" translatable="false">Confirm Delete....</string>
+    <string name="delete_message_text" translatable="false">Are you sure you want to delete from storage ?</string>
 
     <!--    No Trans String -->
 

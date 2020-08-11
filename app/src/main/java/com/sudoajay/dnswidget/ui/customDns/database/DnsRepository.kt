@@ -38,8 +38,8 @@ class DnsRepository(private val context: Context, private val dnsDao: DnsDao) {
     }
 
 
-    suspend fun deleteRow(id: Long) {
-        dnsDao.deleteRow(id)
+    suspend fun deleteRowFromId(id: Long) {
+        dnsDao.deleteRowFromId(id)
     }
 
     suspend fun insert(dns: Dns) {

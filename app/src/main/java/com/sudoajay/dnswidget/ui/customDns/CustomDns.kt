@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -21,6 +22,9 @@ import com.sudoajay.dnswidget.databinding.ActivityCustomDnsBinding
 import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.helper.InsetDivider
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -220,5 +224,33 @@ class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
         customDnsViewModel.filterChanges()
     }
 
+
+    fun alertDelete(id: Long?) {
+        val builder: AlertDialog.Builder =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                AlertDialog.Builder(
+                    this@CustomDns,
+                    if (!isDarkTheme) android.R.style.Theme_Material_Light_Dialog_Alert else android.R.style.Theme_Material_Dialog_Alert
+                )
+            } else {
+                AlertDialog.Builder(this@CustomDns)
+            }
+        builder.setTitle(applicationContext.getString(R.string.confirm_delete_title_text))
+            .setMessage(applicationContext.getString(R.string.delete_message_text))
+            .setPositiveButton("Yes") { _, _ ->
+                if (id != null) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        customDnsViewModel.dnsRepository.deleteRowFromId(id)
+                        customDnsViewModel.filterChanges.postValue(application.getString(R.string.filter_changes_text))
+                    }
+                }
+            }
+            .setNegativeButton("No") { _, _ ->
+
+            }
+            .setIcon(R.drawable.ic_error)
+            .setCancelable(true)
+            .show()
+    }
 
 }

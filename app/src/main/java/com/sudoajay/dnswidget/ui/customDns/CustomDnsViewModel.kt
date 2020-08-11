@@ -24,7 +24,7 @@ class CustomDnsViewModel(application: Application) : AndroidViewModel(applicatio
     private var loadDns: LoadDns
 
     var dnsList: LiveData<List<Dns>>? = null
-    private val filterChanges: MutableLiveData<String> = MutableLiveData()
+     val filterChanges: MutableLiveData<String> = MutableLiveData()
 
 
     init {
@@ -53,7 +53,7 @@ class CustomDnsViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun onRefresh() {
-        filterChanges()
+        filterChanges
     }
 
 

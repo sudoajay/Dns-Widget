@@ -9,9 +9,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.databinding.LayoutMoreoptionBottomsheetBinding
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class MoreOptionBottomSheet(var customDns: CustomDns, var dns: Dns) : BottomSheetDialogFragment() {
@@ -55,11 +52,7 @@ class MoreOptionBottomSheet(var customDns: CustomDns, var dns: Dns) : BottomShee
     }
 
     fun deleteItem() {
-        CoroutineScope(Dispatchers.IO).launch {
-            customDns.customDnsViewModel.dnsRepository.deleteRow(dns.id!!)
-        }
-        customDns.customDnsViewModel.filterChanges()
-
+        customDns.alertDelete(dns.id)
         dismiss()
     }
 

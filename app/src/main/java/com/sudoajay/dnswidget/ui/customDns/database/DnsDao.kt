@@ -45,7 +45,7 @@ interface DnsDao {
     suspend fun insert(dns: Dns)
 
     @Query("DELETE FROM DnsTable Where id = :ID")
-    suspend fun deleteRow(ID: Long)
+    suspend fun deleteRowFromId(ID: Long)
 
     @Query("DELETE FROM DnsTable")
     suspend fun deleteAll()
