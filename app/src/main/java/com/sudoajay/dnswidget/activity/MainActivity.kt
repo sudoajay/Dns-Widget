@@ -7,6 +7,7 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.MenuItem
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
@@ -19,6 +20,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.google.android.material.navigation.NavigationView
 import com.sudoajay.dnswidget.R
+import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.appFilter.LoadApps
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppDao
 import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository
@@ -41,7 +43,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private lateinit var navController: NavController
     private lateinit var navGraph: NavGraph
     private lateinit var drawerLayout: DrawerLayout
-
+    private var doubleBackToExitPressedOnce = false
     private val ratingLink =
         "https://play.google.com/store/apps/details?id=com.sudoajay.duplication_data"
 
@@ -273,6 +275,28 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(link)
         startActivity(i)
+    }
+
+
+    override fun onBackPressed() {
+        onBack()
+    }
+
+    private fun onBack() {
+        if (doubleBackToExitPressedOnce) {
+            closeApp()
+            return
+        }
+        doubleBackToExitPressedOnce = true
+        CustomToast.toastIt(applicationContext, "Click Back Again To Exit")
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+    private fun closeApp() {
+        val homeIntent = Intent(Intent.ACTION_MAIN)
+        homeIntent.addCategory(Intent.CATEGORY_HOME)
+        homeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(homeIntent)
     }
 
     companion object {
