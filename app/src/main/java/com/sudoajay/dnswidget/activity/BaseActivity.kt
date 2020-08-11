@@ -2,6 +2,7 @@ package com.sudoajay.dnswidget.activity
 
 import android.content.Context
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
 import android.util.Log
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.LocalizationUtil.changeLocale
 import com.sudoajay.dnswidget.ui.setting.SettingConfiguration
+import com.sudoajay.dnswidget.vpnClasses.NotificationChannels
 import java.util.*
 
 
@@ -20,7 +22,9 @@ open class BaseActivity : AppCompatActivity() {
         currentTheme = getDarkMode(applicationContext)
         setAppTheme(currentTheme)
 
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannels.notificationOnCreate(applicationContext)
+        }
     }
 
     override fun onResume() {

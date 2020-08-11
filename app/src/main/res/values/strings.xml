@@ -96,6 +96,8 @@
     <string name="notifications_paused_desc">Notifications to resume after pausing</string>
     <string name="notifications_group_service">Service control</string>
     <string name="notifications_group_updates">Updates</string>
+    <string name="firebase_channel_id" translatable="false">Push Notification</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 
     <!-- Ad Vpn service Notification -->
     <string name="notification_paused_title">Dns Widget paused</string>
@@ -215,6 +217,9 @@
     <!--    Delete Alert Dialog-->
     <string name="confirm_delete_title_text" translatable="false">Confirm Delete....</string>
     <string name="delete_message_text" translatable="false">Are you sure you want to delete ?</string>
+
+
+
 
     <!--    No Trans String -->
 

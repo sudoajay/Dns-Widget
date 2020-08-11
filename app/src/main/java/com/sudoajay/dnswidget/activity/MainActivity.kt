@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.MenuItem
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
@@ -18,7 +19,9 @@ import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.iid.FirebaseInstanceId
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.appFilter.LoadApps
@@ -46,7 +49,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private var doubleBackToExitPressedOnce = false
     private val ratingLink =
         "https://play.google.com/store/apps/details?id=com.sudoajay.duplication_data"
-
+    private val TAG = "MainActivityClass"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -108,12 +111,26 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-//            shortcutManager()
-//        }
 
 //        Dark Mode Configuration
         darkModeConfiguration()
+
+
+                FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+
+                // Log and toast
+                val msg = getString(R.string.msg_token_fmt, token)
+                Log.d(TAG, msg)
+                CustomToast.toastIt(applicationContext, msg)
+            })
     }
 
     private fun darkModeConfiguration() {
@@ -122,76 +139,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-//    @RequiresApi(Build.VERSION_CODES.N_MR1)
-//    private fun shortcutManager() {
-//
-//        val shortcutManager = getSystemService<ShortcutManager>(ShortcutManager::class.java)
-//
-//
-//        val homeShortcut = ShortcutInfo.Builder(
-//            applicationContext,
-//            homeShortcutId
-//        )
-//            .setShortLabel(getString(R.string.action_home))
-//            .setLongLabel(getString(R.string.action_home))
-//            .setIcon(
-//                Icon.createWithResource(
-//                    applicationContext,
-//                    R.drawable.ic_home
-//                )
-//            )
-//            .setIntent(
-//                Intent(applicationContext, MainActivity::class.java).setAction(
-//                    homeShortcutId
-//                )
-//            )
-//            .build()
-//
-//
-//        val dnsShortcut =
-//            ShortcutInfo.Builder(
-//                applicationContext,
-//                dnsShortcutId
-//            )
-//                .setLongLabel(getString(R.string.add_custom_dns_text))
-//                .setShortLabel(getString(R.string.add_custom_dns_text))
-//                .setIcon(
-//                    Icon.createWithResource(
-//                        applicationContext,
-//                        R.drawable.ic_dns
-//                    )
-//                )
-//                .setIntent(
-//                    Intent(
-//                        applicationContext,
-//                        MainActivity::class.java
-//                    ).setAction(dnsShortcutId)
-//                )
-//                .build()
-//
-//
-//        val settingShortcut =
-//            ShortcutInfo.Builder(
-//                applicationContext,
-//                settingShortcutId
-//            )
-//                .setLongLabel(getString(R.string.action_setting))
-//                .setShortLabel(getString(R.string.action_setting))
-//                .setIcon(
-//                    Icon.createWithResource(
-//                        applicationContext,
-//                        R.drawable.ic_settings
-//                    )
-//                )
-//                .setIntent(
-//                    Intent(
-//                        applicationContext,
-//                        MainActivity::class.java
-//                    ).setAction(settingShortcutId)
-//                )
-//                .build()
-//        shortcutManager!!.dynamicShortcuts = listOf(homeShortcut, dnsShortcut, settingShortcut)
-//    }
 
 
     private fun appDatabaseConfiguration() {

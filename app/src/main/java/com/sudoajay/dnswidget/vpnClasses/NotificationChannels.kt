@@ -16,6 +16,8 @@ object NotificationChannels {
     private const val GROUP_UPDATE = "com.sudoajay.dnswidget.notifications.update"
     const val SERVICE_RUNNING = "com.sudoajay.dnswidget.notifications.service.running"
     const val SERVICE_PAUSED = "com.sudoajay.dnswidget.notifications.service.paused"
+    const val PUSH_NOTIFICATION = "com.sudoajay.dnswidget.push.notifications."
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     @JvmStatic
@@ -56,7 +58,15 @@ object NotificationChannels {
         notificationManager.createNotificationChannel(pausedChannel)
 
 
-
+        val firebaseChannel = NotificationChannel(
+            PUSH_NOTIFICATION,
+            context.getString(R.string.firebase_channel_id),
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        firebaseChannel.description = context.getString(R.string.firebase_channel_id)
+        firebaseChannel.group = GROUP_SERVICE
+        firebaseChannel.setShowBadge(false)
+        notificationManager.createNotificationChannel(firebaseChannel)
 
 
     }
