@@ -97,9 +97,9 @@
                 android:visibility="@{bottomSheet.isValue(@string/title_menu_order_by,@string/menu_alphabetical_order)   ?  View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/alphabeticalOrder_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:tint="?attr/boxTextColor"
                 app:layout_constraintTop_toTopOf="@+id/alphabeticalOrder_TextView"
                 app:srcCompat="@drawable/ic_done"
+                app:tint="?attr/fadeTextColor"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -144,7 +144,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/installationDate_TextView"
                 app:layout_constraintVertical_bias="0.261"
-                app:tint="?attr/boxTextColor"
+                app:tint="?attr/fadeTextColor"
                 app:srcCompat="@drawable/ic_done"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -207,7 +207,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/systemApps_TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/systemApps_TextView"
-                app:tint="?attr/boxTextColor"
+                app:tint="?attr/fadeTextColor"
                 app:srcCompat="@drawable/ic_done"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -254,7 +254,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/userApps_TextView"
                 app:srcCompat="@drawable/ic_done"
-                app:tint="?attr/boxTextColor"
+                app:tint="?attr/fadeTextColor"
                 tools:ignore="ContentDescription" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

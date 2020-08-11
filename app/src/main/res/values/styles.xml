@@ -11,6 +11,7 @@
         <item name="primaryAppColor" >@color/primaryAppColor</item>
         <item name="primaryBoxTextColor">@color/primaryBoxTextColor</item>
         <item name="headingNormalTextColor">@color/headingNormalTextColor</item>
+        <item name="fadeTextColor">@color/fadeTextColor</item>
         <item name="boxTextColor">@color/boxTextColor</item>
         <item name="boxHoverColor">@color/boxHoverColor</item>
         <item name="errorBoxColor">@color/errorBoxColor</item>

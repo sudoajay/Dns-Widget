@@ -10,7 +10,8 @@
 
     <color name="primaryAppColor">#376db6</color>
     <color name="primaryBoxTextColor">#f3f4f7</color>
-    <color name="headingNormalTextColor">#5C5757</color>
+    <color name="headingNormalTextColor">#353131</color>
+    <color name="fadeTextColor">#5C5757</color>
     <color name="boxTextColor">#353131</color>
     <color name="boxHoverColor">#376db6</color>
     <color name="errorBoxColor">#F44336</color>

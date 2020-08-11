@@ -3,6 +3,7 @@
     <attr name="primaryAppColor" format="reference"/>
     <attr name="primaryBoxTextColor" format="reference"/>
     <attr name="headingNormalTextColor" format="reference"/>
+    <attr name="fadeTextColor" format="reference"/>
     <attr name="boxTextColor" format="reference"/>
     <attr name="boxHoverColor" format="reference"/>
     <attr name="errorBoxColor" format="reference"/>
