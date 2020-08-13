@@ -1,4 +1,4 @@
-package com.sudoajay.dnswidget.ui.appFilter.dataBase
+package com.sudoajay.dnswidget.ui.appFilter.database
 
 import android.content.Context
 import android.content.Intent
@@ -164,8 +164,8 @@ class AppRepository(private val context: Context, private val appDao: AppDao) {
     }
 
 
-    suspend fun getCount(packageName: String): Int {
-        return appDao.getCount(packageName)
+    suspend fun isPresent(packageName: String): Int {
+        return appDao.isPresent(packageName)
     }
     suspend fun setUpdateInstall(packageName: String) {
         appDao.updateInstalledByPackage(packageName)

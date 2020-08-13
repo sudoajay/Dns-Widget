@@ -3,8 +3,9 @@ package com.sudoajay.dnswidget.ui.appFilter
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.App
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository
+import android.util.Log
+import com.sudoajay.dnswidget.ui.appFilter.database.App
+import com.sudoajay.dnswidget.ui.appFilter.database.AppRepository
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -14,6 +15,7 @@ class LoadApps(private val context: Context, private  val appRepository: AppRepo
 
     suspend fun searchInstalledApps() {
         appDatabaseConfiguration(getInstalledApplication(context))
+
     }
 
     private fun getInstalledApplication(context: Context): List<ApplicationInfo> {
@@ -24,23 +26,22 @@ class LoadApps(private val context: Context, private  val appRepository: AppRepo
     private suspend fun appDatabaseConfiguration(installedApplicationsInfo: List<ApplicationInfo>) {
 
 
+        //        Here we Just add default value of install app
+        appRepository.setDefaultValueInstall()
+
 
 //        Here we Just add new Install App Into Data base
 
         for (applicationInfo in installedApplicationsInfo) {
             val packageName = getApplicationPackageName(applicationInfo)
             if (packageName == context.packageName) continue
-            if (appRepository.getCount(packageName) == 0) {
+            if (appRepository.isPresent(packageName) == 0) {
                 createApp(applicationInfo)
             }
             appRepository.setUpdateInstall(
                 packageName
             )
         }
-
-        //        Here we Just add default value of install app
-
-        appRepository.setDefaultValueInstall()
 
 //        Here we remove Uninstall App from Data base
         appRepository.removeUninstallAppFromDB()

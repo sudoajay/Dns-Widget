@@ -2,16 +2,17 @@ package com.sudoajay.dnswidget.ui.appFilter
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.PagedList
 import com.sudoajay.dnswidget.R
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.App
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppDao
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRoomDatabase
+import com.sudoajay.dnswidget.ui.appFilter.database.App
+import com.sudoajay.dnswidget.ui.appFilter.database.AppDao
+import com.sudoajay.dnswidget.ui.appFilter.database.AppRepository
+import com.sudoajay.dnswidget.ui.appFilter.database.AppRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
@@ -37,7 +38,7 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
 
 
     var appList: LiveData<PagedList<App>>? = null
-
+    var TAG = "AppFilterViewModel"
 
     init {
 
@@ -70,18 +71,20 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
                 _application.getString(R.string.title_menu_select_option),
                 _application.getString(R.string.menu_custom_app)
             ).apply()
-
-
     }
 
     private fun databaseConfiguration() {
         getHideProgress()
         CoroutineScope(IO).launch {
             withContext(IO) {
+                Log.e(TAG, appRepository.getCount().toString()+" before ")
                 if (appRepository.getCount() == 0)
                     loadApps.searchInstalledApps()
             }
+            Log.e(TAG, appRepository.getCount().toString()+" After ")
             hideProgress!!.postValue(  false)
+            filterChanges.postValue(_application.getString(R.string.filter_changes_text))
+
         }
 
     }

@@ -11,9 +11,9 @@ import android.system.StructPollfd
 import android.util.Log
 import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.R
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppDao
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRoomDatabase
+import com.sudoajay.dnswidget.ui.appFilter.database.AppDao
+import com.sudoajay.dnswidget.ui.appFilter.database.AppRepository
+import com.sudoajay.dnswidget.ui.appFilter.database.AppRoomDatabase
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

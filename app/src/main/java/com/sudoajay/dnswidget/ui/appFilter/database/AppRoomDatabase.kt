@@ -1,4 +1,4 @@
-package com.sudoajay.dnswidget.ui.appFilter.dataBase
+package com.sudoajay.dnswidget.ui.appFilter.database
 
 import android.content.Context
 import androidx.room.Database

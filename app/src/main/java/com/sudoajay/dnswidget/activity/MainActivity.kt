@@ -1,16 +1,12 @@
 package com.sudoajay.dnswidget.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.ShortcutInfo
-import android.content.pm.ShortcutManager
-import android.graphics.drawable.Icon
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -25,9 +21,9 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.appFilter.LoadApps
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppDao
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRepository
-import com.sudoajay.dnswidget.ui.appFilter.dataBase.AppRoomDatabase
+import com.sudoajay.dnswidget.ui.appFilter.database.AppDao
+import com.sudoajay.dnswidget.ui.appFilter.database.AppRepository
+import com.sudoajay.dnswidget.ui.appFilter.database.AppRoomDatabase
 import com.sudoajay.dnswidget.ui.customDns.LoadDns
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
@@ -50,18 +46,72 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private val ratingLink =
         "https://play.google.com/store/apps/details?id=com.sudoajay.duplication_data"
     private val TAG = "MainActivityClass"
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+//
+//                FirebaseInstanceId.getInstance().instanceId
+//            .addOnCompleteListener(OnCompleteListener { task ->
+//                if (!task.isSuccessful) {
+//                    Log.w(TAG, "getInstanceId failed", task.exception)
+//                    return@OnCompleteListener
+//                }
+//
+//                // Get new Instance ID token
+//                val token = task.result?.token
+//
+//                // Log and toast
+//                val msg = getString(R.string.msg_token_fmt, token)
+//                Log.d(TAG, msg)
+//                CustomToast.toastIt(applicationContext, msg)
+//            })
+    }
+
+    override fun onStart() {
+        Log.e(TAG, " Activity - onStart ")
+        super.onStart()
+    }
+
+
+
+    override fun onPause() {
+        Log.e(TAG, " Activity - onPause ")
+
+        super.onPause()
+    }
+
+
+    override fun onStop() {
+        Log.e(TAG, " Activity - onStop ")
+
+        super.onStop()
+    }
+    override fun onRestart() {
+        Log.e(TAG, " Activity - onRestart ")
+
+        super.onRestart()
+    }
+
+    override fun onDestroy() {
+        Log.e(TAG, " Activity - onDestroy ")
+
+        super.onDestroy()
+    }
+
+    private fun darkModeConfiguration() {
+        nightMode_ImageView.setOnClickListener {
+            showDarkMode()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-
-        //        App Data base Configuration
-        appDatabaseConfiguration()
-
-        //        Dns Database Configuration
-        dnsDatabaseConfiguration()
 
 
         if (!intent.action.isNullOrEmpty()) {
@@ -114,32 +164,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
 //        Dark Mode Configuration
         darkModeConfiguration()
+        Log.e(TAG, " Activity - onResume ")
+        //        App Data base Configuration
+        appDatabaseConfiguration()
 
-
-                FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(TAG, "getInstanceId failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                // Get new Instance ID token
-                val token = task.result?.token
-
-                // Log and toast
-                val msg = getString(R.string.msg_token_fmt, token)
-                Log.d(TAG, msg)
-                CustomToast.toastIt(applicationContext, msg)
-            })
+        //        Dns Database Configuration
+        dnsDatabaseConfiguration()
     }
-
-    private fun darkModeConfiguration() {
-        nightMode_ImageView.setOnClickListener {
-            showDarkMode()
-        }
-    }
-
-
 
     private fun appDatabaseConfiguration() {
         //        Creating Object and Initialization
