@@ -38,7 +38,6 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
 
 
     var appList: LiveData<PagedList<App>>? = null
-    var TAG = "AppFilterViewModel"
 
     init {
 
@@ -77,18 +76,18 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
         getHideProgress()
         CoroutineScope(IO).launch {
             withContext(IO) {
-                Log.e(TAG, appRepository.getCount().toString()+" before ")
-                if (appRepository.getCount() == 0)
+                if (isEmpty())
                     loadApps.searchInstalledApps()
             }
-            Log.e(TAG, appRepository.getCount().toString()+" After ")
             hideProgress!!.postValue(  false)
             filterChanges.postValue(_application.getString(R.string.filter_changes_text))
 
         }
 
     }
-
+    suspend fun isEmpty(): Boolean {
+        return appRepository.getCount() == 0
+    }
     fun onRefresh() {
 
         CoroutineScope(IO).launch {

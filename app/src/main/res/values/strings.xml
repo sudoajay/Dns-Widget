@@ -217,6 +217,7 @@
     <!--    Delete Alert Dialog-->
     <string name="confirm_delete_title_text" translatable="false">Confirm Delete....</string>
     <string name="delete_message_text" translatable="false">Are you sure you want to delete ?</string>
+    <string name="empty_list_text" translatable="false">Empty App List Please Report it</string>
 
 
 

@@ -1,10 +1,8 @@
 package com.sudoajay.dnswidget.ui.appFilter
 
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -22,6 +20,9 @@ import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.databinding.ActivityAppFilterBinding
 import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.helper.InsetDivider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -105,7 +106,7 @@ class AppFilter : BaseActivity(), FilterAppBottomSheet.IsSelectedBottomSheetFrag
             if (binding.swipeRefresh.isRefreshing )
                 binding.swipeRefresh.isRefreshing = false
 
-            if (it.isEmpty()) CustomToast.toastIt(applicationContext, "Empty List")
+            isDataEmpty(it.size)
 
         })
 
@@ -127,6 +128,13 @@ class AppFilter : BaseActivity(), FilterAppBottomSheet.IsSelectedBottomSheetFrag
             .build()
     }
 
+    private fun isDataEmpty(it: Int) {
+        CoroutineScope(Dispatchers.Main).launch {
+            if (it == 0 && appFilterViewModel.isEmpty()
+            )
+                CustomToast.toastIt(applicationContext, getString(R.string.empty_list_text))
+        }
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
