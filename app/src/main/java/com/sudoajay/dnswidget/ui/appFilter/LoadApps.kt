@@ -3,7 +3,6 @@ package com.sudoajay.dnswidget.ui.appFilter
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.util.Log
 import com.sudoajay.dnswidget.ui.appFilter.database.App
 import com.sudoajay.dnswidget.ui.appFilter.database.AppRepository
 import java.text.DateFormat
@@ -35,12 +34,13 @@ class LoadApps(private val context: Context, private  val appRepository: AppRepo
         for (applicationInfo in installedApplicationsInfo) {
             val packageName = getApplicationPackageName(applicationInfo)
             if (packageName == context.packageName) continue
-            if (appRepository.isPresent(packageName) == 0) {
+            if (appRepository.isPresent(packageName) == 0)
                 createApp(applicationInfo)
-            }
-            appRepository.setUpdateInstall(
-                packageName
-            )
+            else
+                appRepository.setUpdateInstall(
+                    packageName
+                )
+
         }
 
 //        Here we remove Uninstall App from Data base
