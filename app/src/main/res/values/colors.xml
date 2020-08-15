@@ -29,6 +29,14 @@
     <color name="navigationViewBackgroundChecked">#FAF8FF</color>
 
 
+    <!--    Not Modify Color Theme -->
+    <color name="swipeSchemeColor">#376db6</color>
+    <color name="swipeSchemeDarkColor">#74A0EE</color>
+    <color name="swipeBgColor">#ffffff</color>
+    <color name="swipeBgDarkColor">#121212</color>
+    <color name="navigationIconColor">#353131</color>
+    <color name="navigationIconDarkColor">#74A0EE</color>
+
     <!--Toast Color Background and text Color-->
     <color name="toastBackgroundColor">@android:color/black</color>
     <color name="toastTextColor">#D6D1D1</color>

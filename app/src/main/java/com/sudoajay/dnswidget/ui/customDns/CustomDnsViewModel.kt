@@ -53,7 +53,7 @@ class CustomDnsViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun onRefresh() {
-        filterChanges
+
     }
 
 

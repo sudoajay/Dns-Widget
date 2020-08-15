@@ -89,16 +89,28 @@ class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
 
 //      Setup Swipe RecyclerView
         binding.swipeRefresh.setColorSchemeResources(
-            R.color.primaryAppColor
+            if (isDarkTheme) R.color.swipeSchemeDarkColor else R.color.swipeSchemeColor
         )
         binding.swipeRefresh.setProgressBackgroundColorSchemeColor(
             ContextCompat.getColor(
                 applicationContext,
-                R.color.mainBackgroundColor
+                if (isDarkTheme) R.color.swipeBgDarkColor else R.color.swipeBgColor
+
             )
         )
+
+        //         Setup BottomAppBar Navigation Setup
+        binding.bottomAppBar.navigationIcon?.mutate()?.let {
+            it.setTint(
+                ContextCompat.getColor(
+                    applicationContext,
+                    if (isDarkTheme) R.color.navigationIconDarkColor else R.color.navigationIconColor
+                )
+            )
+            binding.bottomAppBar.navigationIcon = it
+        }
         binding.swipeRefresh.setOnRefreshListener {
-            customDnsViewModel.onRefresh()
+            binding.swipeRefresh.isRefreshing = false
         }
 //        Set On Click
         binding.filterFloatingActionButton.setOnClickListener {
@@ -115,12 +127,11 @@ class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        var customDnsAdapter: CustomDnsAdapter
+        val customDnsAdapter = CustomDnsAdapter(this)
+        recyclerView.adapter = customDnsAdapter
         customDnsViewModel.dnsList!!.observe(this, Observer {
-
-            customDnsAdapter = CustomDnsAdapter(it, this)
-            recyclerView.adapter = customDnsAdapter
-
+            customDnsAdapter.items = it
+            recyclerView.invalidateItemDecorations()
 
             if (it.isEmpty()) CustomToast.toastIt(applicationContext, "Empty List")
 

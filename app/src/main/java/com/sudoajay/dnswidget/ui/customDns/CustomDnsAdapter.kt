@@ -9,9 +9,9 @@ import com.sudoajay.dnswidget.databinding.LayoutCustomDnsItemBinding
 import com.sudoajay.dnswidget.ui.customDns.database.Dns
 
 
-class CustomDnsAdapter(private val items: List<Dns> , private var customDns: CustomDns) :
+class CustomDnsAdapter( private var customDns: CustomDns) :
     RecyclerView.Adapter<CustomDnsAdapter.MyViewHolder>() {
-
+    var items: List<Dns> = listOf()
 
     class MyViewHolder(
        layoutCustomDnsItemBinding: LayoutCustomDnsItemBinding

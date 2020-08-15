@@ -51,6 +51,56 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+
+        if (!intent.action.isNullOrEmpty()) {
+
+            val navHostFragment = nav_host_fragment as NavHostFragment
+            val graphInflater = navHostFragment.navController.navInflater
+            navGraph = graphInflater.inflate(R.navigation.mobile_navigation)
+            navController = navHostFragment.navController
+
+
+            val intent = intent
+            val destination = when (intent.action) {
+                dnsShortcutId -> R.id.nav_custom_dns
+                settingShortcutId ->
+                    R.id.nav_settings
+                else -> R.id.nav_home
+            }
+            navGraph.startDestination = destination
+            navController.graph = navGraph
+        }
+
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        if (isDarkMode(applicationContext)) {
+            navView.itemBackground = getDrawable(R.drawable.drawer_item_bg_dark_mode)
+        }
+        navController = findNavController(R.id.nav_host_fragment)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_home,
+                R.id.nav_custom_dns,
+                R.id.nav_dns_test,
+                R.id.nav_app_filter,
+                R.id.nav_share,
+                R.id.nav_rate_us,
+                R.id.nav_more_app
+                ,
+                R.id.nav_send_feedback,
+                R.id.nav_settings,
+                R.id.nav_about
+            ), drawerLayout
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
+        navView.setNavigationItemSelectedListener(this)
 
 //
 //                FirebaseInstanceId.getInstance().instanceId
@@ -110,56 +160,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onResume() {
         super.onResume()
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-
-        if (!intent.action.isNullOrEmpty()) {
-
-            val navHostFragment = nav_host_fragment as NavHostFragment
-            val graphInflater = navHostFragment.navController.navInflater
-            navGraph = graphInflater.inflate(R.navigation.mobile_navigation)
-            navController = navHostFragment.navController
-
-
-            val intent = intent
-            val destination = when (intent.action) {
-                dnsShortcutId -> R.id.nav_custom_dns
-                settingShortcutId ->
-                    R.id.nav_settings
-                else -> R.id.nav_home
-            }
-            navGraph.startDestination = destination
-            navController.graph = navGraph
-        }
-
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        if (isDarkMode(applicationContext)) {
-            navView.itemBackground = getDrawable(R.drawable.drawer_item_bg_dark_mode)
-        }
-        navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home,
-                R.id.nav_custom_dns,
-                R.id.nav_dns_test,
-                R.id.nav_app_filter,
-                R.id.nav_share,
-                R.id.nav_rate_us,
-                R.id.nav_more_app
-                ,
-                R.id.nav_send_feedback,
-                R.id.nav_settings,
-                R.id.nav_about
-            ), drawerLayout
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-        navView.setNavigationItemSelectedListener(this)
 
 
 //        Dark Mode Configuration

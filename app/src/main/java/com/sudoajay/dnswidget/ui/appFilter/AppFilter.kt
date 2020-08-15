@@ -59,15 +59,26 @@ class AppFilter : BaseActivity(), FilterAppBottomSheet.IsSelectedBottomSheetFrag
         setRecyclerView()
         //      Setup Swipe RecyclerView
         binding.swipeRefresh.setColorSchemeResources(
-             R.color.primaryAppColor
+            if (isDarkTheme) R.color.swipeSchemeDarkColor else R.color.swipeSchemeColor
         )
         binding.swipeRefresh.setProgressBackgroundColorSchemeColor(
             ContextCompat.getColor(
                 applicationContext,
-                R.color.mainBackgroundColor
+                if (isDarkTheme) R.color.swipeBgDarkColor else R.color.swipeBgColor
 
             )
         )
+
+        //         Setup BottomAppBar Navigation Setup
+        binding.bottomAppBar.navigationIcon?.mutate()?.let {
+            it.setTint(
+                ContextCompat.getColor(
+                    applicationContext,
+                    if (isDarkTheme) R.color.navigationIconDarkColor else R.color.navigationIconColor
+                )
+            )
+            binding.bottomAppBar.navigationIcon = it
+        }
         binding.swipeRefresh.setOnRefreshListener {
             appFilterViewModel.onRefresh()
         }
@@ -98,11 +109,11 @@ class AppFilter : BaseActivity(), FilterAppBottomSheet.IsSelectedBottomSheetFrag
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(applicationContext, this)
-
+        recyclerView.adapter = pagingAppRecyclerAdapter
         appFilterViewModel.appList!!.observe(this, Observer {
 
             pagingAppRecyclerAdapter.submitList(it)
-            recyclerView.adapter = pagingAppRecyclerAdapter
+
             if (binding.swipeRefresh.isRefreshing )
                 binding.swipeRefresh.isRefreshing = false
 
