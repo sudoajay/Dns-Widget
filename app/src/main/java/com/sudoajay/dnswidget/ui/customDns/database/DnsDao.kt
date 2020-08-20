@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface DnsDao {
 
-    @Query("Select * FROM DnsTable Where  Custom = :isCustomDns Or Custom = :isDefaultDns And Name != :customDns  Order By Name Asc")
+    @Query("Select * FROM DnsTable Where Name != :customDns  AND  Custom = :isCustomDns Or Custom = :isDefaultDns Order By Name Asc")
     fun getDnsByOption(isCustomDns: Int, isDefaultDns: Int,customDns :String): LiveData<List<Dns>>
 
 

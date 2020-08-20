@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -31,6 +32,7 @@ import com.sudoajay.dnswidget.ui.sendFeedback.SendFeedback
 import com.sudoajay.dnswidget.ui.setting.DarkModeBottomSheet
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,6 +57,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setSupportActionBar(toolbar)
 
 
+        //        App Data base Configuration
+        appDatabaseConfiguration()
+
+        //        Dns Database Configuration
+        dnsDatabaseConfiguration()
+
         if (!intent.action.isNullOrEmpty()) {
 
             val navHostFragment = nav_host_fragment as NavHostFragment
@@ -75,10 +83,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
 
 
+
         drawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
+        val header: View = navView.getHeaderView(0)
+        header.navHeading_ConstraintLayout.setBackgroundResource(if (isDarkMode(applicationContext)) R.drawable.nav_bg_night else R.drawable.nav_bg)
         if (isDarkMode(applicationContext)) {
             navView.itemBackground = getDrawable(R.drawable.drawer_item_bg_dark_mode)
+
         }
         navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -101,6 +113,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.setNavigationItemSelectedListener(this)
+
+
+
 
 //
 //                FirebaseInstanceId.getInstance().instanceId
@@ -165,11 +180,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 //        Dark Mode Configuration
         darkModeConfiguration()
         Log.e(TAG, " Activity - onResume ")
-        //        App Data base Configuration
-        appDatabaseConfiguration()
 
-        //        Dns Database Configuration
-        dnsDatabaseConfiguration()
     }
 
     private fun appDatabaseConfiguration() {
