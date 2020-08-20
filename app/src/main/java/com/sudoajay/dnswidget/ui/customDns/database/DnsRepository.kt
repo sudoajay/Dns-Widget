@@ -20,10 +20,10 @@ class DnsRepository(private val context: Context, private val dnsDao: DnsDao) {
                     .getBoolean(context.getString(R.string.menu_default_dns), true)
             ) 0 else 2
 
-            return dnsDao.getDnsByOption(isCustomDns, isDefaultDns)
+            return dnsDao.getDnsByOption(isCustomDns, isDefaultDns, context.getString(R.string.custom_dns_enter_manually_text))
         } else {
             val value = "%$filter%"
-            return dnsDao.searchItem(value)
+            return dnsDao.searchItem(value, context.getString(R.string.custom_dns_enter_manually_text))
 
         }
 
@@ -48,6 +48,10 @@ class DnsRepository(private val context: Context, private val dnsDao: DnsDao) {
 
     suspend fun getCount(): Int {
         return dnsDao.getCount()
+    }
+
+    suspend fun getCustomCount(): Int{
+        return dnsDao.getCustomCount()
     }
 
     suspend fun updateDns(

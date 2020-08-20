@@ -28,7 +28,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.activity.BaseActivity
 import com.sudoajay.dnswidget.databinding.FragmentHomeBinding
-import com.sudoajay.dnswidget.helper.CustomToast
+import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
 import com.sudoajay.dnswidget.vpnClasses.AdVpnService
@@ -56,9 +56,9 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
 
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         val myDrawerView = layoutInflater.inflate(R.layout.fragment_home, null)
@@ -230,22 +230,7 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
                 if (binding.connectDnsButton.text == requireContext().getString(R.string.start_text)) {
                     var value = binding.materialSpinner.selectedIndex
                     if (value == 0) {
-
-                        CustomToast.toastIt(requireContext(), " Value ")
-                        //        Creating Object and Initialization
-                        val dnsDao = DnsRoomDatabase.getDatabase(requireContext()).dnsDao()
-                        val dnsRepository = DnsRepository(requireContext(), dnsDao)
-                        CoroutineScope(Dispatchers.IO).launch {
-                            dnsRepository.updateDns(
-                                value.toLong(),
-                                requireContext().getString(R.string.custom_dns_enter_manually_text),
-                                dnsList[0],
-                                dnsList[1],
-                                dnsList[2],
-                                dnsList[3]
-                            )
-                        }
-
+                        saveDnsToDataBase(value.toLong())
 
                     }
                     value += 1
@@ -335,7 +320,7 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
     private fun startVpn(value: Long) {
 
 
-        saveSelectedDnsInfo(requireContext(),value)
+        saveSelectedDnsInfo(requireContext(), value)
 
         Log.i(TAG, "Attempting to connect")
         val intent = VpnService.prepare(requireContext())
@@ -447,6 +432,54 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
             .show()
     }
 
+    private fun saveDnsToDataBase(value: Long) {
+
+        val dnsDao = DnsRoomDatabase.getDatabase(requireContext()).dnsDao()
+        val dnsRepository = DnsRepository(requireContext(), dnsDao)
+        val builder: AlertDialog.Builder =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                AlertDialog.Builder(
+                    requireContext(),
+                    if (!BaseActivity.isDarkMode(requireContext())) android.R.style.Theme_Material_Light_Dialog_Alert else android.R.style.Theme_Material_Dialog_Alert
+                )
+            } else {
+                AlertDialog.Builder(requireContext())
+            }
+        builder.setTitle(requireContext().getString(R.string.important_custom_dns_text))
+            .setMessage(requireContext().getString(R.string.custom_dns_message_text))
+            .setPositiveButton("Yeah") { _, _ ->
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    val dnsName = String.format("Custom Dns %s", dnsRepository.getCustomCount()+1)
+                    dnsRepository.insert(
+                        Dns(
+                            null, dnsName, dnsList[0],
+                            dnsList[1],
+                            dnsList[2],
+                            dnsList[3], "None", custom = true
+                        )
+                    )
+                }
+            }
+            .setNegativeButton("No") { _, _ ->
+
+            }
+            .setIcon(R.drawable.ic_error)
+            .setCancelable(true)
+            .show()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            dnsRepository.updateDns(
+                value,
+                requireContext().getString(R.string.custom_dns_enter_manually_text),
+                dnsList[0],
+                dnsList[1],
+                dnsList[2],
+                dnsList[3]
+            )
+        }
+    }
+
     private fun stopService() {
 
         val stopIntent = Intent(requireContext(), AdVpnService::class.java)
@@ -454,8 +487,8 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
         requireContext().bindService(stopIntent, serviceConnection, Context.BIND_AUTO_CREATE)
         requireContext().startService(stopIntent)
 
-        if(mIsBound) {
-            Log.e(TAG , " got Unibind")
+        if (mIsBound) {
+            Log.e(TAG, " got Unibind")
             requireContext().unbindService(serviceConnection)
             mIsBound = false
         }
@@ -494,7 +527,8 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
                 requireContext().getString(R.string.notification_stopped) ->
                     binding.connectDnsButton.text = requireContext().getString(R.string.start_text)
 
-               else -> binding.connectDnsButton.text = requireContext().getString(R.string.stop_text)
+                else -> binding.connectDnsButton.text =
+                    requireContext().getString(R.string.stop_text)
             }
         })
     }
@@ -509,7 +543,7 @@ class HomeFragment : Fragment(), Serializable, View.OnFocusChangeListener {
     }
 
     companion object{
-        fun saveSelectedDnsInfo(context: Context,id: Long) {
+        fun saveSelectedDnsInfo(context: Context, id: Long) {
             context.getSharedPreferences("state", Context.MODE_PRIVATE).edit()
                 .putLong("id", id).apply()
 
