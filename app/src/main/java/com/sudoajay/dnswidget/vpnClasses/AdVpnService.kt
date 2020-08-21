@@ -28,6 +28,7 @@ import com.sudoajay.dnswidget.ui.customDns.database.Dns
 import com.sudoajay.dnswidget.ui.customDns.database.DnsDao
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRepository
 import com.sudoajay.dnswidget.ui.customDns.database.DnsRoomDatabase
+import com.sudoajay.dnswidget.ui.setting.SettingConfiguration
 import com.sudoajay.dnswidget.vpnClasses.AdVpnThread.Notify
 import com.sudoajay.dnswidget.vpnClasses.NotificationChannels.notificationOnCreate
 import kotlinx.coroutines.*
@@ -92,14 +93,6 @@ class  AdVpnService : VpnService() {
     fun reconnect() {
         updateVpnStatus(VPN_STATUS_RECONNECTING)
         startVpn()
-    }
-
-
-    override fun onCreate() {
-        super.onCreate()
-
-
-
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -206,7 +199,7 @@ class  AdVpnService : VpnService() {
     private fun startVpn() {
 
 
-            if (!isNetworkSpeedNotification()) {
+            if (isNetworkSpeedNotification()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     notificationBuilder =
                         Notification.Builder(applicationContext, NotificationChannels.SERVICE_RUNNING)
@@ -308,11 +301,9 @@ class  AdVpnService : VpnService() {
 
 
     private fun isNetworkSpeedNotification(): Boolean {
-        val str = "Notification with more option"
+      val str = applicationContext.resources.getStringArray(R.array.notificationValues)[0]
 
-        return str != PreferenceManager
-            .getDefaultSharedPreferences(applicationContext)
-            .getString("modifyNotification", str)
+        return SettingConfiguration.getModifyNotification(applicationContext) == str
     }
 
 

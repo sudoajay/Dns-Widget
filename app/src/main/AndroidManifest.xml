@@ -25,6 +25,7 @@
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:launchMode = "singleInstance"
             android:theme="@style/AppTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -67,6 +68,7 @@
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
+
 
         <service
             android:name=".tileClasses.MyStartStopTile"

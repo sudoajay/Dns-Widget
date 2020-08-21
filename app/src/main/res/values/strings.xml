@@ -224,6 +224,8 @@
     <string name="important_custom_dns_text" translatable="false">Important Custom Dns!</string>
     <string name="custom_dns_message_text" translatable="false">Save Custom Dns Information to the App Database for Fast Dns selection</string>
 
+    <string name="this_feature_added_soon_text" translatable="false" >This feature added soon</string>
+
     <!--    No Trans String -->
 
     <string name="menu_default_dns" translatable="false">Default DNS</string>
@@ -231,6 +233,10 @@
 
 
     <string name="is_dns_active_text" translatable="false">isDnsActive</string>
+    <string name="is_start_on_boot_text" translatable="false">isStartOnBoot</string>
+    <string name="is_automatic_at_wifi_text" translatable="false">isAutomaticAtWifi</string>
+    <string name="is_automatic_at_mobile_data" translatable="false">isAutomaticAtMobileData</string>
+
 
 
     <string name="dark_mode_text" translatable="false">Dark Mode</string>

@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.core.os.ConfigurationCompat
 import androidx.navigation.Navigation
 import androidx.preference.*
 import com.sudoajay.dnswidget.R
@@ -48,6 +46,26 @@ class SettingConfiguration : PreferenceFragmentCompat() {
                 value
             }
 
+        val isAutomaticAtWifi = findPreference("start_wifi") as  Preference?
+        isAutomaticAtWifi!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            CustomToast.toastIt(requireContext(),requireContext().getString(R.string.this_feature_added_soon_text))
+
+            true
+        }
+
+        val isAutomaticAtMobileData = findPreference("start_mobile") as  Preference?
+        isAutomaticAtMobileData!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            CustomToast.toastIt(requireContext(),requireContext().getString(R.string.this_feature_added_soon_text))
+            true
+        }
+
+        val selectNotification = findPreference("changeLanguage") as ListPreference?
+        selectNotification!!.setOnPreferenceChangeListener { _, newValue ->
+            if (newValue.toString() != getLanguage(requireContext())) {
+                requireActivity().recreate()
+            }
+            true
+        }
 
         val useDarkTheme =
             findPreference("useDarkTheme") as Preference?
@@ -132,6 +150,28 @@ class SettingConfiguration : PreferenceFragmentCompat() {
         fun getLanguage(context: Context): String {
             return PreferenceManager
                 .getDefaultSharedPreferences(context).getString("changeLanguage", "en").toString()
+        }
+
+        fun getIsStartOnBoot(context: Context):Boolean{
+            return  PreferenceManager
+                .getDefaultSharedPreferences(context).getBoolean("start_on_boot", false)
+        }
+
+        fun getIsAutomaticAtWifi(context: Context):Boolean{
+            return  PreferenceManager
+                .getDefaultSharedPreferences(context).getBoolean("start_wifi", false)
+        }
+
+        fun getIsAutomaticAtMobileData(context: Context):Boolean{
+            return  PreferenceManager
+                .getDefaultSharedPreferences(context).getBoolean("start_mobile", false)
+        }
+
+        fun getModifyNotification(context: Context):String{
+            val str = context.resources.getStringArray(R.array.notificationValues)[1]
+            return PreferenceManager
+                .getDefaultSharedPreferences(context)
+                .getString("modifyNotification",str).toString()
         }
     }
 
