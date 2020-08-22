@@ -33,6 +33,7 @@ class DnsNotification(private val context: Context) {
             .setVisibility(Notification.VISIBILITY_PUBLIC)
             .setOngoing(true)
             .setAutoCancel(true)
+        
 
 
         val iStyle =
@@ -134,7 +135,9 @@ class DnsNotification(private val context: Context) {
 
      fun notifyNotification(notification: Notification) {
         notificationManager!!.notify(AdVpnService.NOTIFICATION_ID_STATE, notification)
+
     }
+
 
 
 }

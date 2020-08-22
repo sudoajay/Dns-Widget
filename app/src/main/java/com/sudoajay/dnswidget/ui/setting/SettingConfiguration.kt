@@ -168,7 +168,7 @@ class SettingConfiguration : PreferenceFragmentCompat() {
         }
 
         fun getModifyNotification(context: Context):String{
-            val str = context.resources.getStringArray(R.array.notificationValues)[1]
+            val str = context.resources.getStringArray(R.array.notificationValues)[0]
             return PreferenceManager
                 .getDefaultSharedPreferences(context)
                 .getString("modifyNotification",str).toString()

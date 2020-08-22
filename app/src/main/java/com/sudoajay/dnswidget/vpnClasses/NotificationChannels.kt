@@ -14,7 +14,8 @@ import com.sudoajay.dnswidget.R
 object NotificationChannels {
     private const val GROUP_SERVICE = "com.sudoajay.dnswidget.notifications.service"
     private const val GROUP_UPDATE = "com.sudoajay.dnswidget.notifications.update"
-    const val SERVICE_RUNNING = "com.sudoajay.dnswidget.notifications.service.running"
+    const val SERVICE_RUNNING_Speed = "com.sudoajay.dnswidget.notifications.service.running_speed"
+    const val SERVICE_RUNNING_More_Option = "com.sudoajay.dnswidget.notifications.service.running_more_option"
     const val SERVICE_PAUSED = "com.sudoajay.dnswidget.notifications.service.paused"
     const val PUSH_NOTIFICATION = "com.sudoajay.dnswidget.push.notifications."
 
@@ -37,15 +38,26 @@ object NotificationChannels {
             )
         )
 
-        val runningChannel = NotificationChannel(
-            SERVICE_RUNNING,
+        val speedRunningChannel = NotificationChannel(
+            SERVICE_RUNNING_Speed,
             context.getString(R.string.notifications_running),
             NotificationManager.IMPORTANCE_DEFAULT
         )
-        runningChannel.description = context.getString(R.string.notifications_running_desc)
-        runningChannel.group = GROUP_SERVICE
-        runningChannel.setShowBadge(false)
-        notificationManager.createNotificationChannel(runningChannel)
+        speedRunningChannel.setSound(null , null)
+        speedRunningChannel.description = context.getString(R.string.notifications_running_desc)
+        speedRunningChannel.group = GROUP_SERVICE
+        speedRunningChannel.setShowBadge(false)
+        notificationManager.createNotificationChannel(speedRunningChannel)
+
+        val moreOptionRunningChannel = NotificationChannel(
+            SERVICE_RUNNING_More_Option,
+            context.getString(R.string.notifications_running),
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        moreOptionRunningChannel.description = context.getString(R.string.notifications_running_desc)
+        moreOptionRunningChannel.group = GROUP_SERVICE
+        moreOptionRunningChannel.setShowBadge(false)
+        notificationManager.createNotificationChannel(moreOptionRunningChannel)
 
         val pausedChannel = NotificationChannel(
             SERVICE_PAUSED,

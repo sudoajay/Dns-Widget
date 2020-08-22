@@ -45,6 +45,8 @@ class  AdVpnService : VpnService() {
     private lateinit var notificationBuilder : Notification.Builder
 
     private lateinit var notificationCompat: NotificationCompat.Builder
+    private var dnsNotification:DnsNotification? = null
+    private var notificationJob :Job?=null
 
 
     private var vpnThread: AdVpnThread? = AdVpnThread(this, object : Notify {
@@ -198,11 +200,11 @@ class  AdVpnService : VpnService() {
 
     private fun startVpn() {
 
-
+        dnsNotification= DnsNotification(applicationContext)
             if (isNetworkSpeedNotification()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     notificationBuilder =
-                        Notification.Builder(applicationContext, NotificationChannels.SERVICE_RUNNING)
+                        Notification.Builder(applicationContext, NotificationChannels.SERVICE_RUNNING_Speed)
                 } else {
                     @Suppress("DEPRECATION")
                     notificationBuilder = Notification.Builder(applicationContext)
@@ -224,15 +226,15 @@ class  AdVpnService : VpnService() {
 
                 notificationBuilder.setContentIntent(createPendingIntent())
 
-                val dnsNotification = DnsNotification(applicationContext)
-                dnsNotification.notifyBuilder(
+
+                dnsNotification!!.notifyBuilder(
                     "Connected",
                     notificationBuilder,
                     selectedDns
                 )
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    startCoroutineTimer {
+                    notificationJob =   startCoroutineTimer {
                         val networkSpeed = ConnectivitySpeed.getNetworkSpeed()
                         val speed = networkSpeed.subSequence(0, networkSpeed.indexOf(" ") + 1)
                         val units =
@@ -246,7 +248,8 @@ class  AdVpnService : VpnService() {
                         val icon = Icon.createWithBitmap(bitmap)
                         notificationBuilder.setSmallIcon(icon)
 
-                        dnsNotification.notifyNotification(dnsNotification.notification!!)
+                        dnsNotification!!.notifyNotification(dnsNotification!!.notification!!)
+
                     }
                 }
 
@@ -259,12 +262,12 @@ class  AdVpnService : VpnService() {
             } else {
 
                 notificationCompat =
-                    NotificationCompat.Builder(applicationContext, NotificationChannels.SERVICE_RUNNING)
+                    NotificationCompat.Builder(applicationContext, NotificationChannels.SERVICE_RUNNING_More_Option)
                 notificationCompat.setSmallIcon(R.drawable.ic_dns)
 
                 notificationCompat.setContentIntent(createPendingIntent())
 
-                DnsNotification(applicationContext).notifyCompat(
+               dnsNotification!!.notifyCompat(
                     "Connected",
                     notificationCompat,
                     selectedDns
@@ -340,6 +343,9 @@ class  AdVpnService : VpnService() {
         }
 
         stopForeground(true)
+        CoroutineScope(Dispatchers.IO).launch {
+            notificationJob?.cancelAndJoin()
+        }
         updateVpnStatus(VPN_STATUS_STOPPED)
         stopSelf()
     }
