@@ -346,6 +346,7 @@ class  AdVpnService : VpnService() {
         CoroutineScope(Dispatchers.IO).launch {
             notificationJob?.cancelAndJoin()
         }
+        dnsNotification?.notificationManager?.cancelAll()
         updateVpnStatus(VPN_STATUS_STOPPED)
         stopSelf()
     }

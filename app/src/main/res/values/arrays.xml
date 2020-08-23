@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="LanguageList">
+    <string-array name="languageList">
         <item name="english">English</item>
         <item name="hindi">हिन्दी</item>
         <item name="arabic">عربى</item>
@@ -27,7 +27,7 @@
 
     </string-array>
 
-    <string-array name="languagesValues">
+    <string-array name="languageValues">
         <item name="english">en</item>
         <item name="hindi">hi</item>
         <item name="arabic">ar</item>

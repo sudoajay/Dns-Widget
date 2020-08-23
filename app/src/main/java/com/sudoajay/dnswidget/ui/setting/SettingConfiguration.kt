@@ -10,6 +10,7 @@ import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.helper.DeleteCache
+import java.util.*
 
 
 class SettingConfiguration : PreferenceFragmentCompat() {
@@ -149,16 +150,23 @@ class SettingConfiguration : PreferenceFragmentCompat() {
 
         fun getLanguage(context: Context): String {
             return PreferenceManager
-                .getDefaultSharedPreferences(context).getString("changeLanguage", "en").toString()
+                .getDefaultSharedPreferences(context).getString("changeLanguage", setLanguage(context))
+                .toString()
         }
 
-        fun getIsStartOnBoot(context: Context):Boolean{
-            return  PreferenceManager
+        private fun setLanguage(context: Context): String {
+            val lang = Locale.getDefault().language
+            val array = context.resources.getStringArray(R.array.languageValues)
+            return if (lang in array) lang else "en"
+        }
+
+        fun getIsStartOnBoot(context: Context): Boolean {
+            return PreferenceManager
                 .getDefaultSharedPreferences(context).getBoolean("start_on_boot", false)
         }
 
-        fun getIsAutomaticAtWifi(context: Context):Boolean{
-            return  PreferenceManager
+        fun getIsAutomaticAtWifi(context: Context): Boolean {
+            return PreferenceManager
                 .getDefaultSharedPreferences(context).getBoolean("start_wifi", false)
         }
 

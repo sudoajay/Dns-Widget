@@ -14,7 +14,7 @@ import com.sudoajay.dnswidget.ui.customDns.database.Dns
 
 
 class DnsNotification(private val context: Context) {
-    private var notificationManager: NotificationManager? = null
+    var notificationManager: NotificationManager? = null
     var notification: Notification? = null
 
     fun notifyBuilder(title: String, builder: Notification.Builder, dns: Dns) { // local variable
