@@ -288,7 +288,7 @@ class AddCustomDnsDialog(
                     break
                 }
                 // Modify the layout
-                current.layoutParams.width = width - 10 * width / 100
+                current!!.layoutParams.width = width - 10 * width / 100
             }
         } while (current!!.parent != null)
         // Request a layout to be re-done

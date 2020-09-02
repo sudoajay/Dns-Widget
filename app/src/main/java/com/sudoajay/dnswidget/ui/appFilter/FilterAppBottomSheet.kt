@@ -41,34 +41,34 @@ class FilterAppBottomSheet : BottomSheetDialogFragment() {
     }
 
 
-    fun isValue(key: String, defaultValue: String): Boolean {
+    fun isOrderBy(value: String): Boolean {
         return requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
-            .getString(key, defaultValue).toString() == defaultValue
+            .getString(getString(R.string.title_menu_order_by), getString(R.string.menu_alphabetical_order)).toString() == value
     }
 
-    fun setValue(key: String, value: String) {
+    fun setOrderBy(value: String) {
         requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putString(key, value).apply()
+            .putString(getString(R.string.title_menu_order_by), value).apply()
         isSelectedBottomSheetFragment!!.handleDialogClose()
         dismiss()
     }
 
-    fun isVisible(key: String): Boolean {
+    fun isShow(key: String): Boolean {
         return requireContext().getSharedPreferences("state", Context.MODE_PRIVATE)
             .getBoolean(key, true)
     }
 
-    private fun setVisible(key: String) {
+    private fun setShow(key: String) {
         requireContext().getSharedPreferences("state", Context.MODE_PRIVATE).edit()
-            .putBoolean(key, !isVisible(key)).apply()
+            .putBoolean(key, !isShow(key)).apply()
     }
 
-    fun setUpVisible(key: String) {
-        setVisible(key)
+    fun setUpShow(key: String) {
+        setShow(key)
 
-        if (!isVisible(getString(R.string.menu_system_apps_trans)) && !isVisible(getString(R.string.menu_user_apps_trans))) {
+        if (!isShow(getString(R.string.menu_system_apps)) && !isShow(getString(R.string.menu_user_apps))) {
             CustomToast.toastIt(requireContext(), getString(R.string.at_least_one_item_text))
-            setVisible(key)
+            setShow(key)
         } else {
             isSelectedBottomSheetFragment!!.handleDialogClose()
             dismiss()

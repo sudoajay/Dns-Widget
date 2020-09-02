@@ -2,7 +2,6 @@ package com.sudoajay.dnswidget.ui.appFilter
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -58,7 +57,7 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
 
-    fun filterChanges(filter: String = _application.getString(R.string.filter_changes_text)) {
+    fun filterChanges(filter: String = _application.getString(R.string.filter_changes_text_trans)) {
         filterChanges.value = filter
 
     }
@@ -80,7 +79,7 @@ class AppFilterViewModel(application: Application) : AndroidViewModel(applicatio
                     loadApps.searchInstalledApps()
             }
             hideProgress!!.postValue(  false)
-            filterChanges.postValue(_application.getString(R.string.filter_changes_text))
+            filterChanges.postValue(_application.getString(R.string.filter_changes_text_trans))
 
         }
 

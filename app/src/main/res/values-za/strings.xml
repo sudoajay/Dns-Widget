@@ -97,7 +97,7 @@
     <string name="menu_default_dns_trans">默认DNS</string>
     <string name="menu_custom_dns_trans">自定义DNS</string>
     <string name="at_least_one_item_text">您不能同时隐藏两个项目</string>
-    <string name="filter_changes_text">filterChanges</string>
+    <string name="filter_changes_text_trans">filterChanges</string>
     <string name="selected_app_text">选定的应用</string>
     <string name="unspecified_text">未指定</string>
     <string name="none_text">没有</string>

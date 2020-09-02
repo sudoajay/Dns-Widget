@@ -8,7 +8,7 @@ class DnsRepository(private val context: Context, private val dnsDao: DnsDao) {
 
 
     fun dnsListUpdate(filter: String): LiveData<List<Dns>> {
-        if (filter == context.getString(R.string.filter_changes_text)) {
+        if (filter == context.getString(R.string.filter_changes_text_trans)) {
 
             //   Is Custom Dns Show
             val isCustomDns = if (context.getSharedPreferences("state", Context.MODE_PRIVATE)

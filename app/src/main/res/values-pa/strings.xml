@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">ਡਿਫੌਲਟ DNS</string>
 <string name="menu_custom_dns_trans">ਕਸਟਮ ਡੀ ਐਨ ਐਸ</string>
 <string name="at_least_one_item_text">ਤੁਸੀਂ ਦੋਵੇਂ ਆਈਟਮਾਂ ਨੂੰ ਲੁਕਾ ਨਹੀਂ ਸਕਦੇ</string>
-<string name="filter_changes_text">ਫਿਲਟਰ ਬਦਲਾਅ</string>
+<string name="filter_changes_text_trans">ਫਿਲਟਰ ਬਦਲਾਅ</string>
 <string name="selected_app_text">ਚੁਣੀ ਹੋਈ ਐਪ</string>
 <string name="unspecified_text">ਨਿਰਧਾਰਤ</string>
 <string name="none_text">ਕੋਈ ਨਹੀਂ</string>

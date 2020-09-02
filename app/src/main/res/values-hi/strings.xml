@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">डिफ़ॉल्ट डीएनएस</string>
 <string name="menu_custom_dns_trans">कस्टम DNS</string>
 <string name="at_least_one_item_text">आप दोनों आइटम छिपा नहीं सकते</string>
-<string name="filter_changes_text">filterChanges</string>
+<string name="filter_changes_text_trans">filterChanges</string>
 <string name="selected_app_text">चयनित ऐप</string>
 <string name="unspecified_text">अनिर्दिष्ट</string>
 <string name="none_text">कोई नहीं</string>

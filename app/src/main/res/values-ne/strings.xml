@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">पूर्वनिर्धारित DNS</string>
 <string name="menu_custom_dns_trans">अनुकूलन DNS</string>
 <string name="at_least_one_item_text">तपाईं दुबै चीज लुकाउन सक्नुहुन्न</string>
-<string name="filter_changes_text">फिल्टर परिवर्तनहरू</string>
+<string name="filter_changes_text_trans">फिल्टर परिवर्तनहरू</string>
 <string name="selected_app_text">चयनित अनुप्रयोग</string>
 <string name="unspecified_text">अनिर्दिष्ट</string>
 <string name="none_text">कुनै पनि होईन</string>

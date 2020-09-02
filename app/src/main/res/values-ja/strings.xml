@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">デフォルトDNS</string>
 <string name="menu_custom_dns_trans">カスタムDNS</string>
 <string name="at_least_one_item_text">両方のアイテムを非表示にすることはできません</string>
-<string name="filter_changes_text">filterChanges</string>
+<string name="filter_changes_text_trans">filterChanges</string>
 <string name="selected_app_text">選択したアプリ</string>
 <string name="unspecified_text">不特定</string>
 <string name="none_text">なし</string>

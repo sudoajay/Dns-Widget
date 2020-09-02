@@ -147,6 +147,7 @@ class  AdVpnService : VpnService() {
                 getSharedPreferences("state", Context.MODE_PRIVATE).edit()
                     .putBoolean(getString(R.string.is_dns_active_text), false).apply()
                 stopVpn()
+                stopSelf()
             }
             Command.PAUSE -> {
                 Log.i(TAG, "onStartCommand  Command.PAUSE -  ")
@@ -348,7 +349,7 @@ class  AdVpnService : VpnService() {
         }
         dnsNotification?.notificationManager?.cancelAll()
         updateVpnStatus(VPN_STATUS_STOPPED)
-        stopSelf()
+
     }
 
     private fun closeNotification(){

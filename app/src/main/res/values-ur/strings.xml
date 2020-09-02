@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">ڈیفالٹ ڈی این ایس</string>
 <string name="menu_custom_dns_trans">کسٹم ڈی این ایس</string>
 <string name="at_least_one_item_text">آپ دونوں اشیاء کو نہیں چھپا سکتے ہیں</string>
-<string name="filter_changes_text">فلٹر چینجز</string>
+<string name="filter_changes_text_trans">فلٹر چینجز</string>
 <string name="selected_app_text">منتخب کردہ ایپ</string>
 <string name="unspecified_text">غیر متعینہ</string>
 <string name="none_text">کوئی نہیں</string>

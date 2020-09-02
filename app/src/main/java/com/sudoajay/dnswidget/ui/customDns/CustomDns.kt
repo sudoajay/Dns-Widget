@@ -252,7 +252,7 @@ class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
                 if (id != null) {
                     CoroutineScope(Dispatchers.IO).launch {
                         customDnsViewModel.dnsRepository.deleteRowFromId(id)
-                        customDnsViewModel.filterChanges.postValue(application.getString(R.string.filter_changes_text))
+                        customDnsViewModel.filterChanges.postValue(application.getString(R.string.filter_changes_text_trans))
                     }
                 }
             }

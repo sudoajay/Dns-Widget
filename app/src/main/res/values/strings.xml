@@ -150,7 +150,7 @@
 
 
     <!--    Changes Type in Filter-->
-    <string name="filter_changes_text">filterChanges</string>
+    <string name="filter_changes_text_trans">filterChanges</string>
     <string name="selected_app_text">Selected App</string>
     <string name="unspecified_text">Unspecified</string>
 
@@ -267,5 +267,7 @@
     <string name="menu_only_user_apps" translatable="false">Only user apps</string>
     <string name="menu_system_app_except_browser" translatable="false">System app except browser</string>
 
+    <!--    Changes Type in Filter-->
+    <string name="filter_changes_text" translatable="false">filterChanges</string>
 
 </resources>

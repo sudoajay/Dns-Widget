@@ -29,7 +29,9 @@
     <dimen name="divider_height">0.8dp</dimen>
     <dimen name="divider_inset">72dp</dimen>
 
-<!--    Bottom Sheet Dialog-->
+
+    <!--    Splash Screen-->
+    <dimen name="image_header_dimen">100dp</dimen>
 
 
 </resources>

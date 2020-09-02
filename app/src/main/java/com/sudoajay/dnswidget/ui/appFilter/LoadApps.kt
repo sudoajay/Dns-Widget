@@ -57,7 +57,6 @@ class LoadApps(private val context: Context, private  val appRepository: AppRepo
         val installedDate = getInstalledDate(packageName)
         val systemApp = isSystemApps(applicationInfo)
 
-
         appRepository.insert(
             App(
                 null,
@@ -68,7 +67,7 @@ class LoadApps(private val context: Context, private  val appRepository: AppRepo
                 installedDate,
                 systemApp,
                 !systemApp,
-                isSelected = true,
+                isSelected = false,
                 isInstalled = true
             )
         )
@@ -99,13 +98,12 @@ class LoadApps(private val context: Context, private  val appRepository: AppRepo
     }
 
     private fun getInstalledDate(packageName: String): String {
-        val installDate: Long?
-        installDate = try {
+        val installDate: Long? = try {
             packageManager.getPackageInfo(packageName, 0).firstInstallTime
         } catch (e: PackageManager.NameNotFoundException) {
             Calendar.getInstance().timeInMillis
         }
-        return convertDateToStringFormat(Date(installDate))
+        return convertDateToStringFormat(Date(installDate!!))
     }
 
     private fun convertDateToStringFormat(date: Date): String {

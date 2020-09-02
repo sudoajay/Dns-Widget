@@ -26,7 +26,7 @@ class AppRepository(private val context: Context, private val appDao: AppDao) {
         ArrayList()
 
     fun handleFilterChanges(filter: String): LiveData<PagedList<App>> {
-        if (filter == context.getString(R.string.filter_changes_text)) {
+        if (filter == context.getString(R.string.filter_changes_text_trans)) {
             //         Sorting Data in Alpha or Install date
             val getOrderBy =
                 context.getSharedPreferences("state", Context.MODE_PRIVATE).getString(

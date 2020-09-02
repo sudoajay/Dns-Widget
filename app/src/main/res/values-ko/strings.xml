@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">기본 DNS</string>
 <string name="menu_custom_dns_trans">맞춤 DNS</string>
 <string name="at_least_one_item_text">두 항목을 숨길 수 없습니다</string>
-<string name="filter_changes_text">filterChanges</string>
+<string name="filter_changes_text_trans">filterChanges</string>
 <string name="selected_app_text">선택된 앱</string>
 <string name="unspecified_text">불특정</string>
 <string name="none_text">없음</string>

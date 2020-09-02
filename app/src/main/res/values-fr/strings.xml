@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">DNS par défaut</string>
 <string name="menu_custom_dns_trans">DNS personnalisé</string>
 <string name="at_least_one_item_text">Vous ne pouvez pas masquer les deux éléments</string>
-<string name="filter_changes_text">filterChanges</string>
+<string name="filter_changes_text_trans">filterChanges</string>
 <string name="selected_app_text">Application sélectionnée</string>
 <string name="unspecified_text">Non spécifié</string>
 <string name="none_text">Aucun</string>

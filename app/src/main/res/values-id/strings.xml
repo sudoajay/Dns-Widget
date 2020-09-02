@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">DNS default</string>
 <string name="menu_custom_dns_trans">DNS khusus</string>
 <string name="at_least_one_item_text">Anda Tidak Dapat Menyembunyikan Kedua Item</string>
-<string name="filter_changes_text">filterChanges</string>
+<string name="filter_changes_text_trans">filterChanges</string>
 <string name="selected_app_text">Aplikasi yang dipilih</string>
 <string name="unspecified_text">Tidak ditentukan</string>
 <string name="none_text">Tidak ada</string>

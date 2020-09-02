@@ -35,6 +35,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -276,7 +277,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
         doubleBackToExitPressedOnce = true
         CustomToast.toastIt(applicationContext, "Click Back Again To Exit")
-        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+        CoroutineScope(Dispatchers.IO).launch {
+            delay(2000L)
+            doubleBackToExitPressedOnce = false
+        }
     }
 
     private fun closeApp() {

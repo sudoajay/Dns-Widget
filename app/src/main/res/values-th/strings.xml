@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">DNS เริ่มต้น</string>
 <string name="menu_custom_dns_trans">DNS ที่กำหนดเอง</string>
 <string name="at_least_one_item_text">คุณไม่สามารถซ่อนทั้งสองรายการ</string>
-<string name="filter_changes_text">filterChanges</string>
+<string name="filter_changes_text_trans">filterChanges</string>
 <string name="selected_app_text">แอพที่เลือก</string>
 <string name="unspecified_text">ยังไม่ระบุ</string>
 <string name="none_text">ไม่มี</string>

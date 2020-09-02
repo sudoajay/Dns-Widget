@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">இயல்புநிலை டி.என்.எஸ்</string>
 <string name="menu_custom_dns_trans">தனிப்பயன் டி.என்.எஸ்</string>
 <string name="at_least_one_item_text">நீங்கள் இரண்டு உருப்படிகளையும் மறைக்க முடியாது</string>
-<string name="filter_changes_text">வடிகட்டி மாற்றங்கள்</string>
+<string name="filter_changes_text_trans">வடிகட்டி மாற்றங்கள்</string>
 <string name="selected_app_text">தேர்ந்தெடுக்கப்பட்ட பயன்பாடு</string>
 <string name="unspecified_text">குறிப்பிடப்படாதது</string>
 <string name="none_text">எதுவுமில்லை</string>

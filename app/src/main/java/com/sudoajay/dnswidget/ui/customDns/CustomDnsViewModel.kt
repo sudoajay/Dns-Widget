@@ -48,7 +48,7 @@ class CustomDnsViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun filterChanges(filter: String = _application.getString(R.string.filter_changes_text)) {
+    fun filterChanges(filter: String = _application.getString(R.string.filter_changes_text_trans)) {
         filterChanges.value = filter
     }
 

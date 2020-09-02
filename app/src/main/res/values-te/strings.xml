@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">డిఫాల్ట్ DNS</string>
 <string name="menu_custom_dns_trans">అనుకూల DNS</string>
 <string name="at_least_one_item_text">మీరు రెండు అంశాలను దాచలేరు</string>
-<string name="filter_changes_text">filterChanges</string>
+<string name="filter_changes_text_trans">filterChanges</string>
 <string name="selected_app_text">ఎంచుకున్న అనువర్తనం</string>
 <string name="unspecified_text">పేర్కొనని</string>
 <string name="none_text">గమనిక</string>

@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">DNS по умолчанию</string>
 <string name="menu_custom_dns_trans">Пользовательский DNS</string>
 <string name="at_least_one_item_text">Вы не можете скрыть оба предмета</string>
-<string name="filter_changes_text">filterChanges</string>
+<string name="filter_changes_text_trans">filterChanges</string>
 <string name="selected_app_text">Выбранное приложение</string>
 <string name="unspecified_text">Неопределенные</string>
 <string name="none_text">Никто</string>

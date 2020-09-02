@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">ডিফল্ট ডিএনএস</string>
 <string name="menu_custom_dns_trans">কাস্টম ডিএনএস</string>
 <string name="at_least_one_item_text">আপনি দুটি জিনিসই আড়াল করতে পারবেন না</string>
-<string name="filter_changes_text">filterChanges</string>
+<string name="filter_changes_text_trans">filterChanges</string>
 <string name="selected_app_text">নির্বাচিত অ্যাপ</string>
 <string name="unspecified_text">অসূচিত</string>
 <string name="none_text">না</string>

@@ -97,7 +97,7 @@
 <string name="menu_default_dns_trans">DNS mặc định</string>
 <string name="menu_custom_dns_trans">DNS tùy chỉnh</string>
 <string name="at_least_one_item_text">Bạn không thể giấu cả hai mục</string>
-<string name="filter_changes_text">bộ lọc Thay đổi</string>
+<string name="filter_changes_text_trans">bộ lọc Thay đổi</string>
 <string name="selected_app_text">Ứng dụng được chọn</string>
 <string name="unspecified_text">Không xác định</string>
 <string name="none_text">không ai</string>
