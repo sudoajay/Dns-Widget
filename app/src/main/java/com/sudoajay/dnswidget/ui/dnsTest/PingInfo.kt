@@ -3,7 +3,7 @@ package com.sudoajay.dnswidget.ui.dnsTest
 import java.net.InetAddress
 import java.net.UnknownHostException
 
-class PingInfo() {
+class PingInfo {
 
     companion object {
         fun run(mHost: String?): Long {

@@ -10,26 +10,6 @@ abstract class AppRoomDatabase : RoomDatabase() {
 
     abstract fun appDao(): AppDao
 
-
-//  If You want to set default value then use that method
-
-//    private class WordDatabaseCallback(
-//        private val scope: CoroutineScope
-//    ) : RoomDatabase.Callback() {
-//
-//        override fun onOpen(db: SupportSQLiteDatabase) {
-//            super.onOpen(db)
-//            INSTANCE?.let { database ->
-//                scope.launch {
-//                    val wordDao = database.wordDao()
-//
-//                    // Delete all content here.
-//                    wordDao.deleteAll()
-//                }
-//            }
-//        }
-//    }
-
     companion object {
         @Volatile
         private var INSTANCE: AppRoomDatabase? = null
@@ -46,7 +26,6 @@ abstract class AppRoomDatabase : RoomDatabase() {
                     "app_database"
                 )
 
-//                    .addCallback(WordDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 // return instance

@@ -165,15 +165,6 @@ class SettingConfiguration : PreferenceFragmentCompat() {
                 .getDefaultSharedPreferences(context).getBoolean("start_on_boot", false)
         }
 
-        fun getIsAutomaticAtWifi(context: Context): Boolean {
-            return PreferenceManager
-                .getDefaultSharedPreferences(context).getBoolean("start_wifi", false)
-        }
-
-        fun getIsAutomaticAtMobileData(context: Context):Boolean{
-            return  PreferenceManager
-                .getDefaultSharedPreferences(context).getBoolean("start_mobile", false)
-        }
 
         fun getModifyNotification(context: Context):String{
             val str = context.resources.getStringArray(R.array.notificationValues)[0]

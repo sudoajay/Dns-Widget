@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.ServiceInfo
 import android.graphics.drawable.Icon
 import android.net.ConnectivityManager
 import android.net.VpnService
@@ -18,7 +19,6 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
-import androidx.preference.PreferenceManager
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.activity.MainActivity
 import com.sudoajay.dnswidget.helper.ConnectivitySpeed
@@ -255,7 +255,11 @@ class  AdVpnService : VpnService() {
                 }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                    startForeground(NOTIFICATION_ID_STATE, notificationBuilder.build(), 1)
+                    startForeground(
+                        NOTIFICATION_ID_STATE,
+                        notificationBuilder.build(),
+                        ServiceInfo.FOREGROUND_SERVICE_TYPE_NONE
+                    )
                 else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                     startForeground(NOTIFICATION_ID_STATE, notificationBuilder.build())
 
@@ -275,7 +279,11 @@ class  AdVpnService : VpnService() {
                 )
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                    startForeground(NOTIFICATION_ID_STATE, notificationCompat.build(), 1)
+                    startForeground(
+                        NOTIFICATION_ID_STATE,
+                        notificationCompat.build(),
+                        ServiceInfo.FOREGROUND_SERVICE_TYPE_NONE
+                    )
                 else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                     startForeground(NOTIFICATION_ID_STATE, notificationCompat.build())
             }

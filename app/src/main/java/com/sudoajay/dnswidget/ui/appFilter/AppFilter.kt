@@ -11,7 +11,6 @@ import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
@@ -39,7 +38,9 @@ class AppFilter : BaseActivity(), FilterAppBottomSheet.IsSelectedBottomSheetFrag
         isDarkTheme = isDarkMode(applicationContext)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!isDarkTheme)
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) window.setDecorFitsSystemWindows(
+                    false
+                ) else window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_app_filter)
 
@@ -110,11 +111,11 @@ class AppFilter : BaseActivity(), FilterAppBottomSheet.IsSelectedBottomSheetFrag
 
         val pagingAppRecyclerAdapter = PagingAppRecyclerAdapter(applicationContext, this)
         recyclerView.adapter = pagingAppRecyclerAdapter
-        appFilterViewModel.appList!!.observe(this, Observer {
+        appFilterViewModel.appList!!.observe(this, {
 
             pagingAppRecyclerAdapter.submitList(it)
 
-            if (binding.swipeRefresh.isRefreshing )
+            if (binding.swipeRefresh.isRefreshing)
                 binding.swipeRefresh.isRefreshing = false
 
             isDataEmpty(it.size)

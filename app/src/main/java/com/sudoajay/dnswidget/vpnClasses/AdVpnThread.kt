@@ -573,7 +573,7 @@ class AdVpnThread(private val vpnService: VpnService, private val notify: Notify
                 )
             ).establish()
         Log.i(TAG, "Configured")
-        return pfd
+        return pfd!!
     }
 
     private fun getWorkingDNSInfo(): String {

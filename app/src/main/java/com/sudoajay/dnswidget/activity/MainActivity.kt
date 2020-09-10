@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.Toolbar
@@ -16,9 +14,7 @@ import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.iid.FirebaseInstanceId
 import com.sudoajay.dnswidget.R
 import com.sudoajay.dnswidget.helper.CustomToast
 import com.sudoajay.dnswidget.ui.appFilter.LoadApps
@@ -48,7 +44,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private var doubleBackToExitPressedOnce = false
     private val ratingLink =
         "https://play.google.com/store/apps/details?id=com.sudoajay.duplication_data"
-    private val TAG = "MainActivityClass"
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,54 +113,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
 
 
-//
-//                FirebaseInstanceId.getInstance().instanceId
-//            .addOnCompleteListener(OnCompleteListener { task ->
-//                if (!task.isSuccessful) {
-//                    Log.w(TAG, "getInstanceId failed", task.exception)
-//                    return@OnCompleteListener
-//                }
-//
-//                // Get new Instance ID token
-//                val token = task.result?.token
-//
-//                // Log and toast
-//                val msg = getString(R.string.msg_token_fmt, token)
-//                Log.d(TAG, msg)
-//                CustomToast.toastIt(applicationContext, msg)
-//            })
+
     }
 
-    override fun onStart() {
-        Log.e(TAG, " Activity - onStart ")
-        super.onStart()
-    }
-
-
-
-    override fun onPause() {
-        Log.e(TAG, " Activity - onPause ")
-
-        super.onPause()
-    }
-
-
-    override fun onStop() {
-        Log.e(TAG, " Activity - onStop ")
-
-        super.onStop()
-    }
-    override fun onRestart() {
-        Log.e(TAG, " Activity - onRestart ")
-
-        super.onRestart()
-    }
-
-    override fun onDestroy() {
-        Log.e(TAG, " Activity - onDestroy ")
-
-        super.onDestroy()
-    }
 
     private fun darkModeConfiguration() {
         nightMode_ImageView.setOnClickListener {
@@ -176,11 +126,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onResume() {
         super.onResume()
 
-
-
 //        Dark Mode Configuration
         darkModeConfiguration()
-        Log.e(TAG, " Activity - onResume ")
+
 
     }
 

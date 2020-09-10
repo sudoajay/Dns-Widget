@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.VpnService
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.sudoajay.dnswidget.R
@@ -15,7 +14,6 @@ import com.sudoajay.dnswidget.vpnClasses.Command
 
 
 class VpnTransparentClass : AppCompatActivity() {
-    val TAG = "VpnTransparentClass"
     private var requestDnsCode = 1
 
 
@@ -29,13 +27,13 @@ class VpnTransparentClass : AppCompatActivity() {
 
 
         if (intent.action.equals("startService")) {
-            Log.i(TAG, "Attempting to connect")
+
             val vpnIntent = VpnService.prepare(applicationContext)
             if (vpnIntent != null) {
-                Log.i(TAG, "Intent Not  Null ")
+
                 startActivityForResult(vpnIntent, requestDnsCode)
             } else {
-                Log.i(TAG, "Intent Null ")
+
                 onActivityResult(requestDnsCode, Activity.RESULT_OK, null)
             }
         }else if(intent.action.equals("StopService")){

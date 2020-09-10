@@ -73,7 +73,7 @@ class DnsTestFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        dnsTestViewModel.show!!.observe(viewLifecycleOwner, Observer {
+        dnsTestViewModel.show!!.observe(viewLifecycleOwner, {
 
             if (it == "recyclerList" || it == "progressRecyclerList") {
                 if (it == "recyclerList") binding.swipeRefresh.isEnabled = true

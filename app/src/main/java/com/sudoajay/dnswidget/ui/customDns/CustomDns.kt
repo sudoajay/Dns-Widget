@@ -43,8 +43,10 @@ class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!isDarkTheme)
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            if (!isDarkTheme )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) window.setDecorFitsSystemWindows(
+                    false
+                ) else window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_custom_dns)
 
@@ -129,7 +131,7 @@ class CustomDns : BaseActivity(), FilterDnsBottomSheet.IsSelectedBottomSheetFrag
 
         val customDnsAdapter = CustomDnsAdapter(this)
         recyclerView.adapter = customDnsAdapter
-        customDnsViewModel.dnsList!!.observe(this, Observer {
+        customDnsViewModel.dnsList!!.observe(this, {
             customDnsAdapter.items = it
             recyclerView.invalidateItemDecorations()
 

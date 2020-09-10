@@ -43,9 +43,7 @@ class SystemInfo(private var activity: Activity) {
     }
 
     fun getScreenSize(): DisplayMetrics {
-        val dm = DisplayMetrics()
-        activity.windowManager.defaultDisplay.getMetrics(dm)
-        return dm
+        return activity.resources.displayMetrics
     }
 
     fun createTextForEmail(): StringBuilder {

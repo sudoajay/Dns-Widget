@@ -132,11 +132,6 @@ class MyStartStopTile: TileService(){
         tile.updateTile()
     }
 
-    override fun onStopListening() {
-        super.onStopListening()
-
-        // Called when the tile is no longer visible
-    }
 
 
 }

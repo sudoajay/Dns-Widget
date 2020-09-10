@@ -67,7 +67,7 @@ class LoadApps(private val context: Context, private  val appRepository: AppRepo
                 installedDate,
                 systemApp,
                 !systemApp,
-                isSelected = false,
+                isSelected = true,
                 isInstalled = true
             )
         )

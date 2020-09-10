@@ -74,8 +74,7 @@ class SystemInfoDialog : DialogFragment() {
 
     private fun forceWrapContent(v: View?) { // Start with the provided view
         var current = v
-        val dm = DisplayMetrics()
-        requireActivity().windowManager.defaultDisplay.getMetrics(dm)
+        val dm = requireContext().resources.displayMetrics
         val width = dm.widthPixels
         // Travel up the tree until fail, modifying the LayoutParams
         do { // Get the parent

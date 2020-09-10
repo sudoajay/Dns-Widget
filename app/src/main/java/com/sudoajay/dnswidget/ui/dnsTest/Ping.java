@@ -30,33 +30,19 @@ public class Ping  {
     private final InetAddress mDest;
     private final PingListener mListener;
 
-    private int mTimeoutMs = 4000;
-    private int mDelayMs = 1000;
     private int mCount = DEFAULT_COUNT;
     private EchoPacketBuilder mEchoPacketBuilder;
     private Network mNetwork;
 
     public interface PingListener {
-        /**
-         * Callback for ping
-         * @param timeMs time in ms for ping to return or @see Ping.TIMED_OUT_MS in case of timeout
-         * @param index index of the current ping
-         */
+
         void onPing(long timeMs, int index);
 
-        /**
-         * Ping critical failure
-         * @param e
-         * @param count
-         */
+
         void onPingException(Exception e, int count);
     }
 
-    /**
-     *
-     * @param dest Should work with Inet6Address, but multiple addresses are failing
-     * @param listener
-     */
+
     public Ping(final InetAddress dest, final PingListener listener) {
         mDest = dest;
         if (listener == null) {
@@ -67,40 +53,10 @@ public class Ping  {
         setEchoPacketBuilder(new EchoPacketBuilder(type, "abcdefghijklmnopqrstuvwabcdefghi".getBytes()));
     }
 
-    public void setTimeoutMs(final int timeoutMs) {
-        if (timeoutMs < 0) {
-            throw new IllegalArgumentException("Timeout must not be negative: " + timeoutMs);
-        }
-        mTimeoutMs = timeoutMs;
-    }
-
-    public int getTimeoutMs() {
-        return mTimeoutMs;
-    }
-
-    public int getDelayMs() {
-        return mDelayMs;
-    }
-
-    public void setDelayMs(final int delayMs) {
-        mDelayMs = delayMs;
-    }
-
     public int getCount() {
         return mCount;
     }
 
-    public void setCount(final int count) {
-        mCount = count;
-    }
-
-    public Network getNetwork() {
-        return mNetwork;
-    }
-
-    public void setNetwork(final Network network) {
-        mNetwork = network;
-    }
 
     public void setEchoPacketBuilder(final EchoPacketBuilder echoPacketBuilder) {
         mEchoPacketBuilder = echoPacketBuilder;
@@ -131,7 +87,7 @@ public class Ping  {
                     final StructPollfd[] structPollfds = {structPollfd};
                     for (int i = 0; i < mCount; i++) {
                         final ByteBuffer byteBuffer = mEchoPacketBuilder.build();
-                        final byte buffer[] = new byte[byteBuffer.limit()];
+                        final byte[] buffer = new byte[byteBuffer.limit()];
 
                         try {
                             // Note: it appears that the OS updates the Checksum, Identifier, and Sequence number.  The payload appears to be untouched.
@@ -207,6 +163,7 @@ public class Ping  {
     }
 
     protected int poll(final StructPollfd[] structPollfds) throws ErrnoException {
+        int mTimeoutMs = 4000;
         return Os.poll(structPollfds, mTimeoutMs);
     }
 
@@ -220,6 +177,7 @@ public class Ping  {
 
     protected void sleep() {
         try {
+            int mDelayMs = 1000;
             Thread.sleep(mDelayMs);
         } catch (InterruptedException e) {
             //Intentionally blank

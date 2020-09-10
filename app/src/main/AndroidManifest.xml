@@ -21,7 +21,6 @@
 
         <activity
             android:name=".ui.splashScreen.Splash"
-            android:launchMode = "singleInstance"
             android:theme="@style/splashTheme">
 
             <intent-filter>

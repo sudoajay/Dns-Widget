@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.15"
-        app:srcCompat="@drawable/ic_dns"
-        app:tint="@color/primaryAppColor" />
+        android:src="@drawable/app_icon_trans"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

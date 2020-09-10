@@ -32,7 +32,7 @@ public class EchoPacketBuilder {
         if (mAutoIdentifier) {
             mIdentifier = (short)sSequence.getAndIncrement();
         }
-        final byte buffer[] = new byte[8 + mPayload.length];
+        final byte[] buffer = new byte[8 + mPayload.length];
         final ByteBuffer byteBuffer = ByteBuffer.wrap(buffer);
 
         byteBuffer.put(mType);
@@ -47,25 +47,6 @@ public class EchoPacketBuilder {
         return byteBuffer;
     }
 
-    public void setSequenceNumber(final short sequenceNumber) {
-        mSequenceNumber = sequenceNumber;
-    }
-
-    public void setIdentifier(final short identifier) {
-        mAutoIdentifier = false;
-        mIdentifier = identifier;
-    }
-
-    public void setAutoIdentifier(final boolean value) {
-        mAutoIdentifier = value;
-    }
-
-    /**
-     * RFC 1071 checksum
-     * @param data
-     * @param end
-     * @return
-     */
     static short checksum(byte[] data, int end) {
         int sum = 0;
         // High bytes (even indices)
